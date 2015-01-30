@@ -1,12 +1,18 @@
 apply plugin: 'scala'
+apply plugin: 'jetty'
 
-defaultTasks 'jar'
+defaultTasks 'jar','sourcesJar'
 
 sourceCompatibility = 1.6
 version = '0.20150130'
 
 repositories {
     mavenCentral()
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
 }
 
 dependencies {
@@ -22,7 +28,6 @@ dependencies {
     compile 'org.scalikejdbc:scalikejdbc_2.11:2.2.2'
     compile 'org.flywaydb:flyway-core:3.0'
     compile 'org.apache.velocity:velocity:1.7'
-    //compile 'javax.servlet:servlet-api:2.5'
     compile 'javax.mail:mail:1.4.7'
     compile 'org.eclipse.jetty:jetty-webapp:9.2.7.v20150116'
     compile 'com.yahoo.platform.yui:yuicompressor:2.4.8'
