@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.walbrix</groupId>
 	<artifactId>spring-scala</artifactId>
-	<version>0.20150130</version>
+	<version>__VERSION__</version>
 	<name>spring-scala</name>	
 	<description>spring-scala integration by wbrxcorp</description>
 	<properties>
