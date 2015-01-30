@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.scalikejdbc:scalikejdbc_2.11:2.2.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scalikejdbc/scalikejdbc_2.11/2.2.2/d49c47a99a80028c7ea341aa90cdd6c5fbbe28ce/scalikejdbc_2.11-2.2.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scalikejdbc/scalikejdbc_2.11/2.2.2/9990ae3f4202f7fb02fa4e7f7c0237cc8c96d9f3/scalikejdbc_2.11-2.2.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

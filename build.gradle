@@ -1,0 +1,29 @@
+apply plugin: 'scala'
+
+defaultTasks 'jar'
+
+sourceCompatibility = 1.6
+version = '0.20150130'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile 'org.springframework:spring-test:4.1.4.RELEASE'
+    runtime 'com.h2database:h2:1.4.185'
+    runtime 'org.aspectj:aspectjweaver:1.8.4'
+
+    compile 'org.scala-lang:scala-library:2.11.5'
+    compile 'org.springframework:spring-webmvc:4.1.4.RELEASE'
+    compile 'org.springframework:spring-jdbc:4.1.4.RELEASE'
+    compile 'org.springframework:spring-context-support:4.1.4.RELEASE'
+    compile 'org.scalikejdbc:scalikejdbc_2.11:2.2.2'
+    compile 'org.flywaydb:flyway-core:3.0'
+    compile 'org.apache.velocity:velocity:1.7'
+    //compile 'javax.servlet:servlet-api:2.5'
+    compile 'javax.mail:mail:1.4.7'
+    compile 'org.eclipse.jetty:jetty-webapp:9.2.7.v20150116'
+    compile 'com.yahoo.platform.yui:yuicompressor:2.4.8'
+}
