@@ -4,7 +4,7 @@ apply plugin: 'jetty'
 defaultTasks 'jar','sourcesJar'
 
 sourceCompatibility = 1.6
-version = '0.20150130'
+version = '0.20150201'
 
 repositories {
     mavenCentral()
@@ -22,8 +22,14 @@ task push(type: Exec, dependsOn: [jar,sourcesJar]) {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     testCompile 'org.springframework:spring-test:4.1.4.RELEASE'
-    runtime 'com.h2database:h2:1.4.185'
+    testCompile 'org.eclipse.jetty:jetty-plus:9.2.7.v20150116'
+    testRuntime 'com.h2database:h2:1.4.185'
+    testRuntime 'org.seleniumhq.selenium:selenium-support:2.44.0'
+    testRuntime 'org.seleniumhq.selenium:selenium-chrome-driver:2.44.0'
+
     runtime 'org.aspectj:aspectjweaver:1.8.4'
+    runtime 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.5.0'
+    runtime 'com.fasterxml.jackson.module:jackson-module-scala_2.11:2.5.0'
 
     compile 'org.scala-lang:scala-library:2.11.5'
     compile 'org.springframework:spring-webmvc:4.1.4.RELEASE'
