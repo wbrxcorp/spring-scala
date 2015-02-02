@@ -42,4 +42,6 @@ dependencies {
     compile 'javax.mail:mail:1.4.7'
     compile 'org.eclipse.jetty:jetty-webapp:9.2.7.v20150116'
     compile 'com.yahoo.platform.yui:yuicompressor:2.4.8'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.0'
+
 }
