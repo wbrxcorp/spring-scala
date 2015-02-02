@@ -1,14 +1,17 @@
 package com.walbrix.spring
 
-import java.io.{OutputStream, PrintWriter}
+import java.io.{InputStream, OutputStream, PrintWriter}
+import javax.servlet.ServletContext
 import javax.servlet.http.{Cookie, HttpSession, HttpServletResponse, HttpServletRequest}
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.context.ServletContextAware
 
 /**
  * Created by shimarin on 14/11/15.
  */
 trait HttpContextSupport {
+  @Autowired private var servletContext:ServletContext = _
   @Autowired private var request:HttpServletRequest = _
   @Autowired private var response:HttpServletResponse = _
 
@@ -24,6 +27,10 @@ trait HttpContextSupport {
   def setContentLength(contentLength:Int):Unit = response.setContentLength(contentLength)
   def getWriter:PrintWriter = response.getWriter
   def getOutputStream:OutputStream = response.getOutputStream
+
+  def getResourceAsStream(path:String):Option[InputStream] = {
+    Option(servletContext.getResourceAsStream(path))
+  }
 
   def getContextURL():String = {
     val buf = new StringBuilder

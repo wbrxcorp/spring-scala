@@ -18,6 +18,10 @@ class BadRequestException(message:String="BAD REQUEST") extends RuntimeException
 class ForbiddenException(message:String="FORBIDDEN") extends RuntimeException(message) {
 }
 
+@ResponseStatus(value=HttpStatus.METHOD_NOT_ALLOWED, reason="METHOD NOT ALLOWED")  // 405
+class MethodNotAllowedException(message:String="METHOD NOT ALLOWED") extends RuntimeException(message) {
+}
+
 trait HttpErrorStatus {
   def raiseNotFound = throw new NotFoundException
   def raiseNotFound(message:String) = throw new NotFoundException(message)
@@ -25,4 +29,6 @@ trait HttpErrorStatus {
   def raiseBadRequest(message:String) = throw new BadRequestException(message)
   def raiseForbidden = throw new ForbiddenException
   def raiseForbidden(message:String) = throw new ForbiddenException(message)
+  def raiseMethodNotAllowed = throw new MethodNotAllowedException
+  def raiseMethodNotAllowed(message:String) = throw new MethodNotAllowedException(message)
 }
