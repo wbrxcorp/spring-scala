@@ -24,6 +24,8 @@ dependencies {
     testCompile 'org.springframework:spring-test:4.1.4.RELEASE'
     testCompile 'org.eclipse.jetty:jetty-plus:9.2.7.v20150116'
     testCompile 'commons-io:commons-io:2.4'
+    testCompile 'org.tukaani:xz:1.5'
+    testCompile 'net.sf.opencsv:opencsv:2.3'
     testRuntime 'com.h2database:h2:1.4.185'
     testRuntime 'org.seleniumhq.selenium:selenium-support:2.44.0'
     testRuntime 'org.seleniumhq.selenium:selenium-chrome-driver:2.44.0'

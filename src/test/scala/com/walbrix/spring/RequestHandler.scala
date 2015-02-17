@@ -1,10 +1,11 @@
 package com.walbrix.spring
 
+import com.fasterxml.jackson.annotation.{JsonInclude, JsonProperty}
 import com.walbrix.spring.mvc.HttpErrorStatus
 import org.apache.commons.io.IOUtils
 import org.springframework.stereotype.Controller
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.web.bind.annotation.{RequestBody, ResponseBody, RequestMethod, RequestMapping}
+import org.springframework.web.bind.annotation._
 
 /**
  * Created by shimarin on 15/02/01.
@@ -38,5 +39,61 @@ class RequestHandler extends Base with HttpContextSupport {
   @ResponseBody
   def context():Either[Option[String], Nothing] = {
     Left(getResourceAsStream("/WEB-INF/web.xml").map(IOUtils.toString(_)))
+  }
+}
+
+case class Tasty[T](
+                     header:Seq[{val key:String; val name:String}],
+                     rows:Seq[T],
+                     pagination:{val count:Int;val page:Int;val pages:Int;val size:Int},
+                     @JsonInclude(JsonInclude.Include.NON_NULL) sortBy:Option[String],
+                     @JsonInclude(JsonInclude.Include.NON_NULL) sortOrder:Option[String])
+
+
+object Tasty {
+  case class HeaderColumn(key:String,name:String)
+  case class Pagination(count:Int,page:Int,pages:Int,size:Int)
+  def apply[T](header:Seq[(String,String)],rows:Seq[T],
+           count:Int/*pageSize*/, page:Int,size:Int/*total count*/,
+           sortBy:Option[String]=None,sortOrder:Option[String]=None):Tasty[T] = {
+    Tasty(
+      header.map { case (key,name) => HeaderColumn(key, name)} , rows,
+      Pagination(rows.size, page, ((size - 1) / count + 1), size),
+      sortBy, sortOrder
+    )
+  }
+  def offset(page:Int,count:Int):Int = (page - 1) * count
+}
+
+@Controller
+@RequestMapping(Array("zip"))
+class ZipCodeRequestHandler extends ScalikeJdbcSupport {
+  @RequestMapping(value=Array(""), method=Array(RequestMethod.GET))
+  @ResponseBody
+  def get(@RequestParam(value="sort-by",required=false) _sortBy:String,
+          @RequestParam(value="sort-order",required=false) _sortOrder:String,
+          @RequestParam(value="page",defaultValue="1") page:Int,
+          @RequestParam(value="count",defaultValue="20") count:Int):Tasty[Map[String,Any]] = {
+
+    val (sortBy, sortOrder) = (Option(_sortBy), Option(_sortOrder))
+
+    val header = Seq(
+      "JIS_CODE"->"JISコード",
+      "ZIP_CODE"->"郵便番号",
+      "CITY_KANA"->"市区町村カナ",
+      "STREET_KANA"-> "それ以降カナ",
+      "PREF"->"都道府県",
+      "CITY"->"市区町村",
+      "STREET"->"それ以降"
+    )
+    val size = int(sql"select count(*) from zip_code").get
+    val rows = apply(sql"select * from zip_code limit ${count} offset ${Tasty.offset(page, count)}".toMap().list())
+    Tasty(
+      header,// カラムヘッダ
+      rows,  // 行
+      count, // 1ページあたりの行数
+      page,  // ページ(1-)
+      size,  // 全件の行数
+      sortBy, sortOrder)
   }
 }

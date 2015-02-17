@@ -42,6 +42,6 @@ trait JsonSupport extends HttpErrorStatus {
 
   def toJson(value:AnyRef):String = objectMapper.writeValueAsString(value)
   def toJson(out:OutputStream, value:AnyRef) = objectMapper.writeValue(out, value)
-  def fromJson[T](content:String):T = objectMapper.readValue(content, classOf[T])
-  def fromJson[T](in:InputStream):T = objectMapper.readValue(in, classOf[T])
+  //def fromJson[T](content:String):T = objectMapper.readValue(content, classOf[T])
+  //def fromJson[T](in:InputStream):T = objectMapper.readValue(in, classOf[T])
 }

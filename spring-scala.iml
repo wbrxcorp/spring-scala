@@ -84,5 +84,7 @@
     <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.5.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.5.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.5.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.tukaani:xz:1.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: net.sf.opencsv:opencsv:2.3" level="project" />
   </component>
 </module>
