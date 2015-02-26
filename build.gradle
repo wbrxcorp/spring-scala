@@ -1,10 +1,13 @@
-apply plugin: 'scala'
-apply plugin: 'jetty'
+plugins {
+    id 'scala'    // Javaアプリケーションの場合
+    id 'jetty'  // Groovyアプリケーションの場合
+    id 'com.github.johnrengelman.shadow' version '1.2.1'
+}
 
-defaultTasks 'jar','sourcesJar'
+defaultTasks 'jar','sourcesJar','shadowJar'
 
 sourceCompatibility = 1.6
-version = '0.20150202'
+version = '0.20150226'
 
 repositories {
     mavenCentral()
@@ -13,6 +16,16 @@ repositories {
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
     from sourceSets.main.allSource
+}
+
+shadowJar {
+    manifest {
+        attributes 'Main-Class': 'com.walbrix.spring.REPL'
+    }
+    configurations = [project.configurations.runtime, project.configurations.testRuntime]
+    mergeServiceFiles {
+        include 'META-INF/spring.*'
+    }
 }
 
 task push(type: Exec, dependsOn: [jar,sourcesJar]) {
@@ -24,6 +37,9 @@ dependencies {
     testCompile 'org.springframework:spring-test:4.1.4.RELEASE'
     testCompile 'org.eclipse.jetty:jetty-plus:9.2.7.v20150116'
     testCompile 'commons-io:commons-io:2.4'
+    testCompile 'org.scala-lang:scala-compiler:2.11.5'
+    testCompile 'org.slf4j:slf4j-jdk14:1.7.10'
+    testCompile 'jline:jline:2.12.1'
     testCompile 'org.tukaani:xz:1.5'
     testCompile 'net.sf.opencsv:opencsv:2.3'
     testRuntime 'com.h2database:h2:1.4.185'
