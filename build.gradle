@@ -7,7 +7,7 @@ plugins {
 defaultTasks 'jar','sourcesJar','shadowJar'
 
 sourceCompatibility = 1.6
-version = '0.20150226'
+version = '0.20150302'
 
 repositories {
     mavenCentral()

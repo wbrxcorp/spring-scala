@@ -1,5 +1,6 @@
 package com.walbrix.spring
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.ApplicationContext
 import org.springframework.context.support.{ClassPathXmlApplicationContext, FileSystemXmlApplicationContext}
 
@@ -16,6 +17,7 @@ object REPL {
   def apply(name:String):AnyRef = applicationContext.getBean(name)
 
   def DB:_DB = apply("DB").asInstanceOf[_DB]
+  def objectMapper:ObjectMapper = apply("objectMapper").asInstanceOf[ObjectMapper]
 
   def main(args:Array[String]):Unit = {
     applicationContext = new ClassPathXmlApplicationContext("/com/walbrix/spring/REPL.xml")

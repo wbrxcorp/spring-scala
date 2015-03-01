@@ -16,6 +16,18 @@
     <aop:config proxy-target-class="true"/>
     <tx:annotation-driven/>
 
+    <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+      <property name="propertyNamingStrategy">
+        <bean class="com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy"/>
+      </property>
+      <property name="modules">
+        <list>
+          <bean class="com.fasterxml.jackson.module.scala.DefaultScalaModule"/>
+          <bean class="com.fasterxml.jackson.datatype.joda.JodaModule"/>
+        </list>
+      </property>
+    </bean>
+
     <jdbc:embedded-database id="dataSource" type="H2"/><!-- will be jdbc:h2:mem:dataSource -->
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
