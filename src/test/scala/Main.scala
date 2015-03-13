@@ -34,12 +34,13 @@ object Main {
     val (server, port) = jetty.run(Seq(root))
     println("http://localhost:%d".format(port))
 
-    System.setProperty("webdriver.chrome.driver", System.getProperty("os.name") match {
-      case x if x.startsWith("Windows") => "src/test/chromedriver.exe"
-      case x if x.startsWith("Mac") => "src/test/chromedriver-mac"
-      case x if x.startsWith("Linux") => "src/test/chromedriver-linux"
-      case _ => "src/test/chromedriver"
-    })
+    val driverPath = System.getProperty("os.name") match {
+      case x if x.startsWith("Windows") => Some("src/test/chromedriver.exe")
+      case x if x.startsWith("Mac") => Some("src/test/chromedriver")
+      // if Linux, /usr/bin/chromedriver is expected
+      case _ => None
+    }
+    driverPath.foreach(System.setProperty("webdriver.chrome.driver", _))
     val driver = new ChromeDriver()
     driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
     val url = "http://localhost:%d/".format(port)
