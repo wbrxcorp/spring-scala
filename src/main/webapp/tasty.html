@@ -19,7 +19,7 @@
                 $scope.filterBy = {
                 };
                 $scope.load = function(params, paramsObj) {
-                    return $http.get("./api/zip?" + params).then(function (response) {
+                    return $http.get("./api/zip/tasty?" + params).then(function (response) {
                         return response.data;
                     });
                 };

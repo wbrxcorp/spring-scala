@@ -65,10 +65,21 @@ object Tasty {
   def offset(page:Int,count:Int):Int = (page - 1) * count
 }
 
+case class Page[T](count:Int, rows:Seq[T])
+
 @Controller
 @RequestMapping(Array("zip"))
 class ZipCodeRequestHandler extends ScalikeJdbcSupport {
   @RequestMapping(value=Array(""), method=Array(RequestMethod.GET))
+  @ResponseBody
+  def get(@RequestParam(value="pageNumber", defaultValue="1") pageNumber:Int = 1,
+          @RequestParam(value="pageSize", defaultValue="20") pageSize:Int = 20):Page[Map[String,Any]] = {
+    Page(int(sql"select count(*) from zip_code").get, apply(
+      sql"select * from zip_code limit ${pageSize} offset ${(pageNumber - 1) * pageSize}".toMap().list()
+    ))
+  }
+
+  @RequestMapping(value=Array("tasty"), method=Array(RequestMethod.GET))
   @ResponseBody
   def get(@RequestParam(value="sort-by",required=false) _sortBy:String,
           @RequestParam(value="sort-order",required=false) _sortOrder:String,
