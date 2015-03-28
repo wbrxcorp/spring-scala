@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment>Default settings</comment>
+    <entry key="mailtrap_id">YOUR_MAILTRAP_ID</entry>
+    <entry key="mailtrap_password">YOUR_MAILTRAP_PASSWORD</entry>
+    <entry key="amazon_endpoint">http://ecs.amazonaws.jp/onca/xml</entry>
+    <entry key="amazon_access_key_id">YOUR_AMAZON_ACCESSKEY_HERE</entry>
+    <entry key="amazon_associate_tag">YOUR_AMAZON_ASSOCIATE_TAG_HERE</entry>
+    <entry key="amazon_secret_access_key">YOUR_AMAZON_SECRET_ACCESS_KEY_HERE</entry>
+</properties>

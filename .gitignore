@@ -1,4 +1,4 @@
 .gradle
 build
 .idea/workspace.xml
-
+settings-*.xml
