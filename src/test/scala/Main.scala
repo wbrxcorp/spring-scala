@@ -11,8 +11,6 @@ import org.openqa.selenium.chrome.ChromeDriver
 
 object Main {
   def main(args:Array[String]):Unit = {
-    //System.setProperty("java.util.logging.config.file", "logging.properties")
-
     val root = jetty.createWebapp("src/main/webapp", "")
 
     // setup DataSource

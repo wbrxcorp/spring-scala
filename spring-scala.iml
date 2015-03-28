@@ -55,7 +55,6 @@
     <orderEntry type="library" scope="TEST" name="Gradle: net.java.dev.jna:jna:3.4.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: net.java.dev.jna:platform:3.4.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.httpcomponents:httpcore:4.3.2" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: commons-codec:commons-codec:1.6" level="project" />
     <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: com.thoughtworks.paranamer:paranamer:2.6" level="project" />
     <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-joda:2.5.0" level="project" />
     <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: com.fasterxml.jackson.module:jackson-module-scala_2.11:2.5.0" level="project" />
@@ -65,9 +64,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: org.tukaani:xz:1.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: net.sf.opencsv:opencsv:2.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.scala-lang:scala-compiler:2.11.5" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.slf4j:slf4j-jdk14:1.7.10" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: jline:jline:2.12.1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.scala-lang.modules:scala-xml_2.11:1.0.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.slf4j:slf4j-api:1.7.10" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.pegdown:pegdown:1.5.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.parboiled:parboiled-java:1.1.7" level="project" />
@@ -106,5 +103,10 @@
     <orderEntry type="library" exported="" name="Gradle: org.springframework:spring-tx:4.1.6.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.springframework:spring-aop:4.1.6.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.springframework:spring-test:4.1.6.RELEASE" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: commons-codec:commons-codec:1.6" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.scala-lang.modules:scala-xml_2.11:1.0.3" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.typesafe.scala-logging:scala-logging-slf4j_2.11:2.1.2" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.typesafe.scala-logging:scala-logging-api_2.11:2.1.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.slf4j:slf4j-jcl:1.7.10" level="project" />
   </component>
 </module>
