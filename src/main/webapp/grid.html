@@ -3,13 +3,16 @@
 <head lang="ja">
     <meta charset="UTF-8">
     <title>ui-grid</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/ui-grid.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-resource.js"></script>
-    <script src="./js/ui-grid.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/i18n/angular-locale_ja.js"></script>
+    <script src="./js/ui-grid.js"></script>
     <script>
-        angular.module("MyApp", ["ngResource", "ui.grid", "ui.grid.pagination"])
-        .run(["$rootScope","$resource", function($scope, $resource) {
+        angular.module("MyApp", ["ngResource", "ui.grid.pagination", "ui.grid.resizeColumns","ui.grid.selection"])
+        .run(["$rootScope","$resource","i18nService", function($scope, $resource,i18nService) {
+            i18nService.setCurrentLang('ja');
             console.log("Hello, World!");
             var zip = $resource("./api/zip");
 
@@ -24,6 +27,10 @@
                 });
             }
             $scope.gridOptions = {
+                enableColumnMenus: false,
+                enableColumnResizing: true,
+                enableRowSelection: true,
+                multiSelect: true,
                 paginationPageSizes: [25, 50, 75],
                 paginationPageSize: 25,
                 useExternalPagination: true,
@@ -36,22 +43,25 @@
                     });
                 },
                 columnDefs: [
-                    { name: 'チェック', headerCellTemplate: 'checkbox_header.html', cellTemplate: 'checkbox_column.html' },
-                    { name: 'JIS_CODE', cellTemplate: 'jis_code.html' },
-                    { name: 'ZIP_CODE' },
-                    { name: 'PREF' },
-                    { name: 'CITY' },
-                    { name: 'CITY_KANA' },
-                    { name: 'STREET' },
-                    { name: 'STREET_KANA' }
-    ]            }
+                    { name: 'チェック', enableColumnResizing: false, width:40, headerCellTemplate: 'checkbox_header.html', cellTemplate: 'checkbox_column.html' },
+                    { name: 'JIS_CODE', displayName:'JISコード', cellTemplate: 'jis_code.html' },
+                    { name: 'ZIP_CODE', displayName:'郵便番号'},
+                    { name: 'PREF',displayName:'都道府県' },
+                    { name: 'CITY',displayName:'市区町村' },
+                    { name: 'CITY_KANA', displayName:'市区町村カナ' },
+                    { name: 'STREET',displayName:'番地' },
+                    { name: 'STREET_KANA',displayName:'番地カナ' }
+                ]
+            }
             getPage();
         }]);
     </script>
 </head>
 <body>
-    <h1>ui-grid</h1>
-    <div id="grid1" ui-grid="gridOptions" ui-grid-pagination class="grid"></div>
+    <div class="container">
+        <h1>ui-grid</h1>
+        <div id="grid1" ui-grid="gridOptions" ui-grid-pagination class="grid"></div>
+    </div>
 </body>
 <script type="text/ng-template" id="checkbox_header.html">
     <div class="ui-grid-cell-contents" title="すべてチェック"><input type="checkbox"></div>
