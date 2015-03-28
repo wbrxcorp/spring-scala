@@ -9,7 +9,7 @@
 	<name>spring-scala</name>	
 	<description>spring-scala integration by wbrxcorp</description>
 	<properties>
-		<spring.version>4.1.4.RELEASE</spring.version>
+		<spring.version>4.1.6.RELEASE</spring.version>
 		<scala.version.major>2.11</scala.version.major>
 		<scala.version.minor>5</scala.version.minor>
 		<aspectj.version>1.8.4</aspectj.version>
