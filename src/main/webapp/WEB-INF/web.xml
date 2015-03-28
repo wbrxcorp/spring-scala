@@ -15,6 +15,17 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>fakephp</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>fakephp</servlet-name>
+        <url-pattern>/api.php/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>H2Console</servlet-name>
         <servlet-class>org.h2.server.web.WebServlet</servlet-class>
         <init-param>
