@@ -6,6 +6,7 @@ import java.util.TimeZone
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 
+import com.typesafe.scalalogging.slf4j.LazyLogging
 import org.apache.commons.codec.binary.Base64
 
 import scala.collection.SortedMap
@@ -14,7 +15,7 @@ import scala.xml.{XML, Elem}
 /**
  * Created by shimarin on 2015/03/28.
  */
-class AmazonService {
+class AmazonService extends AnyRef with LazyLogging {
   private val method = "GET"
 
   private val dateFormatter = new ThreadLocal[SimpleDateFormat]() {
@@ -68,10 +69,11 @@ class AmazonService {
 
   def setEndpoint(endpoint:String):Unit = this.endpoint = endpoint
   def setAccessKeyId(accessKeyId:String):Unit = this.accessKeyId = accessKeyId
-  def setAssociateTag(associateTag:String):Unit = this.associateTag = Option(associateTag)
+  def setAssociateTag(associateTag:String):Unit = this.associateTag = Option(associateTag match { case "" => null case x=>x})
   def setSecretAccessKey(secretAccessKey:String):Unit = this.secretAccessKey = secretAccessKey
 
   def query(operation:String, args:Map[String,String]):Elem = {
+    logger.debug("AssociateTag: %s".format(this.associateTag))
     XML.load(new URL(createRequestURL(endpoint, accessKeyId, associateTag, secretAccessKey, operation, args)))
   }
 }

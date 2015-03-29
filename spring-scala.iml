@@ -108,5 +108,6 @@
     <orderEntry type="library" exported="" name="Gradle: com.typesafe.scala-logging:scala-logging-slf4j_2.11:2.1.2" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.typesafe.scala-logging:scala-logging-api_2.11:2.1.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.slf4j:slf4j-jcl:1.7.10" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.github.scopt:scopt_2.11:3.3.0" level="project" />
   </component>
 </module>

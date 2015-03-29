@@ -1,28 +1,67 @@
 package com.walbrix.spring
 
+import java.io.File
+
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.beans.BeansException
 import org.springframework.context.ApplicationContext
 import org.springframework.context.support.{ClassPathXmlApplicationContext, FileSystemXmlApplicationContext}
 
 /**
  * Created by shimarin on 15/02/26.
  */
-class _DB extends ScalikeJdbcSupport {
+object REPLEnvironment {
+  private var applicationContext:ApplicationContext = _
 
+  def setApplicationContext(applicationContext: ApplicationContext):Unit = {
+    this.applicationContext = applicationContext
+  }
+
+  def db:ScalikeJdbcSupport = {
+    applicationContext.getBean(classOf[javax.sql.DataSource])
+    val scalikeJdbcSupport = new AnyRef with ScalikeJdbcSupport
+    applicationContext.getAutowireCapableBeanFactory.autowireBean(scalikeJdbcSupport)
+    scalikeJdbcSupport
+  }
+
+  def objectMapper:ObjectMapper = applicationContext.getBean(classOf[ObjectMapper])
 }
 
 object REPL {
-  private var applicationContext:ApplicationContext = _
+  case class Config(subcmd:(Config)=>Unit, file:Option[File]=None)
 
-  def apply(name:String):AnyRef = applicationContext.getBean(name)
-
-  def DB:_DB = apply("DB").asInstanceOf[_DB]
-  def objectMapper:ObjectMapper = apply("objectMapper").asInstanceOf[ObjectMapper]
-
-  def main(args:Array[String]):Unit = {
-    applicationContext = new ClassPathXmlApplicationContext("/com/walbrix/spring/REPL.xml")
+  def run(config:Config):Unit = {
+    val applicationContext = config.file match {
+      case Some(x) => new FileSystemXmlApplicationContext(x.getPath)
+      case None =>
+        try { new ClassPathXmlApplicationContext("applicationContext.xml") }
+        catch { case ex:BeansException => new ClassPathXmlApplicationContext("/com/walbrix/spring/REPL.xml") }
+    }
+    REPLEnvironment.setApplicationContext(applicationContext)
     System.setProperty("scala.usejavacp","true")
     val runner = Class.forName("scala.tools.nsc.MainGenericRunner")
-    runner.getMethod("main", classOf[Array[String]]).invoke(null, args)
+    println("Type\nimport com.walbrix.spring.REPLEnvironment._\nto import helper")
+    runner.getMethod("main", classOf[Array[String]]).invoke(null, Array("-nc"))
+  }
+
+  def hello(config:Config):Unit = {
+    println("Hello")
+  }
+
+  def main(args:Array[String]):Unit = {
+    val config = new scopt.OptionParser[Config]("repl") {
+      head("repl", "1.0")
+      cmd("hello") action { (_, c) =>
+        c.copy(subcmd = hello)
+      }
+      arg[File]("<file>") optional() action { (x, c) =>
+        c.copy(file = Some(x))
+      } text("Spring bean file")
+      help("help") text("prints this usage text")
+    }.parse(args, Config(subcmd=run)).getOrElse {
+      // arguments are bad, usage message will have been displayed
+      return
+    }
+    config.subcmd(config)
   }
 }

@@ -15,18 +15,13 @@
     <tx:annotation-driven/>
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:settings.xml</value>
-                <value>classpath:settings-${user.name}.xml</value>
-            </list>
-        </property>
+        <property name="location" value="file:settings-${user.name}.xml"/>
         <property name="ignoreResourceNotFound" value="true" />
     </bean>
 
     <bean class="com.walbrix.spring.AmazonService">
-        <property name="accessKeyId" value="${amazon_access_key_id}"/>
-        <property name="associateTag" value="${amazon_associate_tag}"/>
-        <property name="secretAccessKey" value="${amazon_secret_access_key}"/>
+        <property name="accessKeyId" value="${amazon_access_key_id:YOUR_ACCESS_KEY_ID_HERE}"/>
+        <property name="associateTag" value="${amazon_associate_tag:}"/>
+        <property name="secretAccessKey" value="${amazon_secret_access_key:YOUR_SECRET_ACCESS_KEY_HERE}"/>
     </bean>
 </beans>

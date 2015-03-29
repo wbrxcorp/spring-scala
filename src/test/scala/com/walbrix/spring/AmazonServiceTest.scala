@@ -15,10 +15,17 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 class AmazonServiceTest extends LazyLogging {
   @Autowired private var amazonService:AmazonService = _
   @Test def testQuery():Unit = {
-    val response = amazonService.query("ItemSearch", Map(
-      "Keywords"->"田村ゆかり",
-      "SearchIndex"->"All"))
+    val response = amazonService.query("BrowseNodeLookup", Map(
+      //"Keywords"->"田村ゆかり",
+      //"BrowseNodeId"->"2151948051",
+      "BrowseNodeId"->"689116",
+      "ResponseGroup"->"NewReleases"
+      //"Keywords"->"マザーボード",
+      /*"SearchIndex"->"PCHardware"*/))
 
-    (response \\ "Item").foreach { item => logger.info(item.toString()) }
+    println(response)
+    val items = (response \\ "NewRelease")
+    println("%d items".format(items.size))
+    items.foreach { item => logger.info(item.toString()) }
   }
 }
