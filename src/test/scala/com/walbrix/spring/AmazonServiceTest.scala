@@ -18,7 +18,7 @@ class AmazonServiceTest extends LazyLogging {
     val response = amazonService.query("BrowseNodeLookup", Map(
       //"Keywords"->"田村ゆかり",
       //"BrowseNodeId"->"2151948051",
-      "BrowseNodeId"->"689116",
+      "BrowseNodeId"->"689116,2151948051",
       "ResponseGroup"->"NewReleases"
       //"Keywords"->"マザーボード",
       /*"SearchIndex"->"PCHardware"*/))
