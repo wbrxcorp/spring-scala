@@ -2,7 +2,9 @@ package com.walbrix.spring
 
 import java.io.File
 
+import _root_.ch.qos.logback.classic.{Level, Logger}
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.slf4j.LoggerFactory
 import org.springframework.beans.BeansException
 import org.springframework.context.ApplicationContext
 import org.springframework.context.support.{ClassPathXmlApplicationContext, FileSystemXmlApplicationContext}
@@ -28,7 +30,7 @@ object REPLEnvironment {
 }
 
 object REPL {
-  case class Config(subcmd:(Config)=>Unit, file:Option[File]=None)
+  case class Config(verbose:Boolean=false,subcmd:(Config)=>Unit, file:Option[File]=None)
 
   def run(config:Config):Unit = {
     val applicationContext = config.file match {
@@ -51,6 +53,9 @@ object REPL {
   def main(args:Array[String]):Unit = {
     val config = new scopt.OptionParser[Config]("repl") {
       head("repl", "1.0")
+      opt[Unit]('v', "verbose") action { (_, c) =>
+        c.copy(verbose = true)
+      }
       cmd("hello") action { (_, c) =>
         c.copy(subcmd = hello)
       }
@@ -61,6 +66,9 @@ object REPL {
     }.parse(args, Config(subcmd=run)).getOrElse {
       // arguments are bad, usage message will have been displayed
       return
+    }
+    if (config.verbose) {
+      LoggerFactory.getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME).asInstanceOf[Logger].setLevel(Level.DEBUG)
     }
     config.subcmd(config)
   }
