@@ -3,25 +3,23 @@ package com.walbrix.servlet
 import java.io.{FileNotFoundException, InputStream, InputStreamReader}
 import javax.servlet._
 import javax.servlet.http.HttpServletRequest
+import com.typesafe.scalalogging.slf4j.LazyLogging
 import com.yahoo.platform.yui.compressor.{CssCompressor, JavaScriptCompressor}
-
-import org.apache.commons.logging.{Log, LogFactory}
 
 import scala.io.Source
 
 /**
  * Created by shimarin on 14/11/03.
  */
-class MinifierFilter extends Filter {
+class MinifierFilter extends Filter with LazyLogging {
   private var context:ServletContext = _
   private var lineBreak:Int = -1
   private var noMunge:Boolean = false
   private var preserveSemi:Boolean = false
   private var disableOptimizations:Boolean = false
-  val log:Log = LogFactory.getLog(this.getClass)
 
   override def init(config: FilterConfig): Unit = {
-    log.debug("Initializing MinifierFilter")
+    logger.debug("Initializing MinifierFilter")
 
     this.context = config.getServletContext()
 
@@ -63,10 +61,10 @@ class MinifierFilter extends Filter {
 
   override def doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain): Unit = {
     val path = request.asInstanceOf[HttpServletRequest].getServletPath
-    log.debug("processing %s".format(path))
+    logger.debug("processing %s".format(path))
     val resources = findResourceToCompress(path)
     if (resources.isEmpty) {
-      log.debug("%s - nothing to be compressed".format(path))
+      logger.debug("%s - nothing to be compressed".format(path))
       chain.doFilter(request, response)
       return
     }
