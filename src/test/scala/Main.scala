@@ -29,7 +29,7 @@ object Main {
     mailref.setProperties(properties)
     new org.eclipse.jetty.plus.jndi.Resource("java:comp/env/mail/Session", mailref)
 
-    val (server, port) = jetty.run(Seq(root))
+    val (server, port) = jetty.run(Seq(root), Some(41829))
     println("http://localhost:%d".format(port))
 
     val driverPath = System.getProperty("os.name") match {
