@@ -54,7 +54,6 @@
     <orderEntry type="library" scope="TEST" name="Gradle: net.java.dev.jna:platform:3.4.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.httpcomponents:httpcore:4.3.2" level="project" />
     <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: com.thoughtworks.paranamer:paranamer:2.6" level="project" />
-    <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-joda:2.5.0" level="project" />
     <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: com.fasterxml.jackson.module:jackson-module-scala_2.11:2.5.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.5.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.5.0" level="project" />
@@ -110,9 +109,7 @@
     <orderEntry type="library" exported="" name="Gradle: ch.qos.logback:logback-core:1.1.2" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.scala-lang:scala-library:2.11.6" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.scala-lang:scala-compiler:2.11.6" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: net.databinder.dispatch:dispatch-core_2.11:0.11.2" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.ning:async-http-client:1.8.10" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: io.netty:netty:3.9.2.Final" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.scala-lang:scala-reflect:2.11.6" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-joda:2.5.0" level="project" />
   </component>
 </module>

@@ -1,4 +1,4 @@
-package com.walbrix.spring
+package com.walbrix.spring.googleapi
 
 import org.junit.Test
 import org.junit.runner.RunWith

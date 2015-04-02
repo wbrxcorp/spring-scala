@@ -14,6 +14,7 @@
     <aop:config proxy-target-class="true"/>
     <tx:annotation-driven/>
 
-    <bean class="com.walbrix.spring.GoogleApiRequestHandler"/>
+    <bean class="com.walbrix.spring.googleapi.GoogleApiClient"/>
+    <bean class="com.walbrix.spring.googleapi.GoogleApiRequestHandler"/>
     <bean class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean"/>
 </beans>
