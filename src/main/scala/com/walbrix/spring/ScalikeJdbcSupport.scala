@@ -92,6 +92,7 @@ trait ScalikeJdbcSupport extends SQLInterpolation {
   def int[A](sql:SQL[A, NoExtractor]):Option[Int] = single(sql.map(_.int(1)))
   def string[A](sql:SQL[A, NoExtractor]):Option[String] = single(sql.map(_.string(1)))
   def boolean[A](sql:SQL[A, NoExtractor]):Option[Boolean] = single(sql.map(_.boolean(1)))
+  def long[A](sql:SQL[A, NoExtractor]):Option[Long] = single(sql.map(_.long(1)))
 
   def exists(condition:SQLSyntax):Boolean = {
     boolean(sql"select exists(select 1 from ${condition})").get
