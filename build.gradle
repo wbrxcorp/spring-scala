@@ -7,7 +7,7 @@ plugins {
 defaultTasks 'jar','sourcesJar','shadowJar'
 
 sourceCompatibility = 1.6
-version = '0.20150330'
+version = '0.20150402'
 
 repositories {
     mavenCentral()
@@ -61,7 +61,7 @@ dependencies {
     compile 'org.springframework:spring-webmvc:4.1.6.RELEASE'
     compile 'org.springframework:spring-jdbc:4.1.6.RELEASE'
     compile 'org.springframework:spring-context-support:4.1.6.RELEASE'
-    compile 'org.scalikejdbc:scalikejdbc_2.11:2.2.2'
+    compile 'org.scalikejdbc:scalikejdbc_2.11:2.2.5'
     compile 'org.flywaydb:flyway-core:3.1'
     compile 'org.apache.velocity:velocity:1.7'
     compile 'commons-io:commons-io:2.4'

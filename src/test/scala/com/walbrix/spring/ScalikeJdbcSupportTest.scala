@@ -17,4 +17,10 @@ class ScalikeJdbcSupportTest extends ScalikeJdbcSupport {
   @Test def testExecute():Unit = {
     assert(execute(sql"select * from users"))
   }
+
+  @Test def testExists():Unit = {
+    val zipCode = "1010052"
+    assert(exists(sqls"zip_code where zip_code=${zipCode}"))
+    assert(!exists(sqls"zip_code where zip_code='abchoge'"))
+  }
 }

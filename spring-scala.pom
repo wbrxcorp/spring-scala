@@ -11,9 +11,9 @@
 	<properties>
 		<spring.version>4.1.6.RELEASE</spring.version>
 		<scala.version.major>2.11</scala.version.major>
-		<scala.version.minor>5</scala.version.minor>
+		<scala.version.minor>6</scala.version.minor>
 		<aspectj.version>1.8.4</aspectj.version>
-		<scalikejdbc.version>2.2.2</scalikejdbc.version>
+		<scalikejdbc.version>2.2.5</scalikejdbc.version>
 	</properties>
 	<dependencies>
 		<!-- scala -->
