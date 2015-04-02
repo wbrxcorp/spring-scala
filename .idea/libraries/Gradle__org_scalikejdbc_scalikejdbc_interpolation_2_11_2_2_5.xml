@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.scalikejdbc:scalikejdbc-interpolation_2.11:2.2.5">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scalikejdbc/scalikejdbc-interpolation_2.11/2.2.5/198c76a14e7d04f04b18436d121c4d47f77182e3/scalikejdbc-interpolation_2.11-2.2.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scalikejdbc/scalikejdbc-interpolation_2.11/2.2.5/765d10ae0c25ff734bdf60072e0e7d3517c4b7b8/scalikejdbc-interpolation_2.11-2.2.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
