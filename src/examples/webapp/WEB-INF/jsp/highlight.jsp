@@ -20,7 +20,9 @@
     </script>
 </head>
 <body>
-<h1>Source</h1>
-<pre><code>${content}</code></pre>
+<div class="container">
+    <h1>Source</h1>
+    <pre><code>${content}</code></pre>
+</div>
 </body>
 </html>
