@@ -5,7 +5,6 @@ import javax.servlet.ServletContext
 import javax.servlet.http.{Cookie, HttpSession, HttpServletResponse, HttpServletRequest}
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.context.ServletContextAware
 
 /**
  * Created by shimarin on 14/11/15.

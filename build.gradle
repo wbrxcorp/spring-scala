@@ -1,6 +1,6 @@
 plugins {
-    id 'scala'    // Javaアプリケーションの場合
-    id 'jetty'  // Groovyアプリケーションの場合
+    id 'scala'
+    id 'war'
     id 'com.github.johnrengelman.shadow' version '1.2.1'
 }
 
@@ -9,8 +9,16 @@ defaultTasks 'jar','sourcesJar','shadowJar'
 sourceCompatibility = 1.6
 version = '0.20150402'
 
-repositories {
-    mavenCentral()
+repositories.mavenCentral()
+
+sourceSets {
+    examples {
+        resources.srcDir 'src/examples/resources'
+        scala {
+            srcDir 'src/examples/scala'
+        }
+    }
+    test.runtimeClasspath += examples.runtimeClasspath
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -34,17 +42,24 @@ task push(type: Exec, dependsOn: [jar,sourcesJar]) {
 
 configurations {
     all*.exclude module: 'commons-logging'
+    examplesCompile.extendsFrom compile
+}
+
+war {
+    into('src') { from 'src' }
+    webAppDirName = 'src/examples/webapp'
+    classpath += sourceSets.examples.output
+    manifest {
+        attributes("Implementation-Title": project.name, "Implementation-Version": version, "Implementation-Timestamp": new Date())
+    }
 }
 
 dependencies {
+    testRuntime sourceSets.examples.output
     testCompile group: 'junit', name: 'junit', version: '4.11'
     testCompile 'org.springframework:spring-test:4.1.6.RELEASE'
     testCompile 'org.eclipse.jetty:jetty-plus:9.2.10.v20150310'
-    testCompile 'org.scala-lang:scala-compiler:2.11.6'
     testCompile 'jline:jline:2.12.1'
-    testCompile 'org.tukaani:xz:1.5'
-    testCompile 'net.sf.opencsv:opencsv:2.3'
-    testCompile 'com.h2database:h2:1.4.185'
     testCompile 'org.seleniumhq.selenium:selenium-chrome-driver:2.44.0'
     testRuntime 'org.eclipse.jetty:jetty-jsp:9.2.10.v20150310'
     testRuntime 'org.seleniumhq.selenium:selenium-support:2.44.0'
@@ -66,10 +81,19 @@ dependencies {
     compile 'org.apache.velocity:velocity:1.7'
     compile 'commons-io:commons-io:2.4'
     compile 'commons-codec:commons-codec:1.6'
-    compile 'javax.mail:mail:1.4.7'
-    compile 'org.eclipse.jetty:jetty-webapp:9.2.10.v20150310'
     compile 'com.yahoo.platform.yui:yuicompressor:2.4.8'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.5.0'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.5.0'
     compile 'org.pegdown:pegdown:1.5.0'
+
+    // deps for examples
+    examplesCompile sourceSets.main.output
+    compile 'com.h2database:h2:1.4.186'
+    compile 'net.sf.opencsv:opencsv:2.3'
+    compile 'org.tukaani:xz:1.5'
+
+    // メールセッションはアプリケーションサーバ任せにするのでこのdepはwarに入れない
+    providedCompile 'javax.mail:mail:1.4.7'
+    // Servlet APIはアプリケーションサーバの classpathにあるものを使うのでこのdepはwarに入れない
+    providedCompile 'org.eclipse.jetty:jetty-webapp:9.2.10.v20150310'
 }

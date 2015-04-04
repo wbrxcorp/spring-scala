@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app="MyApp">
+<head lang="ja">
+    <meta charset="UTF-8">
+    <title>gplus-login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/ui-grid.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-resource.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/i18n/angular-locale_ja.js"></script>
+    <script src="./js/google-plus-signin.js"></script>
+    <script>
+        angular.module("MyApp", ["ngResource","directive.g+signin"])
+        .run(["$rootScope","$resource", function($scope, $resource) {
+            var hello = $resource("./api/google/hello");
+            $scope.$on('event:google-plus-signin-success', function (event,authResult) {
+                $scope.userInfo = hello.get({accessToken:authResult.access_token})
+            });
+            $scope.$on('event:google-plus-signin-failure', function (event,authResult) {
+                console.log(event, authResult);
+            });
+        }]);
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>gplus-login</h1>
+        <div ng-show="userInfo">
+            {{userInfo}}
+        </div>
+        <div ng-show="!userInfo">
+            <google-plus-signin clientid="642542541877-bu5eigunp4qr319g0q5umkqbekcj64ql.apps.googleusercontent.com" language="ja"></google-plus-signin>
+        </div>
+        キーやらは <a href="https://console.developers.google.com">https://console.developers.google.com</a> で生成する
+    </div>
+</body>
+</html>
