@@ -22,6 +22,7 @@
 <body>
 <div class="container">
     <h1>Source</h1>
+    <!--<p><a href="https://github.com/wbrxcorp/spring-scala/tree/master/src/...">GitHubで見る</a></p>-->
     <pre><code>${content}</code></pre>
 </div>
 </body>
