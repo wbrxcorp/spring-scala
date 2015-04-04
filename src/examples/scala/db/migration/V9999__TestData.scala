@@ -12,7 +12,7 @@ import org.tukaani.xz.XZInputStream
  */
 class V9999__TestData extends ScalikeJdbcMigration {
   override def migrate(implicit session: DBSession): Unit = {
-    Option(this.getClass.getResourceAsStream("/KEN_ALL.CSV.xz")).foreach { kenAll =>
+    Option(this.getClass.getResourceAsStream("/13TOKYO.CSV.xz")).foreach { kenAll =>
       try {
         val xz = new XZInputStream(kenAll)
         val isr = new InputStreamReader(xz, "MS932")

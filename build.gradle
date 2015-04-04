@@ -19,6 +19,7 @@ sourceSets {
         }
     }
     test.runtimeClasspath += examples.runtimeClasspath
+    test.resources.srcDirs += examples.resources.srcDirs
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
