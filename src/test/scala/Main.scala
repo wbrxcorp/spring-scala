@@ -14,8 +14,9 @@ object Main {
     val root = jetty.createWebapp("src/examples/webapp", "")
     val sources = jetty.createWebapp("src", "/src")
 
-    sources.addServlet("com.walbrix.spring.HighlightServlet", "*.html")
-    sources.addServlet("com.walbrix.spring.HighlightServlet", "*.scala")
+    Seq("*.html","*.scala","*.php","*.sql","*.js","*.xml","*.py","*.ts").foreach { pattern =>
+      sources.addServlet("com.walbrix.spring.HighlightServlet", pattern)
+    }
 
     // setup DataSource
     val dataSource = new JdbcDataSource()
