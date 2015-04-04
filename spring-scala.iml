@@ -32,7 +32,6 @@
     <orderEntry type="library" exported="" name="Gradle: com.yahoo.platform.yui:yuicompressor:2.4.8" level="project" />
     <orderEntry type="library" exported="" name="Gradle: rhino:js:1.7R2" level="project" />
     <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: org.aspectj:aspectjweaver:1.8.4" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.flywaydb:flyway-core:3.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.seleniumhq.selenium:selenium-support:2.44.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.seleniumhq.selenium:selenium-chrome-driver:2.44.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.seleniumhq.selenium:selenium-remote-driver:2.44.0" level="project" />
@@ -46,9 +45,6 @@
     <orderEntry type="library" scope="TEST" name="Gradle: net.java.dev.jna:platform:3.4.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.httpcomponents:httpcore:4.3.2" level="project" />
     <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: com.thoughtworks.paranamer:paranamer:2.6" level="project" />
-    <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: com.fasterxml.jackson.module:jackson-module-scala_2.11:2.5.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.5.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.5.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.5.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: jline:jline:2.12.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.pegdown:pegdown:1.5.0" level="project" />
@@ -87,7 +83,6 @@
     <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: org.slf4j:jcl-over-slf4j:1.7.10" level="project" />
     <orderEntry type="library" exported="" name="Gradle: ch.qos.logback:logback-classic:1.1.2" level="project" />
     <orderEntry type="library" exported="" name="Gradle: ch.qos.logback:logback-core:1.1.2" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-joda:2.5.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.scalikejdbc:scalikejdbc_2.11:2.2.5" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.scalikejdbc:scalikejdbc-core_2.11:2.2.5" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.scalikejdbc:scalikejdbc-interpolation_2.11:2.2.5" level="project" />
@@ -130,5 +125,12 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: com.fasterxml.jackson.module:jackson-module-scala_2.11:2.5.1" level="project" />
+    <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.5.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.scala-lang:scala-compiler:2.11.6" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.5.1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.5.1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-joda:2.5.1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.flywaydb:flyway-core:3.2.1" level="project" />
   </component>
 </module>
