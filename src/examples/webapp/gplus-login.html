@@ -25,6 +25,7 @@
 <body>
     <div class="container">
         <h1>gplus-login</h1>
+        <p>Powered by: <a href="http://jeradbitner.com/angular-directive.g-signin/">Angular Google Plus Sign-in Directive</a></p>
         <div ng-show="userInfo">
             {{userInfo}}
         </div>
@@ -32,6 +33,11 @@
             <google-plus-signin clientid="642542541877-bu5eigunp4qr319g0q5umkqbekcj64ql.apps.googleusercontent.com" language="ja"></google-plus-signin>
         </div>
         キーやらは <a href="https://console.developers.google.com">https://console.developers.google.com</a> で生成する
+        <h3>View Source</h3>
+        <ul>
+            <li><a href="./src/examples/webapp/gplus-login.html">HTML + JavaScript</a></li>
+            <li>Scala (<a href="./src/examples/scala/com/walbrix/spring/GoogleApiRequestHandler.scala">REST</a>, <a href="./src/main/scala/com/walbrix/spring/googleapi/GoogleApiClient.scala">Service</a>)</li>
+        </ul>
     </div>
 </body>
 </html>
