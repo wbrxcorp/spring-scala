@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html ng-app="MyApp">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular-route.min.js"></script>
+    <title>{{title}} : route</title>
+    <script>
+        angular.module("MyApp", ["ngRoute"])
+        .config(["$routeProvider", function($routeProvider) {
+            function templateUrl(lang, url) {
+                return (lang == "ja") ? url : lang + "/" + url;
+            }
+
+            $routeProvider
+            .when("/:lang", {redirectTo: "/:lang/first"})
+            .when("/:lang/first", {
+                templateUrl:function(params) {return templateUrl(params.lang, "first.html")},
+                controller:"FirstController",
+                title:{ja:"最初", en:"First"}
+            })
+            .when("/:lang/second", {
+                templateUrl:function(params) {return templateUrl(params.lang, "second.html")},
+                controller:"SecondController",
+                title:{ja:"二番目",en:"Second"}
+            })
+            .otherwise({redirectTo:"/ja"});
+        }])
+        .controller("FirstController", ["$rootScope", "$scope", "$routeParams", "$location", function($rootScope, $scope, $routeParams, $location) {
+            $scope.next = function() {
+                $location.path($routeParams.lang + "/second");
+            }
+        }])
+        .controller("SecondController", ["$scope", "$routeParams", "$location", function($scope, $routeParams, $location) {
+            $scope.prev = function() {
+                $location.path($routeParams.lang + "/first");
+            }
+        }])
+        .run(["$rootScope", "$window",  function($scope, $window) {
+            $scope.$on("$routeChangeSuccess", function(event, currentRoute, previousRoute){
+                if (currentRoute.hasOwnProperty("title")) $scope.title = currentRoute.title[currentRoute.params.lang];
+                $window.scrollTo(0,0);
+            });
+        }]);
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>ngRoute</h1>
+        <div ng-view></div>
+
+        <p><a href="../src/examples/webapp/route/index.html">View source</a></p>
+        <p><a href="../">一覧へ戻る</a></p>
+    </div>
+</body>
+</html>
