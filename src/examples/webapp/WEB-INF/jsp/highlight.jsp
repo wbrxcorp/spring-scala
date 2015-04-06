@@ -28,7 +28,7 @@
     ${notation.content}
     </c:if>
     <h2>Source</h2>
-    <!--<p><a href="https://github.com/wbrxcorp/spring-scala/tree/master/src/...">GitHubで見る</a></p>-->
+    <p><a href="https://github.com/wbrxcorp/spring-scala/tree/master/${path}">GitHubで見る</a></p>
     <pre><code>${source}</code></pre>
 </div>
 </body>
