@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %><html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%><html>
 <head>
     <title>Source</title>
     <meta charset="UTF-8">
@@ -21,9 +22,14 @@
 </head>
 <body>
 <div class="container">
-    <h1>Source</h1>
+    <h1><c:out value="${path}" /></h1>
+    <c:if test="${not empty notation}">
+    <h2>説明</h2>
+    ${notation.content}
+    </c:if>
+    <h2>Source</h2>
     <!--<p><a href="https://github.com/wbrxcorp/spring-scala/tree/master/src/...">GitHubで見る</a></p>-->
-    <pre><code>${content}</code></pre>
+    <pre><code>${source}</code></pre>
 </div>
 </body>
 </html>
