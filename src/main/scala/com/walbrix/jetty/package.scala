@@ -1,5 +1,7 @@
 package com.walbrix
 
+import java.net.URLClassLoader
+
 import org.eclipse.jetty.server.{ServerConnector, Server}
 import org.eclipse.jetty.server.handler.HandlerList
 import org.eclipse.jetty.webapp.WebAppContext
@@ -13,7 +15,7 @@ package object jetty {
 
     webapp.setResourceBase(resourceBase)
     webapp.setContextPath(contextPath)
-    webapp.setClassLoader(this.getClass().getClassLoader())
+    webapp.setClassLoader(new URLClassLoader(new Array[java.net.URL](0), this.getClass().getClassLoader()))
     webapp.setInitParameter("org.eclipse.jetty.servlet.Default.useFileMappedBuffer", "false")
     webapp
   }

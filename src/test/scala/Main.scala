@@ -1,7 +1,9 @@
+import java.net.URLClassLoader
 import java.util.Properties
 import java.util.concurrent.TimeUnit
 
 import com.walbrix.jetty
+import com.walbrix.spring.HighlightServlet
 import org.h2.jdbcx.JdbcDataSource
 import org.openqa.selenium.chrome.ChromeDriver
 
@@ -11,12 +13,11 @@ import org.openqa.selenium.chrome.ChromeDriver
 
 object Main {
   def main(args:Array[String]):Unit = {
-    val root = jetty.createWebapp("src/examples/webapp", "")
-    val sources = jetty.createWebapp("src", "/src")
+    System.setProperty("org.apache.jasper.compiler.disablejsr199", "false")
 
-    Seq("*.html","*.scala","*.php","*.sql","*.js","*.xml","*.py","*.ts").foreach { pattern =>
-      sources.addServlet("com.walbrix.spring.HighlightServlet", pattern)
-    }
+    val root = jetty.createWebapp("src/examples/webapp", "")
+
+    HighlightServlet.externalBasePath = Some(".")
 
     // setup DataSource
     val dataSource = new JdbcDataSource()
@@ -34,7 +35,7 @@ object Main {
     mailref.setProperties(properties)
     new org.eclipse.jetty.plus.jndi.Resource("java:comp/env/mail/Session", mailref)
 
-    val (server, port) = jetty.run(Seq(sources,root), Some(41829))
+    val (server, port) = jetty.run(Seq(root), Some(41829))
     println("http://localhost:%d".format(port))
 
     val driverPath = System.getProperty("os.name") match {

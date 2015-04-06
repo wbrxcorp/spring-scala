@@ -69,6 +69,7 @@ dependencies {
     runtime 'org.slf4j:jcl-over-slf4j:1.7.10'
     runtime 'org.aspectj:aspectjweaver:1.8.4'
     runtime 'com.fasterxml.jackson.module:jackson-module-scala_2.11:2.5.1'
+    runtime 'javax.servlet:jstl:1.2'
 
     compile 'org.scala-lang:scala-library:2.11.6'
     compile 'org.scala-lang.modules:scala-xml_2.11:1.0.3'

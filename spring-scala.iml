@@ -55,15 +55,9 @@
     <orderEntry type="library" exported="" name="Gradle: org.ow2.asm:asm-analysis:5.0.3" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.ow2.asm:asm-util:5.0.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jetty:jetty-plus:9.2.10.v20150310" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jetty:jetty-jsp:9.2.10.v20150310" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jetty:jetty-jndi:9.2.10.v20150310" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jetty.toolchain:jetty-schemas:3.1.M0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: javax.servlet.jsp:javax.servlet.jsp-api:2.3.1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.glassfish.web:javax.servlet.jsp:2.3.2" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jetty.orbit:javax.servlet.jsp.jstl:1.2.0.v201105211821" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.glassfish.web:javax.servlet.jsp.jstl:1.2.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jetty.orbit:org.eclipse.jdt.core:3.8.2.v20130121" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.glassfish:javax.el:3.0.1-b05" level="project" />
     <orderEntry type="library" exported="" name="Gradle: commons-io:commons-io:2.4" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.springframework:spring-webmvc:4.1.6.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.springframework:spring-jdbc:4.1.6.RELEASE" level="project" />
@@ -132,5 +126,12 @@
     <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.5.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-joda:2.5.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.flywaydb:flyway-core:3.2.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jetty:jetty-jsp:9.2.10.v20150310" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: javax.servlet.jsp:javax.servlet.jsp-api:2.3.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.glassfish.web:javax.servlet.jsp:2.3.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jetty.orbit:javax.servlet.jsp.jstl:1.2.0.v201105211821" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.glassfish.web:javax.servlet.jsp.jstl:1.2.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.glassfish:javax.el:3.0.1-b05" level="project" />
+    <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: javax.servlet:jstl:1.2" level="project" />
   </component>
 </module>
