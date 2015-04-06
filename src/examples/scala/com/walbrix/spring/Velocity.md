@@ -1,1 +1,0 @@
-文字列で与えられた Velocityテンプレートに Velocityを適用する方法

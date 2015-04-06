@@ -28,8 +28,8 @@ class HighlightServlet extends HttpServlet with LazyLogging {
     openStream(mdPath).map { is =>
       try {
         val contextRoot = this.getServletContext.getContextPath
-        val md = Velocity.evaluate(IOUtils.toString(is, "UTF-8"), Map("contextRoot"->contextRoot))
-        Notation(PegDown.markdownToHtml(md))
+        val md = ApplyVariables(IOUtils.toString(is, "UTF-8"), Map("contextRoot"->contextRoot))
+        Notation(PegDown(md))
       }
       finally {
         is.close()
