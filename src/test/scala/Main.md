@@ -9,4 +9,5 @@
 
 ### 参照
 
-- [com.walbrix.jetty](/src/main/scala/com/walbrix/jetty/package.scala)
+- [com.walbrix.jetty](${contextRoot}/src/main/scala/com/walbrix/jetty/package.scala)
+

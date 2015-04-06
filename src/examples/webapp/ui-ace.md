@@ -8,4 +8,4 @@ JavaScriptで動作するテキストエディタ ACE Editorを AngularJSで利�
     <li><a href="http://angular-ui.github.io/ui-ace/">ui-ace</a></li>
 </ul>
 
-[戻る](/ui-ace.html)
+[戻る](${contextRoot}/ui-ace.html)

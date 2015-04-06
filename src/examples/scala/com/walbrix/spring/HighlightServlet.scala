@@ -1,11 +1,12 @@
 package com.walbrix.spring
 
-import java.io.{FileNotFoundException, FileInputStream}
+import java.io.{StringWriter, FileNotFoundException, FileInputStream}
 import javax.servlet.http.{HttpServlet, HttpServletRequest, HttpServletResponse}
 
 import com.typesafe.scalalogging.slf4j.LazyLogging
 import org.apache.commons.io.IOUtils
 import org.apache.commons.lang.StringEscapeUtils
+import org.apache.velocity.VelocityContext
 import org.pegdown.{Extensions, PegDownProcessor}
 
 import scala.beans.BeanProperty
@@ -24,10 +25,11 @@ class HighlightServlet extends HttpServlet with LazyLogging {
 
   private def getNotation(path:String):Option[Notation] = {
     val mdPath = path.split("\\.(?=[^\\.]+$)")(0) + ".md"
-    logger.debug(mdPath)
     openStream(mdPath).map { is =>
       try {
-        Notation(new PegDownProcessor(Extensions.ALL).markdownToHtml(IOUtils.toString(is, "UTF-8")))
+        val contextRoot = this.getServletContext.getContextPath
+        val md = Velocity.evaluate(IOUtils.toString(is, "UTF-8"), Map("contextRoot"->contextRoot))
+        Notation(PegDown.markdownToHtml(md))
       }
       finally {
         is.close()

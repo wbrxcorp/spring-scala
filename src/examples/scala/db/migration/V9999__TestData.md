@@ -8,6 +8,6 @@
 
 ### 関連
 
-- [V0001__Initial_version.sql](/src/examples/resources/db/migration/V0001__Initial_version.sql) - スキーマ
-- [com.walbrix.flyway.ScalikeJdbcMigration](/src/main/scala/com/walbrix/flyway/ScalikeJdbcMigration.scala) - Flywayの Migrationを ScalikeJDBCで書くための奴
-- [api-servlet.xml](/src/examples/webapp/WEB-INF/api-servlet.xml) - Spring MVCの DispatcherServletがロードされた時に FlywayのMigrationを実行する例
+- [V0001__Initial_version.sql](${contextRoot}/src/examples/resources/db/migration/V0001__Initial_version.sql) - スキーマ
+- [com.walbrix.flyway.ScalikeJdbcMigration](${contextRoot}/src/main/scala/com/walbrix/flyway/ScalikeJdbcMigration.scala) - Flywayの Migrationを ScalikeJDBCで書くための奴
+- [api-servlet.xml](${contextRoot}/src/examples/webapp/WEB-INF/api-servlet.xml) - Spring MVCの DispatcherServletがロードされた時に FlywayのMigrationを実行する例

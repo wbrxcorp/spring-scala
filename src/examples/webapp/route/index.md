@@ -5,4 +5,4 @@ ng-routeを使ってシングルページで遷移のあるアプリケーショ
 - [en/first.html](en/first.html)
 - [en/second.html](en/second.html)
 
-[戻る](/route/)
+[戻る](${contextRoot}/route/)
