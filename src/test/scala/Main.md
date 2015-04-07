@@ -1,5 +1,6 @@
 このソースからわかるもの
 
+- ScalikeJDBCのSQLログ表示を設定する方法
 - Jettyの起動方法
 - 組み込みJettyで Mail Sessionを JNDIに登録する方法
 - 組み込みJettyでデータソースを JNDIに登録する方法

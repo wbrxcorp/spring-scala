@@ -1,4 +1,3 @@
-import java.net.URLClassLoader
 import java.util.Properties
 import java.util.concurrent.TimeUnit
 
@@ -6,6 +5,7 @@ import com.walbrix.jetty
 import com.walbrix.spring.HighlightServlet
 import org.h2.jdbcx.JdbcDataSource
 import org.openqa.selenium.chrome.ChromeDriver
+import scalikejdbc.{GlobalSettings, LoggingSQLAndTimeSettings}
 
 /**
  * Created by shimarin on 15/01/30.
@@ -13,6 +13,13 @@ import org.openqa.selenium.chrome.ChromeDriver
 
 object Main {
   def main(args:Array[String]):Unit = {
+    // ScalikeJDBC log settings
+    GlobalSettings.loggingSQLAndTime = new LoggingSQLAndTimeSettings(
+      enabled = true,
+      singleLineMode = true,
+      logLevel = 'DEBUG
+    )
+
     System.setProperty("org.apache.jasper.compiler.disablejsr199", "false")
 
     val root = jetty.createWebapp("src/examples/webapp", "")

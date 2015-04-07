@@ -6,6 +6,7 @@
     </appender>
 
     <logger name="com.walbrix" level="DEBUG"/>
+    <logger name="scalikejdbc.StatementExecutor" level="DEBUG"/>
 
     <root level="INFO">
         <appender-ref ref="STDOUT" />
