@@ -3,6 +3,7 @@
 - ScalikeJDBCのSQLログ表示を設定する方法
 - Jettyの起動方法
 - 組み込みJettyで Mail Sessionを JNDIに登録する方法
+- [Mailtrap](https://mailtrap.io/)を利用する Mail Sessionの作成方法
 - 組み込みJettyでデータソースを JNDIに登録する方法
 - OSの判定方法
 - ChromeDriverの実行バイナリを指定する方法
