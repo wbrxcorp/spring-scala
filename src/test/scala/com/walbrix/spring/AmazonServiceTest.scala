@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 class AmazonServiceTest extends LazyLogging {
   @Autowired private var amazonService:AmazonService = _
   @Test def testQuery():Unit = {
+    logger.debug("begin")
     val response = amazonService.query("BrowseNodeLookup", Map(
       //"Keywords"->"田村ゆかり",
       //"BrowseNodeId"->"2151948051",

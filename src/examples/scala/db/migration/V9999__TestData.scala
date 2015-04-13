@@ -4,17 +4,19 @@ import java.io.InputStreamReader
 import java.text.Normalizer
 
 import au.com.bytecode.opencsv.CSVReader
+import com.typesafe.scalalogging.slf4j.LazyLogging
 import com.walbrix.flyway.{DBSession, ScalikeJdbcMigration}
 import org.tukaani.xz.XZInputStream
 
 /**
  * Created by shimarin on 15/02/15.
  */
-class V9999__TestData extends ScalikeJdbcMigration {
+class V9999__TestData extends ScalikeJdbcMigration with LazyLogging {
   private def normalize(str:String):String = Normalizer.normalize(str, Normalizer.Form.NFKC)
 
   override def migrate(implicit session: DBSession): Unit = {
     Option(this.getClass.getResourceAsStream("/13TOKYO.CSV.xz")).foreach { kenAll =>
+      logger.debug("begin loading testdata")
       try {
         val xz = new XZInputStream(kenAll)
         val isr = new InputStreamReader(xz, "MS932")
@@ -31,6 +33,7 @@ class V9999__TestData extends ScalikeJdbcMigration {
             values(${jis_code},${zip_code},${city_kana},${street_kana},${pref},${city},${street})""".update().apply()
           line = reader.readNext()
         }
+        logger.debug("end loading testdata")
         isr.close()
         xz.close()
       }

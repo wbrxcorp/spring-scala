@@ -1,10 +1,11 @@
 plugins {
     id 'scala'
     id 'war'
+    id 'idea'
     id 'com.github.johnrengelman.shadow' version '1.2.1'
 }
 
-defaultTasks 'jar','sourcesJar','shadowJar'
+defaultTasks 'clean','jar','sourcesJar','shadowJar','war'
 
 sourceCompatibility = 1.6
 version = '0.20150413'
@@ -17,11 +18,17 @@ sourceSets {
         scala {
             srcDir 'src/examples/scala'
         }
+        compileClasspath += sourceSets.main.runtimeClasspath
     }
-/*
-    test.runtimeClasspath += examples.runtimeClasspath
+    //test.runtimeClasspath += examples.runtimeClasspath
     test.resources.srcDirs += examples.resources.srcDirs
-*/
+}
+
+idea {
+    module {
+        //and some extra test source dirs
+        scopes.TEST.plus += [ configurations.examplesCompile ]
+    }
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -45,13 +52,14 @@ task push(type: Exec, dependsOn: [jar,sourcesJar]) {
 
 configurations {
     all*.exclude module: 'commons-logging'
-//    examplesCompile.extendsFrom compile
+    examplesCompile
+    examplesCompile.extendsFrom compile
 }
 
 war {
     into('src') { from 'src' }
     webAppDirName = 'src/examples/webapp'
-//    classpath += sourceSets.examples.output
+    classpath += sourceSets.examples.output
     manifest {
         attributes("Implementation-Title": project.name, "Implementation-Version": version, "Implementation-Timestamp": new Date())
     }
@@ -92,7 +100,7 @@ dependencies {
     compile 'org.pegdown:pegdown:1.5.0'
 
     // deps for examples
-//    examplesCompile sourceSets.main.output
+    examplesCompile sourceSets.main.output
     compile 'com.h2database:h2:1.4.186'
     compile 'net.sf.opencsv:opencsv:2.3'
     compile 'org.tukaani:xz:1.5'
