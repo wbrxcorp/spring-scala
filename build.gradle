@@ -7,7 +7,7 @@ plugins {
 defaultTasks 'jar','sourcesJar','shadowJar'
 
 sourceCompatibility = 1.6
-version = '0.20150402'
+version = '0.20150413'
 
 repositories.mavenCentral()
 
@@ -18,8 +18,10 @@ sourceSets {
             srcDir 'src/examples/scala'
         }
     }
+/*
     test.runtimeClasspath += examples.runtimeClasspath
     test.resources.srcDirs += examples.resources.srcDirs
+*/
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -43,20 +45,20 @@ task push(type: Exec, dependsOn: [jar,sourcesJar]) {
 
 configurations {
     all*.exclude module: 'commons-logging'
-    examplesCompile.extendsFrom compile
+//    examplesCompile.extendsFrom compile
 }
 
 war {
     into('src') { from 'src' }
     webAppDirName = 'src/examples/webapp'
-    classpath += sourceSets.examples.output
+//    classpath += sourceSets.examples.output
     manifest {
         attributes("Implementation-Title": project.name, "Implementation-Version": version, "Implementation-Timestamp": new Date())
     }
 }
 
 dependencies {
-    testRuntime sourceSets.examples.output
+//    testRuntime sourceSets.examples.output
     testCompile group: 'junit', name: 'junit', version: '4.11'
     testCompile 'org.springframework:spring-test:4.1.6.RELEASE'
     testCompile 'org.eclipse.jetty:jetty-plus:9.2.10.v20150310'
@@ -90,7 +92,7 @@ dependencies {
     compile 'org.pegdown:pegdown:1.5.0'
 
     // deps for examples
-    examplesCompile sourceSets.main.output
+//    examplesCompile sourceSets.main.output
     compile 'com.h2database:h2:1.4.186'
     compile 'net.sf.opencsv:opencsv:2.3'
     compile 'org.tukaani:xz:1.5'
