@@ -21,24 +21,34 @@
 
             $scope.load = function(tableState) {
                 console.log(tableState);
+                $scope.lastTableState = tableState; // リロードしたい時のためにtableStateを保存する
+                var pagination = tableState.pagination;
+                if (!pagination.number) return; // 1ページあたりの行数がセットされずに呼び出された場合何もしない
                 var conditions = {
-                    number:tableState.pagination.number,    // 1ページあたりの行数
-                    start:tableState.pagination.start   // 開始位置（オフセット）
+                    number:pagination.number,    // 1ページあたりの行数
+                    start:pagination.start   // 開始位置（オフセット）
                 };
                 // 検索条件が一つでも指定されている場合 search.predicateObjectがセットされる
-                if (tableState.search.hasOwnProperty("predicateObject")) {
+                if (!!tableState.search.predicateObject) {
                     angular.extend(conditions, tableState.search.predicateObject);
                 }
                 // ソート条件が指定されている場合 sort.predicateがセットされる
-                if (tableState.sort.hasOwnProperty("predicate")) {
+                if (!!tableState.sort.predicate) {
                     conditions.sort = tableState.sort.predicate;
-                    conditions.reverse = tableState.sort.reverse;
+                    conditions.reverse = tableState.sort.reverse || false;
                 }
                 $scope.zip = zip.get(conditions, function(result) {
                     $scope.rows = result.rows;
                     // サーバからのレスポンスが来たらnumberOfPages(最大ページ数)をセットしてやる必要がある
                     tableState.pagination.numberOfPages = result.numberOfPages;
                 });
+            }
+
+            $scope.reload = function() {
+                if (!!$scope.lastTableState) {
+                    // 保存しておいたtableStateを使ってload関数を呼び出す
+                    $scope.load($scope.lastTableState);
+                }
             }
         }]);
     </script>
@@ -86,6 +96,8 @@
         </tr>
         </tfoot>
     </table>
+
+    <p><button class="btn btn-default" ng-click="reload()">リロード</button></p>
 
     <h3>View Source</h3>
     <ul>
