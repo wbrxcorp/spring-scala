@@ -52,6 +52,8 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <import resource="multipartResolver.xml"/> <!-- FileUpload用 Multipart Resolver -->
+
     <!-- conponents to be tested -->
     <bean class="com.walbrix.spring.googleapi.GoogleApiClient"/>
 

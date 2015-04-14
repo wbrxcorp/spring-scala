@@ -53,6 +53,9 @@ object Main {
     }
     driverPath.foreach(System.setProperty("webdriver.chrome.driver", _))
     val driver = new ChromeDriver()
+
+    // カスタマイズするには https://sites.google.com/a/chromium.org/chromedriver/capabilities#TOC-Use-custom-profile-also-called-user-data-directory-
+
     driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
     val url = "http://localhost:%d/".format(port)
     driver.get(url)
