@@ -38,6 +38,11 @@
     <%-- タイトル --%>
     <h1><c:out value="${path}" /></h1>
 
+    <p>
+    <a href="https://twitter.com/share" class="twitter-share-button" data-size="large">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    </p>
+
     <%-- 説明文（ソースファイルと同じ階層に同名で置いてある .mdファイルをHTMLに変換したもの） --%>
     <c:if test="${not empty notation}">
     <h2>説明</h2>
