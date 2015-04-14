@@ -1,5 +1,10 @@
 JSONのPOSTで日付を受け取り、1ヶ月後の日付を返すサンプル。
 
+### 要件
+
+- Spring MVCではJSONプロセッサとして[Jackson](https://github.com/FasterXML/jackson-datatype-joda)を用いるが、
+日付データを Jodaにマッピングするためこれに[Jodaモジュール](https://github.com/FasterXML/jackson-datatype-joda)が追加されていること。
+
 ### このソースからわかること
 
 - [Joda](http://www.joda.org/joda-time/)の日付時刻型を使ってRESTクライアントから時刻データを受け付ける方法
