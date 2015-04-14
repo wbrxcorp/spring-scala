@@ -3,8 +3,7 @@ package com.walbrix.spring
 import com.typesafe.scalalogging.slf4j.LazyLogging
 import com.walbrix.spring.mvc.{Success, Result}
 import org.joda.time.{LocalDate, DateTimeZone, DateTime}
-import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{RequestBody, ResponseBody, RequestMethod, RequestMapping}
+import org.springframework.web.bind.annotation._
 
 /**
  * Created by shimarin on 15/04/14.
@@ -15,7 +14,7 @@ case class Request(
   timezone:Option[String] // "Asia/Tokyo" など
 )
 
-@Controller
+@RestController
 @RequestMapping(Array("datepicker"))
 class DatePickerRequestHandler extends LazyLogging {
 
@@ -23,7 +22,6 @@ class DatePickerRequestHandler extends LazyLogging {
    * 日付を受け取り、１ヶ月後の日付を返す
    */
   @RequestMapping(value=Array(""), method=Array(RequestMethod.POST))
-  @ResponseBody
   def hello(@RequestBody request:Request):Result[DateTime] = {
     logger.info(request.date.toString)    // UTCに正規化されている日時
 

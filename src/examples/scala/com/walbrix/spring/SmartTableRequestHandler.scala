@@ -1,14 +1,13 @@
 package com.walbrix.spring
 
 import com.typesafe.scalalogging.slf4j.LazyLogging
-import org.springframework.stereotype.Controller
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.web.bind.annotation.{RequestParam, ResponseBody, RequestMethod, RequestMapping}
+import org.springframework.web.bind.annotation._
 
 /**
  * Created by shimarin on 15/04/07.
  */
-@Controller
+@RestController
 @Transactional
 @RequestMapping(Array("smart-table"))
 class SmartTableRequestHandler extends ScalikeJdbcSupport with LazyLogging {
@@ -42,7 +41,6 @@ class SmartTableRequestHandler extends ScalikeJdbcSupport with LazyLogging {
    * 郵便番号データベースに問い合わせを行い結果を返す
    */
   @RequestMapping(value=Array(""), method=Array(RequestMethod.GET))
-  @ResponseBody
   def get(@RequestParam(value="start", defaultValue="0") start:Int = 0, // オフセット
           @RequestParam(value="number", defaultValue="10") number:Int = 10, // ページあたりの行数
           @RequestParam(value="sort", required=false) sort:String,  // ソートに使用するカラム名
