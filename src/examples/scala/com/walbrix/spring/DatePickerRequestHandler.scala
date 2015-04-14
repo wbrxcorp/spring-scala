@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.{RequestBody, ResponseBody, Reque
 /**
  * Created by shimarin on 15/04/14.
  */
-case class Request(date:DateTime,formattedDate:LocalDate, timezone:Option[String])
+case class Request(
+  date:DateTime,  // JavaScriptの Dateオブジェクトを通信に乗せた時のタイムゾーン付き日時フォーマットを受け付けるフィールド
+  formattedDate:LocalDate,  // YYYY-MM-DD形式の文字列を最も単純な日付データとして受け付けるフィールド
+  timezone:Option[String] // "Asia/Tokyo" など
+)
 
 @Controller
 @RequestMapping(Array("datepicker"))
