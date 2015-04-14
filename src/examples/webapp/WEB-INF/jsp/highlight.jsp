@@ -21,15 +21,39 @@
     </script>
 </head>
 <body>
+<%-- ヘッダ --%>
+<div class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="<%=request.getContextPath()%>/">spring-scala</a>
+    </div>
+  </div>
+</div>
 <div class="container">
+    <%-- タイトル --%>
     <h1><c:out value="${path}" /></h1>
+
+    <%-- 説明文（ソースファイルと同じ階層に同名で置いてある .mdファイルをHTMLに変換したもの） --%>
     <c:if test="${not empty notation}">
     <h2>説明</h2>
     ${notation.content}
     </c:if>
+
     <h2>Source</h2>
     <p><a href="https://github.com/wbrxcorp/spring-scala/tree/master/${path}">GitHubで見る</a></p>
+
+    <%-- ソースコードをここにハイライト表示 --%>
     <pre><code>${source}</code></pre>
+
+    <%-- フッタ --%>
+    <div class="footer" style="border-top: 1px solid #eee;margin-top: 40px;padding-top: 40px;padding-bottom: 40px;">
+        <p>&copy; <a href="http://www.walbrix.com/jp/">ワルブリックス株式会社</a> 2014-2015</p>
+    </div>
 </div>
 </body>
 </html>
