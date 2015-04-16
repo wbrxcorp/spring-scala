@@ -1,5 +1,6 @@
 import java.net.URLClassLoader
 
+import com.walbrix.spring.HighlightServlet
 import org.eclipse.jetty.server.{ServerConnector, Server}
 import org.eclipse.jetty.webapp.WebAppContext
 import org.junit._
@@ -20,6 +21,10 @@ class E2ETest extends Chrome {
 
   @Test def foo():Unit = {
 
+  }
+
+  @Ignore @Test def justStart:Unit = {
+    E2ETest.join()
   }
 }
 
@@ -53,6 +58,9 @@ object E2ETest {
     webapp.setClassLoader(new URLClassLoader(new Array[java.net.URL](0), this.getClass().getClassLoader()))
     webapp.setInitParameter("org.eclipse.jetty.servlet.Default.useFileMappedBuffer", "false")
     server.setHandler(webapp)
+
+    HighlightServlet.externalBasePath = Some(".")
+
     server.start()
   }
 
