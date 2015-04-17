@@ -15,7 +15,9 @@ trait HttpContextSupport {
   @Autowired private var response:HttpServletResponse = _
 
   def getRemoteHost():String = request.getRemoteHost
+  def getRemotePort():Int = request.getRemotePort
   def getRemoteAddr():String = request.getRemoteAddr
+  def getServerName():String = request.getServerName
   def getSession(createNew:Boolean = true):HttpSession = request.getSession(createNew)
   def getAttribute(name:String):AnyRef = request.getAttribute(name)
   def setAttribute(name:String,value:AnyRef):Unit = request.setAttribute(name, value)

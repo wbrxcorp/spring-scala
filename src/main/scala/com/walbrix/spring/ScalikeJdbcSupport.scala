@@ -3,6 +3,7 @@ package com.walbrix.spring
 import java.sql.{SQLException, Connection}
 import javax.sql.DataSource
 
+import com.typesafe.scalalogging.slf4j.LazyLogging
 import org.springframework.jdbc.support.{SQLErrorCodeSQLExceptionTranslator, SQLExceptionTranslator}
 import scalikejdbc.GeneralizedTypeConstraintsForWithExtractor._
 import scalikejdbc._
@@ -15,12 +16,15 @@ import org.springframework.jdbc.datasource.DataSourceUtils
 
 class TransactionAwareDBSession(private val dataSource:DataSource,
                                 override val isReadOnly:Boolean = false,
-                                override val connectionAttributes:DBConnectionAttributes = DBConnectionAttributes()) extends scalikejdbc.DBSession {
+                                override val connectionAttributes:DBConnectionAttributes = DBConnectionAttributes()) extends scalikejdbc.DBSession with LazyLogging {
   override val conn:Connection = {
-    DataSourceUtils.getConnection(dataSource)
+    val conn = DataSourceUtils.getConnection(dataSource)
+    logger.debug("DataSourceUtils.getConnection = %s".format(conn.toString))
+    conn
   }
   override def close(): Unit = {
     util.control.Exception.ignoring(classOf[Throwable]) {
+      logger.debug("DataSourceUtils.releaseConnection(%s)".format(conn.toString))
       DataSourceUtils.releaseConnection(conn, dataSource)
     }
   }
@@ -28,11 +32,9 @@ class TransactionAwareDBSession(private val dataSource:DataSource,
 
 trait ScalikeJdbcSupport extends SQLInterpolation {
   private var dataSource:DataSource = _
-  private var exceptionTranslator:SQLExceptionTranslator = _
 
   @Autowired def setDataSource(dataSource:DataSource):Unit = {
     this.dataSource = dataSource
-    this.exceptionTranslator = new SQLErrorCodeSQLExceptionTranslator(dataSource)
   }
 
   def scalikeJdbcSession[T](task:String,sql:String,f:DBSession=>T):T = {
@@ -42,7 +44,9 @@ trait ScalikeJdbcSupport extends SQLInterpolation {
       }
     }
     catch {
-      case e:SQLException => throw exceptionTranslator.translate("", "", e)
+      // SQLErrorCodeSQLExceptionTranslatorはsetDataSource時にnewしたほうが省資源なのだが、それだと
+      // DataSourceがSingleton以外のスコープで定義されているときに死ぬので都度生成とした。
+      case e:SQLException => throw new SQLErrorCodeSQLExceptionTranslator(dataSource).translate("", "", e)
     }
   }
 
