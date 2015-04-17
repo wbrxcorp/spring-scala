@@ -64,8 +64,16 @@ class HighlightServlet extends HttpServlet with LazyLogging {
     logger.debug("servletPath:%s, pathInfo:%s".format(request.getServletPath, request.getPathInfo))
 
     val resourcePath = request.getServletPath + Option(request.getPathInfo).getOrElse("")
+
+    def sendNotFound:Unit = response.sendError(HttpServletResponse.SC_NOT_FOUND)
+
+    val highlight = FilenameSuffixes(resourcePath).getOrElse {
+      sendNotFound
+      return
+    }
+
     val is = openStream(resourcePath).getOrElse {
-      response.sendError(HttpServletResponse.SC_NOT_FOUND)
+      sendNotFound
       return
     }
     val source = StringEscapeUtils.escapeHtml(IOUtils.toString(is, "UTF-8"))
@@ -76,6 +84,8 @@ class HighlightServlet extends HttpServlet with LazyLogging {
           notation.title.foreach(request.setAttribute("title", _))
           notation.description.foreach(request.setAttribute("description", _))
         }
+        request.setAttribute("language", highlight._1)
+        request.setAttribute("highlight", highlight._2)
         request.setAttribute("path", resourcePath)
         request.setAttribute("source", source)
         request.getRequestDispatcher(x).forward(request, response)

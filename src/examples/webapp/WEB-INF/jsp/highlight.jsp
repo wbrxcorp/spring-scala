@@ -59,11 +59,11 @@
     ${content}
     </c:if>
 
-    <h2>Source</h2>
+    <h2>ソース (<c:out value="${language}"/>)</h2>
     <p><a href="https://github.com/wbrxcorp/spring-scala/tree/master/${path}">GitHubで見る</a></p>
 
     <%-- ソースコードをここにハイライト表示 --%>
-    <pre><code>${source}</code></pre>
+    <pre><code<c:if test="${not empty highlight}"> class="<c:out value="${highlight}"/>"</c:if>>${source}</code></pre>
 
     <%-- フッタ --%>
     <div class="footer" style="border-top: 1px solid #eee;margin-top: 40px;padding-top: 40px;padding-bottom: 40px;">
