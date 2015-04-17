@@ -25,14 +25,7 @@
         <property name="favorPathExtension" value="false" />
     </bean>
 
-    <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
-        <property name="modules">
-            <list>
-                <bean class="com.fasterxml.jackson.module.scala.DefaultScalaModule"/>
-                <bean class="com.fasterxml.jackson.datatype.joda.JodaModule"/>
-            </list>
-        </property>
-    </bean>
+    <import resource="objectMapper.xml"/> <!-- REST I/O用 JSONプロセッサ -->
 
     <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
         <mvc:message-converters register-defaults="false">
