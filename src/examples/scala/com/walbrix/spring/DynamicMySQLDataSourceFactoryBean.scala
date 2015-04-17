@@ -13,19 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired
 /**
  * Created by shimarin on 15/04/17.
  */
-class DynamicMySQLDataSourceException(msg:String) extends FatalBeanException(msg) {
-}
-
 class DynamicMySQLDataSourceFactoryBean extends LazyLogging {
   @Autowired private var request:HttpServletRequest = _
 
-  //override def getObjectType: Class[_] = classOf[DataSource]
-
-  /*override*/ def getObject: DataSource = {
-    val session = Option(request.getSession(false)).getOrElse(throw new DynamicMySQLDataSourceException("Could not obtain database connection info from session"))
+  def getObject: DataSource = {
+    val session = Option(request.getSession(false)).getOrElse(throw new FatalBeanException("Could not obtain database connection info from session"))
     val serverName = Option(session.getAttribute("mysql.serverName").asInstanceOf[String]).getOrElse("localhost")
-    val databaseName = Option(session.getAttribute("mysql.databaseName").asInstanceOf[String]).getOrElse(throw new DynamicMySQLDataSourceException("MySQL database name is not specified"))
-    val user = Option(session.getAttribute("mysql.user").asInstanceOf[String]).getOrElse(throw new DynamicMySQLDataSourceException("MySQL user is not specified"))
+    val databaseName = Option(session.getAttribute("mysql.databaseName").asInstanceOf[String]).getOrElse(throw new FatalBeanException("MySQL database name is not specified"))
+    val user = Option(session.getAttribute("mysql.user").asInstanceOf[String]).getOrElse(throw new FatalBeanException("MySQL user is not specified"))
     val password = Option(session.getAttribute("mysql.password").asInstanceOf[String])
 
     val dataSource = new MysqlDataSource()
@@ -39,6 +34,4 @@ class DynamicMySQLDataSourceFactoryBean extends LazyLogging {
     logger.debug("DynamicMySQLDataSourceFactoryBean.getObject = %s".format(dataSource.toString))
     dataSource
   }
-
-  //override def isSingleton: Boolean = false
 }

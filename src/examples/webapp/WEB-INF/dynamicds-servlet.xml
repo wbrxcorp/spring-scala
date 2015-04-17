@@ -26,17 +26,20 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
+
+    <!-- 動的にデータソースを生成するファクトリ -->
     <bean id="dataSourceFactory" class="com.walbrix.spring.DynamicMySQLDataSourceFactoryBean"/>
 
+    <!-- requestごとに生成されるデータソース -->
     <bean id="dataSource" factory-bean="dataSourceFactory" factory-method="getObject" scope="request">
         <aop:scoped-proxy/>
     </bean>
 
+    <!-- トランザクションマネージャを普通に適用できる -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <!-- conponents to be tested -->
     <bean class="com.walbrix.spring.DynamicMySQLDataSourceRequestHandler"/>
 
 </beans>

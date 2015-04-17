@@ -1,0 +1,3 @@
+title: Springで動的なデータソースを実現するためのBean定義ファイル
+description: リクエストごとに異なる接続先を用いるDataSourceを実現する
+

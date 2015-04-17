@@ -14,13 +14,28 @@ import scala.beans.BeanProperty
 /**
  * Created by shimarin on 15/03/13.
  */
-case class Notation(@BeanProperty content:String)
+
+case class Notation(@BeanProperty content:String, title:Option[String] = None, description:Option[String] = None)
 
 class HighlightServlet extends HttpServlet with LazyLogging {
   private var template:Option[String] = None
+  val metadataRegex ="""^(.+:.+\n)+\n""".r
 
   override def init():Unit = {
     template = Option(getInitParameter("template"))
+  }
+
+  private def parseMetadata(md:String):(String,Map[String,String]) = {
+      metadataRegex.findFirstIn(md) match {
+      case Some(metadata) =>
+        val metamap = """(?m)^(.+:.+)$""".r.findAllIn(metadata).map { single =>
+          val splitted = single.split(":")
+          (splitted(0).trim, splitted(1).trim)
+        }.toMap
+        //logger.debug(metadataRegex.split(md).toSeq.toString)
+        ((metadataRegex.split(md) ++ Array("","")).apply(1), metamap)
+      case None => (md, Map())
+    }
   }
 
   private def getNotation(path:String):Option[Notation] = {
@@ -29,7 +44,8 @@ class HighlightServlet extends HttpServlet with LazyLogging {
       try {
         val contextRoot = this.getServletContext.getContextPath
         val md = ApplyVariables(IOUtils.toString(is, "UTF-8"), Map("contextRoot"->contextRoot))
-        Notation(PegDown(md))
+        val (content, meta) = parseMetadata(md)
+        Notation(PegDown(content), meta.get("title"), meta.get("description"))
       }
       finally {
         is.close()
@@ -55,7 +71,11 @@ class HighlightServlet extends HttpServlet with LazyLogging {
     val source = StringEscapeUtils.escapeHtml(IOUtils.toString(is, "UTF-8"))
     template match {
       case Some(x) =>
-        getNotation(resourcePath).foreach(request.setAttribute("notation", _))
+        getNotation(resourcePath).foreach { notation =>
+          request.setAttribute("content", notation.content)
+          notation.title.foreach(request.setAttribute("title", _))
+          notation.description.foreach(request.setAttribute("description", _))
+        }
         request.setAttribute("path", resourcePath)
         request.setAttribute("source", source)
         request.getRequestDispatcher(x).forward(request, response)
