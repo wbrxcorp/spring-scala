@@ -1,9 +1,10 @@
-[AngularJS + マテリアルデザイン](https://material.angularjs.org)のスケルトン
+title: AngularJS + マテリアルデザインのスケルトン
+
+[表示例](${contextRoot}/material.html)
+
+- [Angular Material](https://material.angularjs.org)
 
 ### マテリアルデザインって？
 
 Googleの Bootstrap です。
 
-<hr>
-
-[表示例](${contextRoot}/material.html)
