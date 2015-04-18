@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%><html>
 <head>
     <c:choose>
-        <c:when test="${not empty title}"><title><c:out value="${title}"/></title></c:when>
-        <c:otherwise><title><c:out value="${path}" /></title></c:otherwise>
+        <c:when test="${not empty title}"><title><c:out value="${title}"/> - spring-scala - ワルブリックス株式会社</title></c:when>
+        <c:otherwise><title><c:out value="${path}" /> - spring-scala - ワルブリックス株式会社</title></c:otherwise>
     </c:choose>
     <c:if test="${not empty description}"><meta name="description" content="<c:out value="${description}"/>"></c:if>
     <meta charset="UTF-8">

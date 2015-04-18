@@ -41,22 +41,10 @@ class RequestHandler extends Base with HttpContextSupport {
     Left(getResourceAsStream("/WEB-INF/web.xml").map(IOUtils.toString(_)))
   }
 
-  def getVersion():Option[String] = {
-    getResourceAsStream("/META-INF/MANIFEST.MF").map { is =>
-      try {
-        val manifest = new java.util.jar.Manifest(is)
-        manifest.getMainAttributes.getValue("Implementation-Version")
-      }
-      finally {
-        is.close
-      }
-    }
-  }
-
   @RequestMapping(value=Array("info"), method=Array(RequestMethod.GET))
   @ResponseBody
   def info():Map[String,Any] = {
-    Map("version"->getVersion().getOrElse("UNKNOWN"))
+    Map()
   }
 }
 

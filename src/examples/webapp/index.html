@@ -48,8 +48,12 @@
         <script>
             angular.module("MyApp", ["ngResource",'angulartics', 'angulartics.google.analytics'])
             .run(["$rootScope", "$resource", function($scope, $resource) {
-                var info = $resource("./api/info");
-                $scope.info = info.get();
+                var manifest = $resource("./manifest");
+                manifest.get(function(result) {
+                    $scope.version = result['Implementation-Version'];
+                }, function() {
+                    $scope.version = "UNKNOWN";
+                });
             }]);
     </script>
     </head>
@@ -91,6 +95,7 @@
                 <li><a href="./src/examples/scala/db/migration/V9999__TestData.scala">V9999__TestData.scala</a></li>
                 <li><a href="dynamicds.html">動的に接続先を決定するDataSourceの例</a></li>
                 <li><a href="./src/examples/scala/com/walbrix/spring/HighlightServlet.scala">ソースコードをハイライト表示するサーブレット</a></li>
+                <li><a href="./src/examples/scala/com/walbrix/spring/ManifestRequestHandler.scala">warファイルのマニフェストからアプリケーションのバージョンを得る</a></li>
             </ul>
 
             <h2>Scala</h2>
@@ -114,14 +119,14 @@ repositories {
 }
 
 dependencies {
-    compile 'com.walbrix:spring-scala:{{info.version}}'
+    compile 'com.walbrix:spring-scala:{{version}}'
 }</pre>
             <h2>mvn.walbrix.com</h2>
-            <p>Location: http://mvn.walbrix.com/com/walbrix/spring-scala/{{info.version}}/</p>
+            <p>Location: http://mvn.walbrix.com/com/walbrix/spring-scala/{{version}}/</p>
             <ul>
-                <li><a href="http://mvn.walbrix.com/com/walbrix/spring-scala/{{info.version}}/spring-scala-{{info.version}}.pom">spring-scala-{{info.version}}.pom</a></li>
-                <li><a href="http://mvn.walbrix.com/com/walbrix/spring-scala/{{info.version}}/spring-scala-{{info.version}}.jar">spring-scala-{{info.version}}.jar</a></li>
-                <li><a href="http://mvn.walbrix.com/com/walbrix/spring-scala/{{info.version}}/spring-scala-{{info.version}}-sources.jar">spring-scala-{{info.version}}-sources.jar</a></li>
+                <li><a href="http://mvn.walbrix.com/com/walbrix/spring-scala/{{version}}/spring-scala-{{version}}.pom">spring-scala-{{version}}.pom</a></li>
+                <li><a href="http://mvn.walbrix.com/com/walbrix/spring-scala/{{version}}/spring-scala-{{version}}.jar">spring-scala-{{version}}.jar</a></li>
+                <li><a href="http://mvn.walbrix.com/com/walbrix/spring-scala/{{version}}/spring-scala-{{version}}-sources.jar">spring-scala-{{version}}-sources.jar</a></li>
             </ul>
 
             <p><a href="./src/examples/webapp/index.html">View source</a></p>
