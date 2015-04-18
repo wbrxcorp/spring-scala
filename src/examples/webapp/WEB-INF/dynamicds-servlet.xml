@@ -26,12 +26,13 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-
     <!-- 動的にデータソースを生成するファクトリ -->
     <bean id="dataSourceFactory" class="com.walbrix.spring.DynamicMySQLDataSourceFactoryBean"/>
 
     <!-- requestごとに生成されるデータソース -->
     <bean id="dataSource" factory-bean="dataSourceFactory" factory-method="getObject" scope="request">
+        <!-- ここではデータソースをHTTPリクエスト毎に動的に生成するため scopeを requestとしているが、
+             その場合 Singletonな Beanとのスコープ差を埋めるための Proxyを自動生成してやる必要がある -->
         <aop:scoped-proxy/>
     </bean>
 
@@ -40,6 +41,7 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <!-- テストアプリケーション用の REST API -->
     <bean class="com.walbrix.spring.DynamicMySQLDataSourceRequestHandler"/>
 
 </beans>

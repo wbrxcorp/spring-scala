@@ -13,8 +13,9 @@ object FilenameSuffixes {
     filename match {
       case suffix("md") => Some("Markdown","markdown")
       case suffix("html") => Some("HTML", "html")
+      case suffix("css") => Some("CSS", "css")
       case suffix("xml") => Some("XML", "xml")
-      case suffix("pom") => Some("Maven Project Object Model", "xml")
+      case suffix("pom") => Some("Maven POM", "xml")
       case suffix("php") => Some("PHP", "php")
       case suffix("jsp") => Some("JSP", "jsp")
       case suffix("java") => Some("Java", "java")
