@@ -48,7 +48,7 @@
         <script>
             angular.module("MyApp", ["ngResource",'angulartics', 'angulartics.google.analytics'])
             .run(["$rootScope", "$resource", function($scope, $resource) {
-                var manifest = $resource("./manifest");
+                var manifest = $resource("./api/manifest");
                 manifest.get(function(result) {
                     $scope.version = result['Implementation-Version'];
                 }, function() {

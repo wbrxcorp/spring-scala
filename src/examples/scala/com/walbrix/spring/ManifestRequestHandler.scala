@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.{ExceptionHandler, RequestMapping
  */
 @RestController
 @RequestMapping(Array("manifest"))
-class ManifestRequestHandler {
+class ManifestRequestHandler extends com.typesafe.scalalogging.slf4j.LazyLogging {
   @Autowired private var servletContext:javax.servlet.ServletContext = _  // SpringによってAutowireされる
 
   @ExceptionHandler(Array(classOf[FileNotFoundException]))
@@ -38,6 +38,9 @@ class ManifestRequestHandler {
       Seq("Implementation-Title", "Implementation-Vendor", "Implementation-Version").map { field =>
         (field, Option(mainAttributes.getValue(field)))
       }.toMap
-    }.getOrElse(throw new FileNotFoundException)  // MANIFEST.MFがない場合は 404を出力させる
+    }.getOrElse {
+      logger.error("MANIFEST.MF not found")
+      throw new FileNotFoundException
+    }  // MANIFEST.MFがない場合は 404を出力させる
   }
 }
