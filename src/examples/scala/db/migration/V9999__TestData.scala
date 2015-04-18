@@ -1,26 +1,23 @@
 package db.migration
 
-import java.io.InputStreamReader
 import java.text.Normalizer
-
-import au.com.bytecode.opencsv.CSVReader
-import com.typesafe.scalalogging.slf4j.LazyLogging
-import com.walbrix.flyway.{DBSession, ScalikeJdbcMigration}
-import org.tukaani.xz.XZInputStream
 
 /**
  * Created by shimarin on 15/02/15.
  */
-class V9999__TestData extends ScalikeJdbcMigration with LazyLogging {
+class V9999__TestData extends com.walbrix.flyway.ScalikeJdbcMigration with com.typesafe.scalalogging.slf4j.LazyLogging {
+
+  // NFKC正規化
   private def normalize(str:String):String = Normalizer.normalize(str, Normalizer.Form.NFKC)
 
-  override def migrate(implicit session: DBSession): Unit = {
+  // マイグレーション実行
+  override def migrate(implicit session: scalikejdbc.DBSession): Unit = {
     Option(this.getClass.getResourceAsStream("/13TOKYO.CSV.xz")).foreach { kenAll =>
       logger.debug("begin loading testdata")
       try {
-        val xz = new XZInputStream(kenAll)
-        val isr = new InputStreamReader(xz, "MS932")
-        val reader = new CSVReader(isr, ',', '"')
+        val xz = new org.tukaani.xz.XZInputStream(kenAll)
+        val isr = new java.io.InputStreamReader(xz, "MS932")
+        val reader = new au.com.bytecode.opencsv.CSVReader(isr, ',', '"')
         var line = reader.readNext()
         while (line != null) {
           val (jis_code, zip_code, city_kana, street_kana, pref, city, street) =
