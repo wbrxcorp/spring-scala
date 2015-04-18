@@ -31,7 +31,7 @@ class HighlightServlet extends javax.servlet.http.HttpServlet with com.typesafe.
   }
 
   private def getNotation(path:String):Option[Notation] = {
-    val mdPath = path.split("\\.(?=[^\\.]+$)")(0) + ".md"
+    val mdPath = ReplaceFilenameSuffix(path, ".md")
     openStream(mdPath).map { is =>
       try {
         val contextRoot = this.getServletContext.getContextPath

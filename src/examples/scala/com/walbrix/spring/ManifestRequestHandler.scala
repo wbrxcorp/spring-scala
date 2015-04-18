@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.{ExceptionHandler, RequestMapping
 @RestController
 @RequestMapping(Array("manifest"))
 class ManifestRequestHandler extends com.typesafe.scalalogging.slf4j.LazyLogging {
+  // warファイル内のリソースをロードするには ServletContextが必要
   @Autowired private var servletContext:javax.servlet.ServletContext = _  // SpringによってAutowireされる
 
   @ExceptionHandler(Array(classOf[FileNotFoundException]))
