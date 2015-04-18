@@ -1,23 +1,15 @@
 package com.walbrix.spring
 
-import java.io.{StringWriter, FileNotFoundException, FileInputStream}
-import javax.servlet.http.{HttpServlet, HttpServletRequest, HttpServletResponse}
-
-import com.typesafe.scalalogging.slf4j.LazyLogging
+import javax.servlet.http.HttpServletResponse
 import org.apache.commons.io.IOUtils
-import org.apache.commons.lang.StringEscapeUtils
-import org.apache.velocity.VelocityContext
-import org.pegdown.{Extensions, PegDownProcessor}
-
-import scala.beans.BeanProperty
 
 /**
  * Created by shimarin on 15/03/13.
  */
 
-case class Notation(@BeanProperty content:String, title:Option[String] = None, description:Option[String] = None)
+case class Notation(content:String, title:Option[String] = None, description:Option[String] = None)
 
-class HighlightServlet extends HttpServlet with LazyLogging {
+class HighlightServlet extends javax.servlet.http.HttpServlet with com.typesafe.scalalogging.slf4j.LazyLogging {
   private var template:Option[String] = None
   val metadataRegex ="""^(.+:.+\n)+\n""".r
 
@@ -55,12 +47,12 @@ class HighlightServlet extends HttpServlet with LazyLogging {
 
   private def openStream(path:String):Option[java.io.InputStream] = {
     HighlightServlet.externalBasePath match {
-      case Some(basepath) => try {Some(new FileInputStream(basepath + "/" + path))} catch { case x:FileNotFoundException=> None}
+      case Some(basepath) => try {Some(new java.io.FileInputStream(basepath + "/" + path))} catch { case x:java.io.FileNotFoundException=> None}
       case None => Option(getServletContext.getResourceAsStream(path))
     }
   }
 
-  override def doGet(request:HttpServletRequest, response:HttpServletResponse):Unit = {
+  override def doGet(request:javax.servlet.http.HttpServletRequest, response:HttpServletResponse):Unit = {
     logger.debug("servletPath:%s, pathInfo:%s".format(request.getServletPath, request.getPathInfo))
 
     val resourcePath = request.getServletPath + Option(request.getPathInfo).getOrElse("")
@@ -76,7 +68,7 @@ class HighlightServlet extends HttpServlet with LazyLogging {
       sendNotFound
       return
     }
-    val source = StringEscapeUtils.escapeHtml(IOUtils.toString(is, "UTF-8"))
+    val source = org.apache.commons.lang.StringEscapeUtils.escapeHtml(IOUtils.toString(is, "UTF-8"))
     template match {
       case Some(x) =>
         getNotation(resourcePath).foreach { notation =>
