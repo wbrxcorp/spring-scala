@@ -11,7 +11,7 @@ description: 時代遅れのサーバを立ち上げたり面倒なツールを�
 よってAmazon S3だけで Mavenリポジトリができる。
 
 - [spring-scala.pom](spring-scala.pom) - このスクリプトでアップロードする pomファイル
-- [s3cmd](http://s3tools.org/s3cmd) - コマンドラインで Amazon S3とファイルのやりとりをするためのツール。Pythonでできている。
+- [s3cmd](http://s3tools.org/s3cmd) <span class="glyphicon glyphicon-globe"></span> - コマンドラインで Amazon S3とファイルのやりとりをするためのツール。Pythonでできている。
 
 ### ディレクトリ構造
 

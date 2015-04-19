@@ -113,6 +113,8 @@ dependencies {
     compile 'mysql:mysql-connector-java:5.1.35'
     compile 'net.sf.opencsv:opencsv:2.3'
     compile 'org.tukaani:xz:1.5'
+    compile 'org.apache.httpcomponents:httpclient:4.4.1'
+    compile 'org.jsoup:jsoup:1.8.1'
 
     // メールセッションはアプリケーションサーバ任せにするのでこのdepはwarに入れない
     providedCompile 'javax.mail:mail:1.4.7'

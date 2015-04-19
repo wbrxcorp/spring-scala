@@ -24,6 +24,7 @@ object FilenameSuffixes {
     case suffix("gradle") => Some("Gradle Buildfile", "gradle")
     case suffix("py") => Some("Python", "python")
     case suffix("sh") => Some("Shell Script", "sh")
+    case suffix("sql") => Some("SQL", "sql")
     case _ => None
   }
 }

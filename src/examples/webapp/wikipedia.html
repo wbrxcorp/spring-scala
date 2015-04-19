@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="jQueryとBootstrapを使い、単語をクリックすることで Wikipediaによる解説文のポップアップが表示される文書を作成してみた">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-50657-11', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    <script>
+        $(function(){
+            $("a[data-wikipedia-page]").click(function(event){
+                event.preventDefault();
+                event.stopPropagation();
+                var pageName = $(this).data("wikipedia-page");
+                console.log(pageName);
+                $("#wikipediaLink").attr("href", "http://ja.wikipedia.org");
+                $.getJSON("./api/wikipedia/" + pageName,
+                    {},
+                    function(data, status) {
+                        console.log(data,status);
+                        $("#myModalLabel").text(data.title);
+                        $("#myModalBody").text(data.content);
+                        if (!!data.canonical) $("#wikipediaLink").attr("href", data.canonical.url);
+                    }
+                ).fail(function() {
+                    // 通信に失敗したらモーダルを隠す
+                    $('#myModal').modal('hide');
+                });
+                $('#myModal').modal('show');
+            }).append(" <span class=\"glyphicon glyphicon-book\"></span>")
+        });
+    </script>
+    <title>クリックで Wikipediaによる解説がポップアップする文書</title>
+</head>
+<body>
+    <!-- 本文 -->
+    <div class="container">
+        <h1>クリックで Wikipediaによる解説がポップアップする文書</h1>
+        <p>
+            <a href="https://twitter.com/share" class="twitter-share-button" data-size="large">Tweet</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+            <a href="https://twitter.com/shimariso" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @shimariso</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        </p>
+        <p class="lead">
+            <a href="#" data-wikipedia-page="JQuery">jQuery</a>と<a href="#" data-wikipedia-page="Bootstrap">Bootstrap</a>
+            を使い、単語をクリックすることで <a href="#" data-wikipedia-page="ウィキペディア">Wikipedia</a>による解説文のポップアップが表示される文書を作成してみた
+        </p>
+
+        <h3>そういうことをする理由</h3>
+
+        <p>Webに文書を公開するにあたって、一般的にはより広い読者層に訴求したいと考えるものだが、それなりにハイコンテキストな文章の中には全ての読者が知っているとは
+            限らない単語（主に固有名詞）も数々出現するはずだ。しかし知らないかもしれないからといって文中でいちいち説明するのは面倒だし、
+            説明の必要がない読み手にとっては却って邪魔でしかない。</p>
+
+        <p>Webには<a href="#" data-wikipedia-page="ハイパーリンク">ハイパーリンク</a>という素晴らしいものがあるので、
+            Wikipediaにただリンクすればいいと考えるかもしれないが、文章を読み進める中でたまたま知らない用語に遭遇した人を百科事典にいきなり飛ばすというのは、
+            書き手にとっても読み手にとってもそれほど望ましいスタイルではあるまい。</p>
+
+        <p>しかしWikipediaという百科事典は素晴らしいので利用させてもらうにこしたことはない。これのさらに素晴らしいところは、本文の最初の段落できちんと概要が
+            押さえられていることだ。それなら、ひとまずはそこだけ取り出して（<a href="#" data-wikipedia-page="ウェブスクレイピング">スクレイピング</a>して）
+            読んでもらえれば用語解説としては調度良いのだ。画面中央にポップアップ表示させてしまえば読者がページから「離脱」してしまうこともない。</p>
+
+        <p>例えば私がここで<a href="#" data-wikipedia-page="帰宅部活動記録">帰宅部活動記録</a>という漫画について、空気を読まずにいきなり語りだしたとしよう。
+        普通だったら帰宅部活動記録って何だよってなって Googleで検索しなければならないところだが、ここならなんとリンクっぽくなっているところをクリックするだけでページから離脱せずに
+        帰宅部活動記録が一体何であるのか知ることが出来るのだ（しろよ、クリック）。</p>
+
+        <p>しかも文章を書く側はわざわざ Wikipediaから最初の段落をコピペするなんて手間をかけなくても、所定のdata-属性を持った a タグを置いておくだけで
+            サーバが勝手に Wikipediaから最初の段落を取ってきてくれるという仕組みなので書く側も楽ちんという仕組みである。
+        </p>
+
+        <p>なるほど！自分のサイトでもやってみよう！っていう人（いるの？）は、気が向いたら <a href="https://donate.wikimedia.org">Wikipediaに寄付</a>しようね。</p>
+
+        <p>ところでこれ、Wikipediaじゃなくて<a href="#" data-wikipedia-page="アンサイクロペディア">アンサイクロペディア</a>でやったら大変なカオスになりそうだ。</p>
+
+        <h3>View Source</h3>
+        <ul>
+            <li><a href="./src/examples/webapp/wikipedia.html">クライアント: HTML/JavaScript (Bootstrap+jQuery)</a></li>
+            <li><a href="./src/examples/scala/com/walbrix/spring/WikipediaRequestHandler.scala">サーバ: Scala/Spring MVC</a></li>
+        </ul>
+
+        <p><a href="./">spring-scala</a></p>
+        <div class="footer" style="border-top: 1px solid #eee;margin-top: 40px;padding-top: 40px;padding-bottom: 40px;">
+            <p>&copy; <a href="http://www.walbrix.com/jp/">ワルブリックス株式会社</a> 2014-2015</p>
+        </div>
+    </div>
+    <!-- モーダルの定義 -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">タイトル</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="myModalBody">...</p>
+                    <p class="text-right"><a id="wikipediaLink" href="http://ja.wikipedia.org">出典: Wikipedia</a></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
