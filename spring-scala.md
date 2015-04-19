@@ -22,11 +22,3 @@ dependencies {
     compile 'com.walbrix:spring-scala:${version}'
 }
 ```
-
-### ディレクトリ構造
-
-Base location: http://mvn.walbrix.com/com/walbrix/spring-scala/${version}/
-
-- [spring-scala-${version}.pom](http://mvn.walbrix.com/com/walbrix/spring-scala/${version}/spring-scala-${version}.pom)
-- [spring-scala-${version}.jar](http://mvn.walbrix.com/com/walbrix/spring-scala/${version}/spring-scala-${version}.jar)
-- [spring-scala-${version}-sources.jar](http://mvn.walbrix.com/com/walbrix/spring-scala/${version}/spring-scala-${version}-sources.jar)
