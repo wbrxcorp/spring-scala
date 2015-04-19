@@ -76,6 +76,10 @@
     <servlet-mapping>
         <servlet-name>highlight</servlet-name>
         <url-pattern>/src/*</url-pattern>
+        <url-pattern>*.gradle</url-pattern>
+        <url-pattern>*.pom</url-pattern>
+        <url-pattern>*.js</url-pattern>
+        <url-pattern>*.sh</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>

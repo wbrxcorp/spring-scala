@@ -23,6 +23,7 @@ object FilenameSuffixes {
     case suffix("ts") => Some("TypeScript", "typescript")
     case suffix("gradle") => Some("Gradle Buildfile", "gradle")
     case suffix("py") => Some("Python", "python")
+    case suffix("sh") => Some("Shell Script", "sh")
     case _ => None
   }
 }

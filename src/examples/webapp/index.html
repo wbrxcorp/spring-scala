@@ -95,42 +95,28 @@
                 <li><a href="./src/examples/scala/db/migration/V9999__TestData.scala">V9999__TestData.scala</a></li>
                 <li><a href="dynamicds.html">動的に接続先を決定するDataSourceの例</a></li>
                 <li><a href="./src/examples/scala/com/walbrix/spring/HighlightServlet.scala">ソースコードをハイライト表示するサーブレット</a></li>
-                <li><a href="./src/examples/scala/com/walbrix/spring/ManifestRequestHandler.scala">warファイルのマニフェストからアプリケーションのバージョンを得る</a></li>
+                <li><a href="./src/examples/scala/com/walbrix/spring/ApplicationVersion.scala">warファイルのマニフェストからアプリケーションのバージョンを得る</a></li>
                 <li><a href="./src/examples/scala/com/walbrix/spring/RecentDocument.scala">warファイル内に含まれるリソースのリストを取得して処理する</a></li>
                 <li><a href="./src/test/scala/com/walbrix/spring/RecentDocumentTest.scala">Webアプリケーションコンテキストを必要とするコンポーネントをユニットテストする</a></li>
                 <li><a href="./src/main/scala/com/walbrix/flyway/ScalikeJdbcMigration.scala">Flywayのマイグレーション処理を ScalikeJDBCで記述するための trait</a></li>
             </ul>
 
-            <h2>Scala</h2>
+            <h2>Scala/Java</h2>
             <ul>
                 <li><a href="./src/examples/scala/com/walbrix/spring/FilenameSuffixes.scala">正規表現によるパターンマッチ</a></li>
                 <li><a href="./src/examples/scala/com/walbrix/spring/ReplaceFilenameSuffix.scala">ファイル名のサフィックス部分を差し替える</a></li>
+            </ul>
+
+            <h2>ツール関連</h2>
+            <ul>
+                <li><a href="build.gradle">このプロジェクトの build.gradle</a> (IntelliJ IDEAでインポートして利用する関係で込み入っている)</li>
+                <li><a href="spring-scala.pom">このプロジェクトで生成されるライブラリの pomファイル</a></li>
             </ul>
 
             <h2>Web開発便利ツール・サービス</h2>
             <ul>
                 <li><a href="http://mysys-check.com/">ご利用環境チェックツール</a> - クライアントの環境についてのを情報一括表示できる、顧客向けツール</li>
                 <li><a href="https://mailtrap.io/">Mailtrap</a> - メール送信機能の開発に便利なフェイクメールサーバー</li>
-            </ul>
-
-            <h2>build.gradle</h2>
-            <pre>
-repositories {
-    mavenCentral()
-    maven {
-        url "http://mvn.walbrix.com"
-    }
-}
-
-dependencies {
-    compile 'com.walbrix:spring-scala:{{version}}'
-}</pre>
-            <h2>mvn.walbrix.com</h2>
-            <p>Location: http://mvn.walbrix.com/com/walbrix/spring-scala/{{version}}/</p>
-            <ul>
-                <li><a href="http://mvn.walbrix.com/com/walbrix/spring-scala/{{version}}/spring-scala-{{version}}.pom">spring-scala-{{version}}.pom</a></li>
-                <li><a href="http://mvn.walbrix.com/com/walbrix/spring-scala/{{version}}/spring-scala-{{version}}.jar">spring-scala-{{version}}.jar</a></li>
-                <li><a href="http://mvn.walbrix.com/com/walbrix/spring-scala/{{version}}/spring-scala-{{version}}-sources.jar">spring-scala-{{version}}-sources.jar</a></li>
             </ul>
 
             <p><a href="./src/examples/webapp/index.html">View source</a></p>

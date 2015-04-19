@@ -57,7 +57,13 @@ configurations {
 }
 
 war {
-    into('src') { from 'src' }
+    //into('src') { from 'src' }
+    //into('') { from 'build.gradle','karma.conf.js','spring-scala.pom','push.sh','*.md' }
+    from('.') {
+        include "src/**/*"
+        exclude "**/*.xz"
+        include "build.gradle","karma.conf.js","spring-scala.pom","push.sh","*.md"
+    }
     webAppDirName = 'src/examples/webapp'
     classpath += sourceSets.examples.output
     manifest {

@@ -12,9 +12,14 @@ case class Notation(content:String, title:Option[String] = None, description:Opt
 class HighlightServlet extends javax.servlet.http.HttpServlet with com.typesafe.scalalogging.slf4j.LazyLogging {
   private var template:Option[String] = None
   val metadataRegex ="""^(.+:.+\n)+\n""".r
+  var contextRoot:String = _
+  var version:String = _
 
   override def init():Unit = {
     template = Option(getInitParameter("template"))
+    val servletContext = this.getServletContext
+    contextRoot = servletContext.getContextPath
+    version = ApplicationVersion(servletContext).getOrElse("UNKNOWN")
   }
 
   private def parseMetadata(md:String):(String,Map[String,String]) = {
@@ -34,8 +39,7 @@ class HighlightServlet extends javax.servlet.http.HttpServlet with com.typesafe.
     val mdPath = ReplaceFilenameSuffix(path, ".md")
     openStream(mdPath).map { is =>
       try {
-        val contextRoot = this.getServletContext.getContextPath
-        val md = ApplyVariables(IOUtils.toString(is, "UTF-8"), Map("contextRoot"->contextRoot))
+        val md = ApplyVariables(IOUtils.toString(is, "UTF-8"), Map("contextRoot"->contextRoot, "version"->version))
         val (content, meta) = parseMetadata(md)
         Notation(PegDown(content), meta.get("title"), meta.get("description"))
       }
