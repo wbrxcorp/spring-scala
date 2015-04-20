@@ -20,6 +20,7 @@ description: 「用語解説」をWebサイトに埋め込むには Wikipediaの
 - Spring MVCの @ExceptionHandler アノテーションを使って特定の例外に対するハンドラを定義する方法
 - Scalaでリソース開放の処理を隠蔽する方法([Loanパターン](http://www.ne.jp/asahi/hishidama/home/tech/scala/sample/using.html)）
 - [Apache HttpComponentsを使って Webサーバに対してHEAD, GETリクエストを実行し、レスポンスヘッダやボディを読み込む](http://hc.apache.org/httpcomponents-client-ga/tutorial/html/fundamentals.html#d5e49)方法
+- [Javaと Scalaでコレクション型の相互自動変換を行う](http://docs.scala-lang.org/ja/overviews/collections/conversions-between-java-and-scala-collections.html)方法
 - JSoupを使用して HTMLの中身、特に meta rel="canonical" や「特定のdiv配下にある最初のp」を取り出す方法
   他所の Webサーバからページをクロールして自分のシステムに保存する場合は、「自分がアクセスするのに使ったURL」よりも「canonicalなURL」を優先してキーにするべき。
   Wikipediaの場合は metaタグで canonical URLを表明している。

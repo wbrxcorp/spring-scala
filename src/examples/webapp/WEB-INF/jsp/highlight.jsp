@@ -46,7 +46,7 @@
                     $('#myModal').modal('hide');
                 });
                 $('#myModal').modal('show');
-            }).append(" <span class=\"glyphicon glyphicon-book\"></span>")
+            }).append("<small><span class=\"glyphicon glyphicon-book\"></span></small>")
         });
     </script>
 </head>
@@ -74,9 +74,6 @@
     <p>
     <a href="https://twitter.com/share" class="twitter-share-button" data-size="large">Tweet</a>
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-
-    <a href="https://twitter.com/shimariso" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @shimariso</a>
-    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
     </p>
 
     <%-- 説明文（ソースファイルと同じ階層に同名で置いてある .mdファイルをHTMLに変換したもの） --%>
@@ -87,6 +84,28 @@
     <c:if test="${not empty content}">
     ${content}
     </c:if>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><span class="glyphicon glyphicon-pencil"></span> これを書いている人</h3>
+      </div>
+      <div class="panel-body">
+        <div class="media">
+          <div class="media-left">
+            <a href="https://twitter.com/shimariso">
+              <img class="media-object img-rounded" src="https://pbs.twimg.com/profile_images/450980330233536513/11Z901fy_400x400.jpeg" width="64" height="64" alt="@shimariso">
+            </a>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">嶋田 大貴 (ワルブリックス株式会社 代表取締役)</h4>
+            <strong>「私の年収は102万です。ですがもちろんフルパワーで働く気はありませんからご心配なく…」</strong>(<a href="#" data-wikipedia-page="フリーザ">あの人</a>の声で)<br>
+            コンピュータを触って30年ほどになるソフトウェアエンジニアです。人月40万円の技術者が一週間かかっても解決できない問題を1日で解決する<a href="#" data-wikipedia-page="トラブルシューティング">トラブルシューティング</a>業務は10万円です。
+            お仕事のご依頼・ご相談は<a href="http://www.walbrix.com/jp/">ワルブリックス株式会社</a>または<a href="https://twitter.com/shimariso">代表本人まで直接</a>お気軽にどうぞ。<br>
+          </div>
+        </div>
+
+      </div>
+    </div>
 
     <h2>ソース (<c:out value="${language}"/>)</h2>
     <p><a href="https://github.com/wbrxcorp/spring-scala/tree/master/${path}">GitHubで見る</a> (もっと良い書き方があるよ！のプルリクお願いします)</p>
