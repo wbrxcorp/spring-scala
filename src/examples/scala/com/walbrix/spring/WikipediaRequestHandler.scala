@@ -6,6 +6,7 @@ import com.typesafe.scalalogging.slf4j.LazyLogging
 import org.apache.http.{HttpResponse, HttpStatus}
 import org.apache.http.impl.client.HttpClients
 import org.joda.time.DateTime
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation._
 
 import collection.JavaConversions._
@@ -110,6 +111,7 @@ class WikipediaRequestHandler extends ScalikeJdbcSupport with LazyLogging {
   /**
    * クライアントから与えられた項目名でWikipediaから情報をフェッチして返すAPI
    */
+  @Transactional
   @RequestMapping(value=Array("{pageName}"), method=Array(RequestMethod.GET))
   def get(@PathVariable pageName:String, request:HttpServletRequest):WikipediaEntry = {
     logger.debug(pageName)

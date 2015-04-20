@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/github.min.css">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/languages/scala.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -22,7 +24,30 @@
 
       ga('create', 'UA-50657-11', 'auto');
       ga('send', 'pageview');
-
+    </script>
+    <script>
+        $(function(){
+            $("a[data-wikipedia-page]").click(function(event){
+                event.preventDefault();
+                event.stopPropagation();
+                var pageName = $(this).data("wikipedia-page");
+                console.log(pageName);
+                $("#wikipediaLink").attr("href", "http://ja.wikipedia.org");
+                $.getJSON("<%=request.getContextPath()%>/api/wikipedia/" + pageName,
+                    {},
+                    function(data, status) {
+                        console.log(data,status);
+                        $("#myModalLabel").text(data.title);
+                        $("#myModalBody").text(data.content);
+                        if (!!data.canonical) $("#wikipediaLink").attr("href", data.canonical.url);
+                    }
+                ).fail(function() {
+                    // 通信に失敗したらモーダルを隠す
+                    $('#myModal').modal('hide');
+                });
+                $('#myModal').modal('show');
+            }).append(" <span class=\"glyphicon glyphicon-book\"></span>")
+        });
     </script>
 </head>
 <body>
@@ -72,6 +97,24 @@
     <%-- フッタ --%>
     <div class="footer" style="border-top: 1px solid #eee;margin-top: 40px;padding-top: 40px;padding-bottom: 40px;">
         <p>&copy; <a href="http://www.walbrix.com/jp/">ワルブリックス株式会社</a> 2014-2015</p>
+    </div>
+</div>
+<!-- Wikipedia表示用モーダルの定義 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><span class="glyphicon glyphicon-book"></span> <span id="myModalLabel">タイトル</span></h4>
+            </div>
+            <div class="modal-body">
+                <p id="myModalBody">...</p>
+                <p class="text-right"><a id="wikipediaLink" href="http://ja.wikipedia.org">出典: Wikipedia</a></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>閉じる</button>
+            </div>
+        </div>
     </div>
 </div>
 </body>
