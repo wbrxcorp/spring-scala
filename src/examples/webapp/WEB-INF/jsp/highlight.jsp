@@ -98,7 +98,7 @@
           </div>
           <div class="media-body">
             <h4 class="media-heading">嶋田 大貴 (ワルブリックス株式会社 代表取締役)</h4>
-            <strong>「私の年収は<a href="https://pbs.twimg.com/media/CDBqgjHUEAAhAOu.jpg">102万</a>です。ですがもちろんフルパワーで働く気はありませんからご心配なく…」</strong>(<a href="#" data-wikipedia-page="フリーザ">あの人</a>の声で)<br>
+            <strong>「私の年収は<a href="https://twitter.com/shimariso/status/590088659413508096">102万</a>です。ですがもちろんフルパワーで働く気はありませんからご心配なく…」</strong>(<a href="#" data-wikipedia-page="フリーザ">あの人</a>の声で)<br>
             コンピュータを触って30年ほどになるソフトウェアエンジニアです。人月40万円の技術者が一週間かかっても解決できない問題を1日で解決する<a href="#" data-wikipedia-page="トラブルシューティング">トラブルシューティング</a>業務は10万円です。
             お仕事のご依頼・ご相談は<a href="http://www.walbrix.com/jp/">ワルブリックス株式会社</a>または<a href="https://twitter.com/shimariso">代表本人まで直接</a>お気軽にどうぞ。<br>
           </div>
