@@ -96,7 +96,7 @@
         <url-pattern>/src/*</url-pattern>
         <url-pattern>*.gradle</url-pattern>
         <url-pattern>*.pom</url-pattern>
-        <url-pattern>*.js</url-pattern>
+        <url-pattern>*.conf.js</url-pattern>
         <url-pattern>*.sh</url-pattern>
     </servlet-mapping>
 

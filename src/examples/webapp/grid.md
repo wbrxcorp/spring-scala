@@ -1,5 +1,6 @@
-[ui-grid](http://ui-grid.info/) の使い方サンプル
+title: ui-gridを使って AngularJSでグリッド表示を行う
 
 ### このソースからわかること
 
 - [ui-grid](http://ui-grid.info/)(旧ng-grid)でのサーバーサイドページネーションの使い方
+- ui-gridで行やセルの表示をカスタマズする方法
