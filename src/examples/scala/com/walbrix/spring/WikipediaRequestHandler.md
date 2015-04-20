@@ -1,8 +1,9 @@
-title: Apache HttpComponentsと JSoupと使って Wikipediaから最初の段落を取ってくる
+title: Apache HttpComponentsと JSoupを使って Wikipediaから最初の段落を取ってくる
 description: 「用語解説」をWebサイトに埋め込むには Wikipediaの最初の段落を自動的に取ってきて表示するとピッタリくるので、HTTPで Wikipediaからページをもらってきて最初の段落を拾い出すAPIを作成した。
 
 - [Apache HttpComponents](http://hc.apache.org/) - JavaでのHTTP通信を扱うライブラリ。もともとクライアント部分は Commons HttpClientと呼ばれていた。
 - [JSoup](http://jsoup.org/) - HTMLを解析して中身を取り出す処理を書くためのライブラリ。名称は Pythonで同じようなことをする著名ライブラリ [BeautifulSoup](http://www.crummy.com/software/BeautifulSoup/)から。
+  JSoup自体にもHTTPクライアントとしての機能があるので本当は HttpComponentsを使わなくても同じことができるが、そこはそれ。
 
 なお、<a href="#" data-wikipedia-page="ウィキペディア">Wikipedia</a>に無用な負荷をかけないためにデータベースを使ってキャッシュもする。
 
