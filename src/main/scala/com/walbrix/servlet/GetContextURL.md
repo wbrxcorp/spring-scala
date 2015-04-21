@@ -11,7 +11,9 @@ URL入りの自動送信メールを送ったり <a href="#" data-wikipedia-page
     - おいやめろ貴様
 - どこかの設定ファイルに書く
     - web.xmlだったり何とか.propertiesだったり
-    - Java Webアプリケーションでは全部のファイルが <a href="#" data-wikipedia-page="WAR_%28アーカイバ%29">war</a>ファイルに固められてしまうので、その中に入ってしまっている設定ファイルを書き換えるのがしんどい（このページの冒頭で述べてる意味不明な一文をここで再読してみよう）
+    - Java Webアプリケーションでは全部のファイルが <a href="#" data-wikipedia-page="WAR_%28アーカイバ%29">war</a>ファイルに固められるので、その中に入ってしまっている設定ファイルを書き換えるのがしんどい（このページの冒頭で述べてる意味不明な一文をここで再読してみよう）
+- [Java Preferences API](https://docs.oracle.com/javase/jp/6/api/java/util/prefs/package-summary.html)を使う
+    - 誰がこんなの知ってんだよ
 - <a href="#" data-wikipedia-page="Java_Naming_and_Directory_Interface">JNDI</a>に設定を書く
     - 「JNDIってデータベース接続設定を書いておく所ですよね。え？あそこって他の設定も書けるんですか？」
 - データベースにシステム設定テーブルみたいなものを設けて設定をそこに書く
