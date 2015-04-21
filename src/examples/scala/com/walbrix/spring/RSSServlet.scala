@@ -32,7 +32,7 @@ class RSSServlet extends javax.servlet.http.HttpServlet with com.typesafe.scalal
     feed.setLink(link);
     feed.setDescription(description);
 
-    val entries = GetRecentDocuments(servletContext, "/").map { case (md, source, timestamp) =>
+    val entries = GetRecentDocuments(servletContext, "/src/").map { case (md, source, timestamp) =>
       val is = servletContext.getResourceAsStream(md)
       val (content, meta) =
         ExtractMetadataFromMarkdown(try(org.apache.commons.io.IOUtils.toString(is, "UTF-8")) finally(is.close))
