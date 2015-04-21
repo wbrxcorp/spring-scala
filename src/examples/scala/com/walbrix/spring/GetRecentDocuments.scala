@@ -34,6 +34,6 @@ object GetRecentDocuments extends com.typesafe.scalalogging.slf4j.LazyLogging {
    * 指定されたパス以降のリソースで、対応する.mdファイルの更新された日付が新しい順に並べたリストを返す
    */
   def apply(servletContext:javax.servlet.ServletContext, prefix:String):Seq[(String,String,Long)] = {
-    search(servletContext, prefix)
+    search(servletContext, prefix).sortBy(-_._3)
   }
 }
