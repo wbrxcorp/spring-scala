@@ -1,0 +1,22 @@
+title: サーブレット内で自分自身のURLを動的に得る
+description: 出、出〜！本番環境のアプリケーションサーバが warファイルを展開した一時ディレクトリにある設定ファイルを毎回手で書き換え奴〜
+
+URL入りの自動送信メールを送ったり <a href="#" data-wikipedia-page="RSS">RSS</a>フィードを出力したりと、Webアプリケーションが自身の絶対URLを出力しなければならない時がたまにある。
+
+アプリケーションのベースになるURLは開発環境と本番環境で必ず違うため、その差異をどこかで吸収しなければならない。まさかソースコードに直書きして、本番環境にデプロイする時に都度手で書きなおしてビルドしてないだろうね？
+
+環境によってベースとなるURLを切り替えるやり方としては
+
+- <a href="#" data-wikipedia-page="環境変数">環境変数</a>を使う
+    - おいやめろ貴様
+- どこかの設定ファイルに書く
+    - web.xmlだったり何とか.propertiesだったり
+    - Java Webアプリケーションでは全部のファイルが <a href="#" data-wikipedia-page="WAR_%28アーカイバ%29">war</a>ファイルに固められてしまうので、その中に入ってしまっている設定ファイルを書き換えるのがしんどい（このページの冒頭で述べてる意味不明な一文をここで再読してみよう）
+- <a href="#" data-wikipedia-page="Java_Naming_and_Directory_Interface">JNDI</a>に設定を書く
+    - 「JNDIってデータベース接続設定を書いておく所ですよね。え？あそこって他の設定も書けるんですか？」
+- データベースにシステム設定テーブルみたいなものを設けて設定をそこに書く
+- 設定とかしないで、[HttpServletRequest](http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html)オブジェクトに入っている情報から動的に都度作り出す
+
+のようなものがあるが、これらのうち一番最後のやり方を示すのがこのソースである。（[request.isSecure](http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#isSecure%28%29)が当てになるかどうかはサービス構成次第なので気をつけられたし）
+
+[PHPの場合も似たようなやり方が出来る](${contextRoot}/src/examples/webapp/api.php)。(リンク先ソース内、script_url関数)
