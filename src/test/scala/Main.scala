@@ -46,8 +46,8 @@ object Main {
     println("http://localhost:%d".format(port))
 
     val driverPath = System.getProperty("os.name") match {
-      case x if x.startsWith("Windows") => Some("src/test/chromedriver.exe")
-      case x if x.startsWith("Mac") => Some("src/test/chromedriver")
+      case x if x.startsWith("Windows") => Some("bin/chromedriver.exe")
+      case x if x.startsWith("Mac") => Some("bin/chromedriver")
       // if Linux, /usr/bin/chromedriver is expected
       case _ => None
     }
