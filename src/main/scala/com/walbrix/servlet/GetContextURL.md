@@ -19,6 +19,12 @@ URL入りの自動送信メールを送ったり <a href="#" data-wikipedia-page
 - データベースにシステム設定テーブルみたいなものを設けて設定をそこに書く
 - 設定とかしないで、[HttpServletRequest](http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html)オブジェクトに入っている情報から動的に都度作り出す
 
-のようなものがあるが、これらのうち一番最後のやり方を示すのがこのソースである。（[request.isSecure](http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#isSecure%28%29)が当てになるかどうかはサービス構成次第なので気をつけられたし）
+のようなものがあるが、これらのうち一番最後のやり方を示すのがこのソースである。
 
-[PHPの場合も似たようなやり方が出来る](${contextRoot}/src/examples/webapp/api.php)。(リンク先ソース内、script_url関数)
+- [request.isSecure](http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#isSecure%28%29) - 暗号化された接続かどうか。つまり httpか httpsか。 (この値が当てになるかどうかはサービス構成次第なので気をつけられたし）
+- [request.getServerName](http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#getServerName%28%29) - URLのFQDN（ホスト名）部分。
+- [request.getServerPort](http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#getServerPort%28%29) - ポート番号
+- [request.getContextPath](http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#getContextPath%28%29) - Webアプリケーションのコンテキストパス (例えばアプリケーションが hoge.warだったら多くの場合 /hoge） 
+- それ以下に付け加えたいものがあればご自由に
+
+ちなみに[PHPの場合も似たようなやり方が出来る](${contextRoot}/src/examples/webapp/api.php)。(リンク先ソース内、script_url関数)
