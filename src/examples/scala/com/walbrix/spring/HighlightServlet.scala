@@ -11,7 +11,6 @@ case class Notation(content:String, title:Option[String] = None, description:Opt
 
 class HighlightServlet extends javax.servlet.http.HttpServlet with com.typesafe.scalalogging.slf4j.LazyLogging {
   private var template:Option[String] = None
-  val metadataRegex ="""^(.+:.+\n)+\n""".r
   var contextRoot:String = _
   var version:String = _
 
@@ -22,25 +21,12 @@ class HighlightServlet extends javax.servlet.http.HttpServlet with com.typesafe.
     version = ApplicationVersion(servletContext).getOrElse("UNKNOWN")
   }
 
-  private def parseMetadata(md:String):(String,Map[String,String]) = {
-      metadataRegex.findFirstIn(md) match {
-      case Some(metadata) =>
-        val metamap = """(?m)^(.+:.+)$""".r.findAllIn(metadata).map { single =>
-          val splitted = single.split(":")
-          (splitted(0).trim, splitted(1).trim)
-        }.toMap
-        //logger.debug(metadataRegex.split(md).toSeq.toString)
-        ((metadataRegex.split(md) ++ Array("","")).apply(1), metamap)
-      case None => (md, Map())
-    }
-  }
-
   private def getNotation(path:String):Option[Notation] = {
     val mdPath = ReplaceFilenameSuffix(path, ".md")
     openStream(mdPath).map { is =>
       try {
         val md = ApplyVariables(IOUtils.toString(is, "UTF-8"), Map("contextRoot"->contextRoot, "version"->version))
-        val (content, meta) = parseMetadata(md)
+        val (content, meta) = ExtractMetadataFromMarkdown(md)
         Notation(PegDown(content), meta.get("title"), meta.get("description"))
       }
       finally {

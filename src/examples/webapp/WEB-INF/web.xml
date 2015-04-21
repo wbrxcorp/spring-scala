@@ -100,6 +100,16 @@
         <url-pattern>*.sh</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>rss</servlet-name>
+        <servlet-class>com.walbrix.spring.RSSServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>rss</servlet-name>
+        <url-pattern>/index.xml</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
         <welcome-file>index.html</welcome-file>

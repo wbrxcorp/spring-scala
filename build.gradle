@@ -115,6 +115,7 @@ dependencies {
     compile 'org.tukaani:xz:1.5'
     compile 'org.apache.httpcomponents:httpclient:4.4.1'
     compile 'org.jsoup:jsoup:1.8.1'
+    compile 'com.rometools:rome:1.5.0'
 
     // メールセッションはアプリケーションサーバ任せにするのでこのdepはwarに入れない
     providedCompile 'javax.mail:mail:1.4.7'

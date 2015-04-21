@@ -4,6 +4,7 @@ import java.io.{InputStream, OutputStream, PrintWriter}
 import javax.servlet.ServletContext
 import javax.servlet.http.{Cookie, HttpSession, HttpServletResponse, HttpServletRequest}
 
+import com.walbrix.servlet.GetContextURL
 import org.springframework.beans.factory.annotation.Autowired
 
 /**
@@ -33,22 +34,5 @@ trait HttpContextSupport {
     Option(servletContext.getResourceAsStream(path))
   }
 
-  def getContextURL():String = {
-    val buf = new StringBuilder
-    val scheme = request.isSecure match {
-      case true => ("https", 443)
-      case false => ("http", 80)
-    }
-    buf.append(scheme._1)
-    buf.append("://")
-    buf.append(request.getServerName)
-    buf.append(
-      request.getServerPort match {
-        case port if port != scheme._2 => ":%d".format(port)
-        case _ => ""
-      }
-    )
-    buf.append(request.getContextPath)
-    buf.toString()
-  }
+  def getContextURL():String = GetContextURL(request)
 }

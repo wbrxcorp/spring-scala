@@ -11,9 +11,9 @@
     <script>
         angular.module("MyApp", ["ngResource","directive.g+signin"])
         .run(["$rootScope","$resource", function($scope, $resource) {
-            var hello = $resource("./api/google/hello");
+            var googleapi = $resource("./api/google/:action");
             $scope.$on('event:google-plus-signin-success', function (event,authResult) {
-                $scope.userInfo = hello.get({accessToken:authResult.access_token})
+                $scope.userInfo = googleapi.get({action:"userinfo",accessToken:authResult.access_token})
             });
             $scope.$on('event:google-plus-signin-failure', function (event,authResult) {
                 console.log(event, authResult);
