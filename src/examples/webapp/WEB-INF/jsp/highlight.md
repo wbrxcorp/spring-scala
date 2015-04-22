@@ -8,3 +8,4 @@ title: 説明文とソースコードの表示をする JSPテンプレート
 - JSPから[Webアプリケーションのコンテキストパスを取得](http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html#getContextPath%28%29)する方法
 - [Bootstrapの navbar](http://getbootstrap.com/components/#navbar)でページに適当なヘッダを付ける方法
 - [ツイートボタン](https://about.twitter.com/ja/resources/buttons#tweet)の置き方
+- [Twitterカード](https://dev.twitter.com/ja/cards/overview)を有効にするために必要な metaタグ

@@ -2,13 +2,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%><html>
 <head>
     <c:choose>
-        <c:when test="${not empty title}"><title><c:out value="${title}"/> - spring-scala - ワルブリックス株式会社</title></c:when>
-        <c:otherwise><title><c:out value="${path}" /> - spring-scala - ワルブリックス株式会社</title></c:otherwise>
+        <c:when test="${not empty title}">
+            <title><c:out value="${title}"/> - spring-scala - ワルブリックス株式会社</title>
+            <meta name="twitter:title" content="<c:out value="${title}"/>"/>
+        </c:when>
+        <c:otherwise>
+            <title><c:out value="${path}" /> - spring-scala - ワルブリックス株式会社</title>
+        </c:otherwise>
     </c:choose>
-    <c:if test="${not empty description}"><meta name="description" content="<c:out value="${description}"/>"></c:if>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <c:if test="${not empty description}"><meta name="description" content="<c:out value="${description}"/>"></c:if>
+    <meta name="author" content="ワルブリックス株式会社"/>
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@wbrxcorp">
     <link rel="alternate"  type="application/rss+xml" href="<%=request.getContextPath()%>/index.xml" >
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/github.min.css">
