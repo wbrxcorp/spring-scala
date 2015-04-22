@@ -112,7 +112,7 @@ class WikipediaRequestHandler extends ScalikeJdbcSupport with LazyLogging {
    * クライアントから与えられた項目名でWikipediaから情報をフェッチして返すAPI
    */
   @Transactional
-  @RequestMapping(value=Array("{pageName}"), method=Array(RequestMethod.GET))
+  @RequestMapping(value=Array("{pageName:.+}"), method=Array(RequestMethod.GET))
   def get(@PathVariable pageName:String, request:HttpServletRequest):WikipediaEntry = {
     logger.debug(pageName)
     // まずはキャッシュを検索(キャッシュの賞味期限は1週間とする)

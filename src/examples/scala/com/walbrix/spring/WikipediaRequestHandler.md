@@ -18,6 +18,7 @@ description: 「用語解説」をWebサイトに埋め込むには Wikipediaの
 
 - Scalaのパターンマッチを使って<a href="#" data-wikipedia-page="正規表現">正規表現</a>で文字列の一部を取り出す方法
 - Spring MVCの @ExceptionHandler アノテーションを使って特定の例外に対するハンドラを定義する方法
+- Spring MVCのパス名マッピングで、.(ドット)で区切らせずにマッチングを行う方法
 - Scalaでリソース開放の処理を隠蔽する方法([Loanパターン](http://www.ne.jp/asahi/hishidama/home/tech/scala/sample/using.html)）
 - [Apache HttpComponentsを使って Webサーバに対してHEAD, GETリクエストを実行し、レスポンスヘッダやボディを読み込む](http://hc.apache.org/httpcomponents-client-ga/tutorial/html/fundamentals.html#d5e49)方法
 - [Javaと Scalaでコレクション型の相互自動変換を行う](http://docs.scala-lang.org/ja/overviews/collections/conversions-between-java-and-scala-collections.html)方法
