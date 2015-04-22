@@ -13,7 +13,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <c:if test="${not empty description}"><meta name="description" content="<c:out value="${description}"/>"></c:if>
+    <c:if test="${not empty description}">
+        <meta name="description" content="<c:out value="${description}"/>">
+        <meta name="twitter:description" content="<c:out value="${description}"/>">
+    </c:if>
     <meta name="author" content="ワルブリックス株式会社"/>
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@wbrxcorp">
