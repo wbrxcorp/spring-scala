@@ -24,8 +24,6 @@
     <script>
       angular.module('MyApp', ['angulartics', 'angulartics.google.analytics', 'ngDialog'])
       .run([ "$rootScope", "$analytics","ngDialog",  function($scope, $analytics, ngDialog) {
-        $scope.eventTrack = $analytics.eventTrack;
-
         $scope.optout = function() {
           document.cookie = "optout_ga=1; path=/; expires=" + new Date(new Date().getTime() + (60/*秒*/ * 60/*分*/ * 24/*時間*/ * 1000/*ミリ秒*/ * 3650/*日*/)).toGMTString();
           ngDialog.open({template: '<p>オプトアウトしました</p>',plain: true});
@@ -35,7 +33,8 @@
 </head>
 <body>
     <h1>angulartics</h1>
-    <button ng-click="optout()">オプトアウトする</button>
+    <p><button analytics-on="click" analytics-event="MyEvent">イベント発生</button></p>
+    <p><button ng-click="optout()">オプトアウトする</button></p>
     <h3>View Source</h3>
     <ul>
         <li><a href="./src/examples/webapp/analytics.html">HTML</a></li>

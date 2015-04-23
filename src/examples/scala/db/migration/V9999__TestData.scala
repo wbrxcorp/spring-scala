@@ -16,7 +16,7 @@ class V9999__TestData extends com.walbrix.flyway.ScalikeJdbcMigration with com.t
 
   // マイグレーション実行
   override def migrate(implicit session: scalikejdbc.DBSession): Unit = {
-    using(Option(this.getClass.getResourceAsStream("/13TOKYO.CSV.xz")).getOrElse(throw new java.io.FileNotFoundException)) { kenAll =>
+    using(Option(this.getClass.getResourceAsStream("/47OKINAW.CSV.xz")).getOrElse(throw new java.io.FileNotFoundException)) { kenAll =>
       logger.debug("begin loading testdata")
       using (new org.tukaani.xz.XZInputStream(kenAll)) { xz =>
         using (new java.io.InputStreamReader(xz, "MS932")) { isr =>
