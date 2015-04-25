@@ -8,7 +8,7 @@ description: クリックされたら何かの特別なアクションを起こ�
 
 ### このソースからわかること
 
-- <a href="#" data-wikipedia-page="JQuery">jQuery</a>で[特定の属性を持つ要素を選択する](https://api.jquery.com/has-attribute-selector/)方法
+- [jQuery](http://ja.wikipedia.org/wiki/JQuery)で[特定の属性を持つ要素を選択する](https://api.jquery.com/has-attribute-selector/)方法
 - jQueryでaタグのクリックイベントに何らかのアクションを割り当てた際に、[元々の動作(href先にジャンプする)を取り消す](http://api.jquery.com/event.preventdefault/)方法
     - [jQuery - aタグの無効化 - preventDefaultとreturn falseの違いとか - Qiita](http://qiita.com/mwtonbel/items/f3c6e2373c348ea74b19)
 - jQueryで要素の[属性にアクセスする](https://api.jquery.com/attr/)方法

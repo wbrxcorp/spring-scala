@@ -30,6 +30,8 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-resource.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angulartics/0.17.2/angulartics.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angulartics/0.17.2/angulartics-ga.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-image-spinner/0.1.5/angular-image-spinner.min.js"></script>
         <script>
           // optout_ga という cookieが保存されている場合はアクセスをトラッキングさせない
           if (/(^|;)\s*optout_ga=/.test(document.cookie)) {
@@ -55,7 +57,7 @@
           })();
         </script>
         <script>
-            angular.module("MyApp", ["ngResource",'angulartics', 'angulartics.google.analytics'])
+            angular.module("MyApp", ["ngResource",'angulartics', 'angulartics.google.analytics','imageSpinner'])
             .run(["$rootScope", "$resource", function($scope, $resource) {
                 var manifest = $resource("./api/manifest");
                 manifest.get(function(result) {
@@ -71,19 +73,49 @@
             <h1>実験場</h1>
             <gcse:search></gcse:search>
             <h2>AngularJS関係</h2>
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <h3>smart-table</h3>
+                    <a href="smart-table.html"><img src="./api/pagecapture?url=/smart-table.html" class="img-thumbnail" image-spinner width="200" height="200" alt="smart-table"></a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <h3>Google+ ログイン</h3>
+                    <a href="gplus-login.html"><img src="./api/pagecapture?url=/gplus-login.html&mobile=true" class="img-thumbnail" image-spinner width="200" height="200" alt="Google+ ログイン"></a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <h3>ui-ace</h3>
+                    <a href="ui-ace.html"><img src="./api/pagecapture?url=/ui-ace.html" class="img-thumbnail" image-spinner width="200" height="200" alt="ui-ace"></a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <h3>image-spinner</h3>
+                    <a href="image-spinner.html"><img src="./api/pagecapture?url=/image-spinner.html" class="img-thumbnail" image-spinner width="200" height="200" alt="image-spinner"></a>
+                    <p>AngularJSでロード中の画像をスピナーアニメーション表示する</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <h3>modal-bootstrap</h3>
+                    <a href="modal-bootstrap.html"><img src="./api/pagecapture?url=/modal-bootstrap.html&mobile=true" class="img-thumbnail" image-spinner width="200" height="200" alt="modal-bootstrap"></a>
+                    <p>Modal with ui-bootstrap</p>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <h3>datepicker</h3>
+                    <a href="datepicker.html"><img src="./api/pagecapture?url=/datepicker.html&mobile=true" class="img-thumbnail" image-spinner width="200" height="200" alt="datepicker"></a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <h3>upload</h3>
+                    <a href="upload.html"><img src="./api/pagecapture?url=/upload.html&mobile=true" class="img-thumbnail" image-spinner width="200" height="200" alt="upload"></a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <h3>ngRoute</h3>
+                    <a href="./route/"><img src="./api/pagecapture?url=/route/&mobile=true" class="img-thumbnail" image-spinner width="200" height="200" alt="ngRoute"></a>
+                </div>
+            </div>
             <ul>
                 <li><a href="ui-bootstrap.html">AngularJS+Bootstrapのスケルトン</a></li>
                 <li><a href="tasty.html">Tasty</a></li>
                 <li><a href="grid.html">ui-grid</a></li>
-                <li><a href="smart-table.html">Smart-Table</a></li>
-                <li><a href="gplus-login.html">Google+ login</a></li>
                 <li><a href="analytics.html">Analytics(angulartics)</a></li>
-                <li><a href="ui-ace.html">ui-ace</a></li>
-                <li><a href="./route/">ngRoute</a></li>
-                <li><a href="modal-bootstrap.html">Modal with ui-bootstrap</a></li>
-                <li><a href="datepicker.html">DatePicker(日付選択)</a></li>
-                <li><a href="upload.html">anglar-file-upload によるファイルアップロード</a></li>
-                <li><a href="image-spinner.html">AngularJSでロード中の画像をスピナーアニメーション表示する</a></li>
             </ul>
             <h2>それ以外</h2>
             <ul>
