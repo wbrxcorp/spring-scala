@@ -66,7 +66,7 @@ class PageCaptureRequestHandler extends com.walbrix.spring.ScalikeJdbcSupport wi
         out.write(img)
       case None =>
         // http://stackoverflow.com/questions/6013415/how-does-the-scala-sys-process-from-scala-2-9-work
-        val cmdline = Seq("wkhtmltoimage","-f","png") ++ (if (mobile) Seq("--width","320","--disable-smart-width") else Nil) ++ Seq(url, "-")
+        val cmdline = Seq("wkhtmltoimage","-f","png","--javascript-delay","500") ++ (if (mobile) Seq("--width","320","--disable-smart-width") else Nil) ++ Seq(url, "-")
         val pb = scala.sys.process.Process(cmdline)
         val pio = new scala.sys.process.ProcessIO(_ => (),
         { stdout =>
