@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="MyApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-image-spinner/0.1.5/angular-image-spinner.min.js"></script>
+    <title>ロードに時間のかかる画像をスピナーアニメーション付きで表示する</title>
+    <script>
+        angular.module("MyApp", ["imageSpinner"])
+        .run(["$rootScope", function($scope) {
+        }]);
+    </script>
+</head>
+<body>
+<div class="container">
+    <h1>ロードに時間のかかる画像をスピナーアニメーション付きで表示する</h1>
+
+    <p><a href="https://github.com/oivoodoo/angular-image-spinner">angular-image-spinner</a>を使用</p>
+
+    <h3>Webキャプチャ</h3>
+    <div class="row">
+        <div class="col-md-3">
+            <img class="img-responsive img-thumbnail" src="./api/pagecapture?url=http://www.walbrix.com/jp/" image-spinner width="200" height="200">
+        </div>
+        <div class="col-md-3">
+            <img class="img-responsive img-thumbnail" src="./api/pagecapture?url=http://www.walbrix.net" image-spinner width="200" height="200">
+        </div>
+        <div class="col-md-3">
+            <img class="img-responsive img-thumbnail" src="./api/pagecapture?url=http://www.shimarin.com" image-spinner width="200" height="200">
+        </div>
+        <div class="col-md-3">
+            <img class="img-responsive img-thumbnail" src="./api/pagecapture?url=http://www.walbrix.com/jp/product/oscar.html" image-spinner width="200" height="200">
+        </div>
+    </div>
+
+    <h3>View Source</h3>
+    <ul>
+        <li><a href="./src/examples/webapp/image-spinner.html">クライアント (HTML/JavaScript)</a></li>
+        <li><a href="./src/examples/scala/com/walbrix/spring/PageCaptureRequestHandler.scala">サーバ (Scala/Spring MVC)</a></li>
+    </ul>
+</div>
+</body>
+</html>
