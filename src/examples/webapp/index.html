@@ -10,8 +10,17 @@
         <meta name="twitter:site" content="@wbrxcorp">
         <meta name="twitter:title" content="ワルブリックス株式会社 実験場"/>
         <meta name="twitter:description" content="ワルブリックス株式会社が Spring Framework, Scala, AngularJSなどについて色々実験している場所です。各ソースコードに解説文を付けて公開しています。">
+        <meta name="twitter:image" content="http://www.walbrix.com/spring-scala/img/site_image.jpg" />
 
-        <title>spring-scala - ワルブリックス株式会社</title>
+        <meta property="og:title" content="ワルブリックス株式会社 実験場"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:url" content="http://www.walbrix.com/spring-scala/"/>
+        <meta property="og:site_name" content="ワルブリックス株式会社"/>
+        <meta property="og:description" content="ワルブリックス株式会社が Spring Framework, Scala, AngularJSなどについて色々実験している場所です。各ソースコードに解説文を付けて公開しています。"/>
+        <meta property="og:image" content="http://www.walbrix.com/spring-scala/img/site_image.jpg"/>
+        <meta property="article:publisher" content="https://www.facebook.com/wbrxcorp" />
+
+        <title>ワルブリックス株式会社 実験場</title>
 
         <link rel="alternate"  type="application/rss+xml" href="index.xml" >
         <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
@@ -59,19 +68,22 @@
         <script>
             angular.module("MyApp", ["ngResource",'angulartics', 'angulartics.google.analytics','imageSpinner'])
             .run(["$rootScope", "$resource", function($scope, $resource) {
-                var manifest = $resource("./api/manifest");
-                manifest.get(function(result) {
-                    $scope.version = result['Implementation-Version'];
-                }, function() {
-                    $scope.version = "UNKNOWN";
-                });
+                var recent = $resource("./api/recent");
+                $scope.recent = recent.query();
             }]);
     </script>
     </head>
     <body>
+        <div class="jumbotron" style="padding-left:2em;padding-right:2em;">
+            <h1>ワルブリックス株式会社 実験場</h1>
+            <p>ここはワルブリックス株式会社が主に Web関連の技術を実験する場所です。</p>
+        </div>
         <div class="container">
-            <h1>実験場</h1>
             <gcse:search></gcse:search>
+            <h2>最近更新されたページ</h2>
+            <ul class="list-unstyled">
+                <li ng-repeat="entry in recent | limitTo:10"><a href="{{entry.link}}">{{entry.title}}</a> - {{entry.lastUpdate | date:'yyyy年M月d日 HH:mm'}}更新</li>
+            </ul>
             <h2>AngularJS関係</h2>
             <div class="row">
                 <div class="col-md-3 col-sm-6">

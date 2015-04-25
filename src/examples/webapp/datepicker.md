@@ -7,6 +7,7 @@ title: UI Bootstrapの DatePickerを使って日付選択の入力コントロ�
 
 - [DatePicker](https://angular-ui.github.io/bootstrap/#/datepicker)（ポップアップ型）の使い方
     - [AngularJSと UI Bootstrapで日付と時刻の入力をする - ブログ - ワルブリックス株式会社](http://www.walbrix.com/jp/blog/2014-03-angularjs-datepicker.html)
+- [日付時刻のフォーマット](https://docs.angularjs.org/api/ng/filter/date)方法
 - AngularJSで日本語ロケールを使用する方法
 - [Bootstrapの input-group でテキスト入力とボタンをくっつけて表示する](http://getbootstrap.com/components/#input-groups-buttons)方法
 - [jsTimeZoneDetect](http://pellepim.bitbucket.org/jstz/)でJavaScript実行環境の<a href="#" data-wikipedia-page="時間帯_(標準時)">タイムゾーン</a>名称を得る方法

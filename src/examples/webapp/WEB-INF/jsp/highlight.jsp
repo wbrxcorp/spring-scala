@@ -78,15 +78,15 @@
 </div>
 <div class="container">
     <%-- タイトル --%>
-    <h1><c:choose>
-        <c:when test="${not empty title}"><c:out value="${title}"/></c:when>
-        <c:otherwise><c:out value="${path}" /></c:otherwise>
-    </c:choose></h1>
-
-    <p>
+    <div class="page-header">
+        <h1><c:choose>
+            <c:when test="${not empty title}"><c:out value="${title}"/></c:when>
+            <c:otherwise><c:out value="${path}" /></c:otherwise>
+        </c:choose></h1>
     <a href="https://twitter.com/share" class="twitter-share-button" data-size="large">Tweet</a>
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-    </p>
+    </div>
+
 
     <%-- 説明文（ソースファイルと同じ階層に同名で置いてある .mdファイルをHTMLに変換したもの） --%>
     <c:if test="${not empty description}">
