@@ -82,7 +82,7 @@
             <gcse:search></gcse:search>
             <h2>最近更新されたページ</h2>
             <ul class="list-unstyled">
-                <li ng-repeat="entry in recent | limitTo:10"><a href="{{entry.link}}">{{entry.title}}</a> - {{entry.lastUpdate | date:'yyyy年M月d日 HH:mm'}}更新</li>
+                <li ng-repeat="entry in recent | limitTo:10">{{entry.lastUpdate | date:'yyyy年M月d日 HH:mm'}}更新 - <a href=".{{entry.link}}">{{entry.title}}</a></li>
             </ul>
             <h2>AngularJS関係</h2>
             <div class="row">
