@@ -6,16 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/3.2.5/angular-file-upload-html5-shim.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/3.2.5/angular-file-upload.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/4.0.3/ng-file-upload-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/4.0.3/ng-file-upload.min.js"></script>
     <title>angular-file-upload</title>
     <script>
-        angular.module("MyApp", ["angularFileUpload"])
-        .run(["$rootScope", "$upload", function($scope, $upload) {
+        angular.module("MyApp", ["ngFileUpload"])
+        .run(["$rootScope", "Upload", function($scope, Upload) {
 
             $scope.upload = function() {
-                if ($scope.files && $scope.files.length && $scope.files.length > 0) {
-                    $scope.upload = $upload.upload({
+                if ($scope.files && $scope.files.length) {
+                    $scope.upload = Upload.upload({
                        "url":"./api/upload",
                        file: $scope.files[0],
                        fields: {comments:$scope.comments}
@@ -39,7 +39,7 @@
     <h1>angular-file-upload</h1>
 
     <form>
-        <input type="file" ng-file-select="files=$files" ng-multiple="false">
+        <input type="file" ngf-select ng-model="files" ngf-multiple="false">
         コメント: <input type="text" ng-model="comments" placeholder="コメント">
         <button class="btn btn-default" ng-click="upload()" ng-disabled="!files">アップロード実行</button>
     </form>

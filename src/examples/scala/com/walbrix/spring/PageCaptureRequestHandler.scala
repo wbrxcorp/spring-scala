@@ -17,16 +17,6 @@ class PageCaptureRequestHandler extends com.walbrix.spring.ScalikeJdbcSupport wi
   private val defaultURL = "http://www.walbrix.com/jp/"
   private val absoluteURLPattern = """^(https?:\/\/.+)$""".r
 
-  private def resizeAndCrop(is:java.io.InputStream, size:Int = 200, format:String = "png"):Array[Byte] = {
-    val original = ImageIO.read(is)
-    val bufferedImage = new java.awt.image.BufferedImage(size, size, original.getType)
-    val scaled = original.getScaledInstance(size, -1, java.awt.Image.SCALE_AREA_AVERAGING)
-    bufferedImage.getGraphics.drawImage(scaled, 0, 0, null)
-    val os = new java.io.ByteArrayOutputStream()
-    ImageIO.write(bufferedImage, format, os)
-    os.toByteArray
-  }
-
   private def saveToCache(url:String, img:Array[Byte]):Unit = {
     update(sql"merge into pagecapture_cache(id,content,created_at) key(id) values(${Sha1Hash(url)},${img},current_timestamp)")
   }
@@ -60,23 +50,12 @@ class PageCaptureRequestHandler extends com.walbrix.spring.ScalikeJdbcSupport wi
     response.setContentType("image/png")
     val out = response.getOutputStream
 
-    getCache(url) match {
-      case Some(img) =>
-        response.setContentLength(img.length)
-        out.write(img)
-      case None =>
-        // http://stackoverflow.com/questions/6013415/how-does-the-scala-sys-process-from-scala-2-9-work
-        val cmdline = Seq("wkhtmltoimage","-f","png","--javascript-delay","500") ++ (if (mobile) Seq("--width","320","--disable-smart-width") else Nil) ++ Seq(url, "-")
-        val pb = scala.sys.process.Process(cmdline)
-        val pio = new scala.sys.process.ProcessIO(_ => (),
-        { stdout =>
-          val img = resizeAndCrop(stdout)
-          if (!external) saveToCache(url, img)
-          response.setContentLength(img.length)
-          out.write(img)
-        },
-        _ => ())
-        pb.run(pio).exitValue()
+    val img = getCache(url).getOrElse {
+        val img = PageCapture(url, mobile, "png")
+        if (!external) saveToCache(url, img)
+        img
     }
+    response.setContentLength(img.length)
+    out.write(img)
   }
 }

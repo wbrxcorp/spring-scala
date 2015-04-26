@@ -40,11 +40,9 @@ object MyLinkRenderer extends LinkRenderer {
         new Rendering("#", """%s<span class="glyphicon glyphicon-book"></span>""".format(text)).withAttribute("data-wikipedia-page", pageName)
       case absoluteURLPattern(url) =>
         val domain = new java.net.URL(url).getHost
-        sites.find(_._1.findFirstIn(domain).nonEmpty).map { case (_, render) =>
-          render(url, text).withAttribute("target", "_blank")
-        }.getOrElse {
-          new Rendering(url, """%s<small>(%s<i class="fa fa-external-link"></i>)</small>""".format(text, domain)).withAttribute("target", "_blank")
-        }
+        sites.find(_._1.findFirstIn(domain).nonEmpty).map(_._2(url, text)).getOrElse {
+          new Rendering(url, """%s<small>(%s<i class="fa fa-external-link"></i>)</small>""".format(text, domain))
+        }.withAttribute("target", "_blank")
       case _ => super.render(node, text)  // 絶対URLでない場合は普通にリンクをレンダリングする
     }
   }
