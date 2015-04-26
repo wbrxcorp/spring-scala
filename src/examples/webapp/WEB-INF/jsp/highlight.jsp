@@ -24,6 +24,44 @@
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/github.min.css">
+    <style>
+    .scroll-top-wrapper {
+        position: fixed;
+        opacity: 0;
+        visibility: hidden;
+        overflow: hidden;
+        text-align: center;
+        z-index: 99999999;
+        background-color: #777777;
+        color: #eeeeee;
+        width: 50px;
+        height: 48px;
+        line-height: 48px;
+        right: 30px;
+        bottom: 30px;
+        padding-top: 2px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+        -webkit-transition: all 0.5s ease-in-out;
+        -moz-transition: all 0.5s ease-in-out;
+        -ms-transition: all 0.5s ease-in-out;
+        -o-transition: all 0.5s ease-in-out;
+        transition: all 0.5s ease-in-out;
+    }
+    .scroll-top-wrapper:hover {
+        background-color: #888888;
+    }
+    .scroll-top-wrapper.show {
+        visibility:visible;
+        cursor:pointer;
+        opacity: 1.0;
+    }
+    .scroll-top-wrapper i.fa {
+        line-height: inherit;
+    }
+    </style>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/languages/scala.min.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
@@ -60,7 +98,22 @@
                 });
                 $('#myModal').modal('show');
             })
+            $(document).on('scroll', function(){
+                if ($(window).scrollTop() > 100) {
+                    $('.scroll-top-wrapper').addClass('show');
+                } else {
+                    $('.scroll-top-wrapper').removeClass('show');
+                }
+            });
+            $('.scroll-top-wrapper').on('click', scrollToTop);
         });
+        function scrollToTop() {
+            verticalOffset = typeof(verticalOffset) != 'undefined' ? verticalOffset : 0;
+            element = $('body');
+            offset = element.offset();
+            offsetTop = offset.top;
+            $('html, body').animate({scrollTop: offsetTop}, 500, 'linear');
+        }
     </script>
 </head>
 <body>
@@ -68,12 +121,24 @@
 <div class="navbar navbar-default navbar-static-top">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="<%=request.getContextPath()%>/">spring-scala</a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+       <div class="col-sm-3 col-md-3 pull-right">
+            <form class="navbar-form" role="search" method="post" action="<%=request.getContextPath()%>/romeapi/search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" name="q">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i> 検索</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
   </div>
 </div>
@@ -144,6 +209,13 @@
     <%-- フッタ --%>
     <div class="footer" style="border-top: 1px solid #eee;margin-top: 40px;padding-top: 40px;padding-bottom: 40px;">
         <p>&copy; <a href="http://www.walbrix.com/jp/">ワルブリックス株式会社</a> 2014-2015</p>
+    </div>
+
+    <%-- scroll to top --%>
+    <div class="scroll-top-wrapper ">
+    	<span class="scroll-top-inner">
+    		<i class="fa fa-2x fa-arrow-circle-up"></i>
+    	</span>
     </div>
 </div>
 <!-- Wikipedia表示用モーダルの定義 -->

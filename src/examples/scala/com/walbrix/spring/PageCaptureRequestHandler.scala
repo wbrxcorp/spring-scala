@@ -1,6 +1,5 @@
 package com.walbrix.spring
 
-import javax.imageio.ImageIO
 import javax.servlet.http.HttpServletResponse
 
 import org.apache.commons.io.IOUtils
@@ -22,9 +21,8 @@ class PageCaptureRequestHandler extends com.walbrix.spring.ScalikeJdbcSupport wi
   }
 
   private def getCache(url:String):Option[Array[Byte]] = {
-    single(sql"select content from pagecapture_cache where id=${Sha1Hash(url)}".map { row =>
-      IOUtils.toByteArray(row.blob("content").getBinaryStream)
-    })
+    single(sql"select content from pagecapture_cache where id=${Sha1Hash(url)}".map(_.blob(1).getBinaryStream()))
+      .map(IOUtils.toByteArray(_))
   }
 
   @RequestMapping(value=Array(""), method=Array(RequestMethod.GET))
@@ -32,30 +30,27 @@ class PageCaptureRequestHandler extends com.walbrix.spring.ScalikeJdbcSupport wi
           request:javax.servlet.http.HttpServletRequest, response:HttpServletResponse):Unit = {
 
     val (url, external) = Option(_url).getOrElse(defaultURL) match {
-      case absoluteURLPattern(url) =>
-        val domain = new java.net.URL(url).getHost
-        if (!permittedDomains.contains(domain)) {
+      case absoluteURLPattern(url) => // 外部サイトの場合
+        if (!permittedDomains.contains(new java.net.URL(url).getHost)) {  // 許可リストにないドメインの場合は 403 Forbiddenにする
           response.sendError(HttpServletResponse.SC_FORBIDDEN)
           return
         }
         (url, true)
-      case url =>
-        val absoluteURL = "%s%s".format(com.walbrix.servlet.GetContextURL(request), url)
-        logger.debug(absoluteURL)
-        (absoluteURL, false)
+      case url => // 外部サイトのURLでない場合は、このアプリケーション自身のリソースを示しているものとみなす
+        ("%s%s".format(com.walbrix.servlet.GetContextURL(request), url), false)
     }
 
     logger.debug(url)
 
-    response.setContentType("image/png")
-    val out = response.getOutputStream
-
-    val img = getCache(url).getOrElse {
-        val img = PageCapture(url, mobile, "png")
-        if (!external) saveToCache(url, img)
-        img
+    val img = getCache(url).getOrElse { // キャッシュを検索→キャッシュになければ生成
+      val img = PageCapture(url, mobile, "png")
+      if (!external) saveToCache(url, img)  // 生成したら後のためキャッシュに保存(外部サイトの場合除く)
+      img
     }
+
+    response.setContentType("image/png")
+    // 長さのわかっているバイナリをレスポンスする場合はきちんと Content-Lengthを付けてやるほうがクライアントが効率よく処理できる
     response.setContentLength(img.length)
-    out.write(img)
+    response.getOutputStream.write(img)
   }
 }
