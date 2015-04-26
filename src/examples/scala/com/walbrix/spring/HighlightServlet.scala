@@ -27,7 +27,7 @@ class HighlightServlet extends javax.servlet.http.HttpServlet with com.typesafe.
       try {
         val md = ApplyVariables(IOUtils.toString(is, "UTF-8"), Map("contextRoot"->contextRoot, "version"->version))
         val (content, meta) = ExtractMetadataFromMarkdown(md)
-        Notation(PegDown(content), meta.get("title"), meta.get("description"))
+        Notation(RenderMarkdown(content), meta.get("title"), meta.get("description"))
       }
       finally {
         is.close()

@@ -11,7 +11,7 @@ template サーブレット初期化パラメタで指定された <a href="#" d
 
 - [このサーブレットをマッピングしている web.xml](${contextRoot}/src/examples/webapp/WEB-INF/web.xml)
 - [このサイトで使用しているテンプレート](${contextRoot}/src/examples/webapp/WEB-INF/jsp/highlight.jsp)
-- [PegDownを使ってMarkdownをHTMLに変換](./PegDown.scala)
+- [PegDownを使ってMarkdownをHTMLに変換](./RenderMarkdown.scala)
 - [ファイル名のサフィックスから言語を判定](./FilenameSuffixes.scala)
 - [ファイル名のサフィックス部分を差し替える](./ReplaceFilenameSuffix.scala)
 

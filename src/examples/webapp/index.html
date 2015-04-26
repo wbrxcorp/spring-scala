@@ -26,14 +26,6 @@
         <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
         <style>
             .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
-            input.gsc-input,
-            .gsc-input-box,
-            .gsc-input-box-hover,
-            .gsc-input-box-focus,
-            .gsc-search-button {
-            box-sizing: content-box;
-            line-height: normal;
-            }
         </style>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-resource.min.js"></script>
@@ -54,18 +46,6 @@
           ga('create', 'UA-50657-11', 'auto');
         </script>
         <script>
-          (function() {
-            var cx = '017229871416493699095:huy7rmbmlp0';
-            var gcse = document.createElement('script');
-            gcse.type = 'text/javascript';
-            gcse.async = true;
-            gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-                '//www.google.com/cse/cse.js?cx=' + cx;
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(gcse, s);
-          })();
-        </script>
-        <script>
             angular.module("MyApp", ["ngResource",'angulartics', 'angulartics.google.analytics','imageSpinner'])
             .run(["$rootScope", "$resource", function($scope, $resource) {
                 var recent = $resource("./api/recent");
@@ -79,7 +59,13 @@
             <p>ここはワルブリックス株式会社が主に Web関連の技術を実験する場所です。</p>
         </div>
         <div class="container">
-            <gcse:search></gcse:search>
+            <form method="post" action="./api/search">
+                <p class="input-group">
+                    <input type="text" class="form-control" name="q" required>
+                    <span class="input-group-btn"><button class="btn btn-default"><span class="glyphicon glyphicon-search"></span> 検索</button></span>
+                </p>
+
+            </form>
             <h2>最近更新されたページ</h2>
             <ul class="list-unstyled">
                 <li ng-repeat="entry in recent | limitTo:10">{{entry.lastUpdate | date:'yyyy年M月d日 HH:mm'}}更新 - <a href=".{{entry.link}}">{{entry.title}}</a></li>
@@ -174,6 +160,7 @@
 
             <h2>Web開発便利ツール・サービス</h2>
             <ul>
+                <li><a href="https://www.google.com/intl/ja/webmasters/">Googleウェブマスターツール</a> - ちゃんと検索されるサイトを作るならまずはこれ</li>
                 <li><a href="http://mysys-check.com/">ご利用環境チェックツール</a> - クライアントの環境についてのを情報一括表示できる、顧客向けツール</li>
                 <li><a href="https://mailtrap.io/">Mailtrap</a> - メール送信機能の開発に便利なフェイクメールサーバー</li>
                 <li><a href="https://www.google.com/webmasters/tools/mobile-friendly/">モバイルフレンドリーテスト</a> - このテストに合格しないページはモバイルデバイスからの検索順位を下げられてしまう</li>

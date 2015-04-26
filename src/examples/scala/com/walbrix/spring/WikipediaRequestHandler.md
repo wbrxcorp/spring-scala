@@ -17,6 +17,7 @@ description: 「用語解説」をWebサイトに埋め込むには Wikipediaの
 ### このソースからわかること
 
 - Scalaのパターンマッチを使って [正規表現](http://ja.wikipedia.org/wiki/正規表現)で文字列の一部を取り出す方法
+- [URLEncoderクラスを使って文字列をURLエンコードする](http://docs.oracle.com/javase/jp/7/api/java/net/URLEncoder.html#encode%28java.lang.String,%20java.lang.String%29)方法
 - Spring MVCの @ExceptionHandler アノテーションを使って特定の例外に対するハンドラを定義する方法
 - Spring MVCのパス名マッピングで、.(ドット)で区切らせずにマッチングを行う方法
 - Scalaでリソース開放の処理を隠蔽する方法([Loanパターン](http://www.ne.jp/asahi/hishidama/home/tech/scala/sample/using.html)）

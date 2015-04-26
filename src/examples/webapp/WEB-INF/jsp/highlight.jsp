@@ -22,6 +22,7 @@
     <meta name="twitter:site" content="@wbrxcorp">
     <link rel="alternate"  type="application/rss+xml" href="<%=request.getContextPath()%>/index.xml" >
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/github.min.css">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/languages/scala.min.js"></script>
@@ -58,7 +59,7 @@
                     $('#myModal').modal('hide');
                 });
                 $('#myModal').modal('show');
-            }).append("<small><span class=\"glyphicon glyphicon-book\"></span></small>")
+            })
         });
     </script>
 </head>
@@ -110,9 +111,9 @@
           </div>
           <div class="media-body">
             <h4 class="media-heading">嶋田 大貴 (ワルブリックス株式会社 代表取締役)</h4>
-            <strong>「私の年収は<a href="https://twitter.com/shimariso/status/590088659413508096">102万</a>です。ですがもちろんフルパワーで働く気はありませんからご心配なく…」</strong>(<a href="#" data-wikipedia-page="フリーザ">あの人</a>の声で)<br>
-            コンピュータを触って30年ほどになるソフトウェアエンジニアです。人月40万円の技術者が一週間かかっても解決できない問題を1日で解決する<a href="#" data-wikipedia-page="トラブルシューティング">トラブルシューティング</a>業務は10万円です。
-            お仕事のご依頼・ご相談は<a href="http://www.walbrix.com/jp/">ワルブリックス株式会社</a>または<a href="https://twitter.com/shimariso">代表本人まで直接</a>お気軽にどうぞ。<br>
+            <strong>「私の年収は<a href="https://twitter.com/shimariso/status/590088659413508096">102万</a>です。ですがもちろんフルパワーで働く気はありませんからご心配なく…」</strong>(<a href="#" data-wikipedia-page="フリーザ">あの人<span class="glyphicon glyphicon-book"></span></a>の声で)<br>
+            コンピュータを触って30年ほどになるソフトウェアエンジニアです。人月40万円の技術者が一週間かかっても解決できない問題を1日で解決する<a href="#" data-wikipedia-page="トラブルシューティング">トラブルシューティング<span class="glyphicon glyphicon-book"></span></a>業務は10万円です。
+            お仕事のご依頼・ご相談は<a href="http://www.walbrix.com/jp/">ワルブリックス株式会社</a>または<a href="https://twitter.com/shimariso"><i class="fa fa-twitter"></i>代表本人まで直接</a>お気軽にどうぞ。<br>
           </div>
         </div>
 

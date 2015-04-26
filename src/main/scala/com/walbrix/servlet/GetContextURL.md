@@ -22,8 +22,8 @@ URL入りの自動送信メールを送ったり <a href="#" data-wikipedia-page
 のようなものがあるが、これらのうち一番最後のやり方を示すのがこのソースである。
 
 - [request.isSecure](http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#isSecure%28%29) - 暗号化された接続かどうか。つまり httpか httpsか。 (この値が当てになるかどうかはサービス構成次第なので気をつけられたし）
-- [request.getServerName](http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#getServerName%28%29) - URLのFQDN（ホスト名）部分。
-- [request.getServerPort](http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#getServerPort%28%29) - ポート番号
+- [request.getServerName](http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#getServerName%28%29) - URLの[FQDN(ホスト名)](http://ja.wikipedia.org/wiki/Fully_Qualified_Domain_Name)部分。
+- [request.getServerPort](http://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#getServerPort%28%29) - [ポート番号](http://ja.wikipedia.org/wiki/ポート番号)
 - [request.getContextPath](http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html#getContextPath%28%29) - Webアプリケーションのコンテキストパス (例えばアプリケーションが hoge.warだったら多くの場合 /hoge） 
 - それ以下に付け加えたいものがあればご自由に
 
