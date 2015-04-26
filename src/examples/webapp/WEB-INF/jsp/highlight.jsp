@@ -130,7 +130,7 @@
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse">
        <div class="col-sm-3 col-md-3 pull-right">
-            <form class="navbar-form" role="search" method="post" action="<%=request.getContextPath()%>/romeapi/search">
+            <form class="navbar-form" role="search" method="post" action="<%=request.getContextPath()%>/api/search">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search" name="q">
                     <div class="input-group-btn">
