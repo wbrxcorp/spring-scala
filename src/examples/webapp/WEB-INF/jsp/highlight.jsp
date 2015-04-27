@@ -66,6 +66,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/languages/scala.min.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrolldepth/0.6/jquery.scrolldepth.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -106,6 +107,7 @@
                 }
             });
             $('.scroll-top-wrapper').on('click', scrollToTop);
+            $.scrollDepth();
         });
         function scrollToTop() {
             verticalOffset = typeof(verticalOffset) != 'undefined' ? verticalOffset : 0;

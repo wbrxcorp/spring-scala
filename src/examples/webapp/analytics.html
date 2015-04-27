@@ -25,7 +25,12 @@
     </script>
     <script>
       angular.module('MyApp', ['angulartics', 'angulartics.google.analytics', 'angulartics.scroll', 'ngDialog'])
-      .run([ "$rootScope", "$analytics","ngDialog",  function($scope, $analytics, ngDialog) {
+	  .config(function ($analyticsProvider) {
+	    $analyticsProvider.registerEventTrack(function (eventName, properties) {
+          console.log('hit: '+eventName)
+	    });
+	  })
+	  .run([ "$rootScope", "$analytics","ngDialog",  function($scope, $analytics, ngDialog) {
         $scope.optout = function() {
           document.cookie = "optout_ga=1; path=/; expires=" + new Date(new Date().getTime() + (60/*秒*/ * 60/*分*/ * 24/*時間*/ * 1000/*ミリ秒*/ * 3650/*日*/)).toGMTString();
           ngDialog.open({template: '<p>オプトアウトしました</p>',plain: true});
@@ -35,7 +40,7 @@
 </head>
 <body>
     <h1>angulartics</h1>
-    <p><button analytics-on="click" analytics-event="MyEvent">イベント発生</button></p>
+    <p><button analytics-on="click" analytics-category="Category" analytics-event="MyEvent">イベント発生</button></p>
     <p><button ng-click="optout()">オプトアウトする</button></p>
     <h3>View Source</h3>
     <ul>
@@ -46,9 +51,11 @@
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
-    <section analytics-on="scrollby" analytics-category="Scroll" analytics-event="bottom">
+    <section id="bottom" analytics-on="scrollby" scrollby-offset="15%" scrollby-trigger-once analytics-category="Scroll" analytics-event="bottom">
         下までスクロールしたのでイベントが発生しました。
     </section>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 </body>
 </html>
