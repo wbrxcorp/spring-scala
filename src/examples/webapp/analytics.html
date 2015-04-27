@@ -5,9 +5,11 @@
     <title>angulartics</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.12/css/ngDialog.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.12/css/ngDialog-theme-default.min.css" />
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angulartics/0.17.2/angulartics.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angulartics/0.17.2/angulartics-ga.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angulartics/0.17.2/angulartics-scroll.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.12/js/ngDialog.min.js"></script>
     <script>
       // optout_ga という cookieが保存されている場合はアクセスをトラッキングさせない
@@ -22,7 +24,7 @@
       ga('create', 'UA-50657-11', 'auto');
     </script>
     <script>
-      angular.module('MyApp', ['angulartics', 'angulartics.google.analytics', 'ngDialog'])
+      angular.module('MyApp', ['angulartics', 'angulartics.google.analytics', 'angulartics.scroll', 'ngDialog'])
       .run([ "$rootScope", "$analytics","ngDialog",  function($scope, $analytics, ngDialog) {
         $scope.optout = function() {
           document.cookie = "optout_ga=1; path=/; expires=" + new Date(new Date().getTime() + (60/*秒*/ * 60/*分*/ * 24/*時間*/ * 1000/*ミリ秒*/ * 3650/*日*/)).toGMTString();
@@ -39,5 +41,14 @@
     <ul>
         <li><a href="./src/examples/webapp/analytics.html">HTML</a></li>
     </ul>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+    <section analytics-on="scrollby" analytics-category="Scroll" analytics-event="bottom">
+        下までスクロールしたのでイベントが発生しました。
+    </section>
+
 </body>
 </html>
