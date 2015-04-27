@@ -15,6 +15,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 class GoogleApiRequestHandlerTest {
   @Autowired private var target:GoogleApiRequestHandler = _
   @Test def test():Unit = {
-    println(target.hello("ya29.xxxxxxxxxxxNobySuIhje0vhgHw"))
+    println(target.userinfo("ya29.xxxxxxxxxxxNobySuIhje0vhgHw"))
   }
 }

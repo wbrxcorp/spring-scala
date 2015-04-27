@@ -2,7 +2,7 @@
 <html ng-app="MyApp">
 <head lang="ja">
     <meta charset="UTF-8">
-    <title>gplus-login</title>
+    <title>Googleアカウントでログインする</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-resource.js"></script>
@@ -11,9 +11,10 @@
     <script>
         angular.module("MyApp", ["ngResource","directive.g+signin"])
         .run(["$rootScope","$resource", function($scope, $resource) {
-            var googleapi = $resource("./api/google/:action");
             $scope.$on('event:google-plus-signin-success', function (event,authResult) {
-                $scope.userInfo = googleapi.get({action:"userinfo",accessToken:authResult.access_token})
+                // Googleアカウントによるログインに成功した時にはイベントが発生し accessTokenが得られるのでそれをサーバに教える。
+                // サーバはその accessTokenを使ってユーザーを特定する情報を得ることができる。
+                $scope.userInfo = $resource("./api/google/userinfo").get({accessToken:authResult.access_token})
             });
             $scope.$on('event:google-plus-signin-failure', function (event,authResult) {
                 console.log(event, authResult);
@@ -23,19 +24,30 @@
 </head>
 <body>
     <div class="container">
-        <h1>gplus-login</h1>
-        <p>Powered by: <a href="http://jeradbitner.com/angular-directive.g-signin/">Angular Google Plus Sign-in Directive</a></p>
-        <div ng-show="userInfo">
-            {{userInfo}}
-        </div>
+        <h1>Googleアカウントでログインする</h1>
         <div ng-show="!userInfo">
+            <p>ログインされていません。Googleのアカウント使ってログインできます。</p>
             <google-plus-signin clientid="642542541877-bu5eigunp4qr319g0q5umkqbekcj64ql.apps.googleusercontent.com" language="ja"></google-plus-signin>
         </div>
-        キーやらは <a href="https://console.developers.google.com">https://console.developers.google.com</a> で生成する
+        <div ng-show="userInfo">
+            <p>ログイン済みです。</p>
+            <dl class="dl-horizontal">
+                <dt>id</dt><dd>{{userInfo.id}}</dd>
+                <dt>メールアドレス</dt><dd>{{userInfo.email}}</dd>
+                <dt>メールアドレス確認済み</dt><dd>{{userInfo.verified_email}}</dd>
+                <dt>フルネーム</dt><dd>{{userInfo.name}}</dd>
+                <dt>名</dt><dd>{{userInfo.given_name}}</dd>
+                <dt>姓</dt><dd>{{userInfo.family_name}}</dd>
+                <dt>プロフィール</dt><dd><a href="{{userInfo.link}}">{{userInfo.link}}</a></dd>
+                <dt>画像</dt><dd><img ng-src="{{userInfo.picture}}" width="64" height="64"></dd>
+                <dt>性別</dt><dd>{{userInfo.gender}}</dd>
+                <dt>言語</dt><dd>{{userInfo.locale}}</dd>
+            </dl>
+        </div>
         <h3>View Source</h3>
         <ul>
-            <li><a href="./src/examples/webapp/gplus-login.html">HTML + JavaScript</a></li>
-            <li>Scala (<a href="./src/examples/scala/com/walbrix/spring/GoogleApiRequestHandler.scala">REST</a>, <a href="./src/main/scala/com/walbrix/spring/googleapi/GoogleApiClient.scala">Service</a>)</li>
+            <li><a href="./src/examples/webapp/gplus-login.html">クライアント(HTML/JavaScript)</a></li>
+            <li><a href="./src/examples/scala/com/walbrix/spring/GoogleApiRequestHandler.scala">サーバ(Scala/Spring MVC)</a></li>
         </ul>
     </div>
 </body>
