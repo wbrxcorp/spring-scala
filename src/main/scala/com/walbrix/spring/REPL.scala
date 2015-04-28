@@ -3,7 +3,6 @@ package com.walbrix.spring
 import java.io.File
 
 import _root_.ch.qos.logback.classic.{Level, Logger}
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.slf4j.LoggerFactory
 import org.springframework.beans.BeansException
 import org.springframework.context.ApplicationContext
@@ -26,7 +25,7 @@ object REPLEnvironment {
     scalikeJdbcSupport
   }
 
-  def objectMapper:ObjectMapper = applicationContext.getBean(classOf[ObjectMapper])
+  def objectMapper = applicationContext.getBean(classOf[com.fasterxml.jackson.databind.ObjectMapper])
 }
 
 object REPL {
