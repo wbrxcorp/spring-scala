@@ -161,6 +161,11 @@
     <p class="lead"><c:out value="${description}"/></p>
     </c:if>
 
+    <c:if test="${not empty example}">
+    <h3>動作例</h3>
+    <a href="<%=request.getContextPath()%><c:out value="${example}"/>"><img src="<%=request.getContextPath()%>/api/pagecapture?url=<c:out value="${example}"/>" class="img-thumbnail" image-spinner width="200" height="200" alt="動作例"></a>
+    </c:if>
+
     <c:if test="${not empty content}">
     ${content}
     </c:if>
