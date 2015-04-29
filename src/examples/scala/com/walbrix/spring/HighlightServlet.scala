@@ -1,5 +1,6 @@
 package com.walbrix.spring
 
+import java.util.Date
 import javax.servlet.http.HttpServletResponse
 import org.apache.commons.io.IOUtils
 
@@ -7,7 +8,7 @@ import org.apache.commons.io.IOUtils
  * Created by shimarin on 15/03/13.
  */
 
-case class Notation(content:String, title:Option[String] = None, description:Option[String] = None)
+case class Notation(content:String, title:Option[String] = None, description:Option[String] = None, lastUpdate:Option[Date] = None)
 
 class HighlightServlet extends javax.servlet.http.HttpServlet with com.typesafe.scalalogging.slf4j.LazyLogging {
   private var template:Option[String] = None
@@ -23,11 +24,11 @@ class HighlightServlet extends javax.servlet.http.HttpServlet with com.typesafe.
 
   private def getNotation(path:String):Option[Notation] = {
     val mdPath = ReplaceFilenameSuffix(path, ".md")
-    openStream(mdPath).map { is =>
+    openStream(mdPath).map { case (is, lastUpdate) =>
       try {
         val md = ApplyVariables(IOUtils.toString(is, "UTF-8"), Map("contextRoot"->contextRoot, "version"->version))
         val (content, meta) = ExtractMetadataFromMarkdown(md)
-        Notation(RenderMarkdown(content), meta.get("title"), meta.get("description"))
+        Notation(RenderMarkdown(content), meta.get("title"), meta.get("description"), Some(lastUpdate))
       }
       finally {
         is.close()
@@ -35,10 +36,19 @@ class HighlightServlet extends javax.servlet.http.HttpServlet with com.typesafe.
     }
   }
 
-  private def openStream(path:String):Option[java.io.InputStream] = {
+  private def openStream(path:String):Option[(java.io.InputStream, Date)] = {
     HighlightServlet.externalBasePath match {
-      case Some(basepath) => try {Some(new java.io.FileInputStream(basepath + "/" + path))} catch { case x:java.io.FileNotFoundException=> None}
-      case None => Option(getServletContext.getResourceAsStream(path))
+      case Some(basepath) =>
+        try {
+          val file = new java.io.File(basepath + "/" + path)
+          Some(new java.io.FileInputStream(file), new Date(file.lastModified))
+        }
+        catch { case x:java.io.FileNotFoundException=> None}
+      case None =>
+        Option(getServletContext.getResource(path)).map { resource =>
+          val conn = resource.openConnection
+          (conn.getInputStream, new Date(conn.getLastModified))
+        }
     }
   }
 
@@ -58,13 +68,14 @@ class HighlightServlet extends javax.servlet.http.HttpServlet with com.typesafe.
       sendNotFound
       return
     }
-    val source = org.apache.commons.lang.StringEscapeUtils.escapeHtml(IOUtils.toString(is, "UTF-8"))
+    val source = org.apache.commons.lang.StringEscapeUtils.escapeHtml(IOUtils.toString(is._1, "UTF-8"))
     template match {
       case Some(x) =>
         getNotation(resourcePath).foreach { notation =>
           request.setAttribute("content", notation.content)
           notation.title.foreach(request.setAttribute("title", _))
           notation.description.foreach(request.setAttribute("description", _))
+          notation.lastUpdate.foreach(request.setAttribute("lastUpdate", _))
         }
         request.setAttribute("language", highlight._1)
         request.setAttribute("highlight", highlight._2)

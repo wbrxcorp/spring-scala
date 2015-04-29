@@ -39,3 +39,4 @@ template サーブレット初期化パラメタで指定された <a href="#" d
 - [サーブレットで 404 Not Foundをレスポンスする](http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletResponse.html#sendError%28int%29)方法
 - [Commons IO IOUtils](http://commons.apache.org/proper/commons-io/javadocs/api-release/org/apache/commons/io/IOUtils.html) を使って [InputStream](https://docs.oracle.com/javase/jp/6/api/java/io/InputStream.html)から文字列を一気に読み取る方法
 - [Commons Lang StringEscapeUtils](https://commons.apache.org/proper/commons-lang/javadocs/api-release/org/apache/commons/lang3/StringEscapeUtils.html)を使って文字列をHTML向けにエスケープする方法
+- [ファイルの最終更新日時を取得する](https://docs.oracle.com/javase/jp/6/api/java/io/File.html#lastModified%28%29)方法

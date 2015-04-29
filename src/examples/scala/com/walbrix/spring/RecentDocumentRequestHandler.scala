@@ -23,6 +23,7 @@ class RecentDocumentRequestHandler {
         Entry(title, source, new java.util.Date(timestamp), meta.get("description"))
       }
     }.flatten match {
+      // もし空ならおそらくテスト環境で実行されているので適当なダミーをひとつ入れる
       case Nil => Seq(Entry("ダミー", "DUMMY_LINK", new java.util.Date(), Some("ダミーの説明")))
       case x => x
     }

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%><html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<html>
 <head>
     <c:choose>
         <c:when test="${not empty title}">
@@ -67,6 +69,7 @@
     <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrolldepth/0.6/jquery.scrolldepth.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment-with-locales.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -107,6 +110,8 @@
                 }
             });
             $('.scroll-top-wrapper').on('click', scrollToTop);
+            moment.lang(navigator.language);
+            $("#timeAgo").text(moment(<c:out value="${lastUpdate.time}"/>).fromNow());
             $.scrollDepth();
         });
         function scrollToTop() {
@@ -151,8 +156,12 @@
             <c:when test="${not empty title}"><c:out value="${title}"/></c:when>
             <c:otherwise><c:out value="${path}" /></c:otherwise>
         </c:choose></h1>
-    <a href="https://twitter.com/share" class="twitter-share-button" data-size="large">Tweet</a>
-    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        <c:if test="${not empty lastUpdate}">
+        <p>最終更新日: <fmt:formatDate value="${lastUpdate}" pattern="yyyy年M月d日"/> (<span id="timeAgo">-</span>)</p>
+        </c:if>
+
+        <a href="https://twitter.com/share" class="twitter-share-button" data-size="large">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
     </div>
 
 
