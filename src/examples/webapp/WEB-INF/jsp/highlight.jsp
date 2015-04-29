@@ -110,7 +110,7 @@
                 }
             });
             $('.scroll-top-wrapper').on('click', scrollToTop);
-            moment.lang(navigator.language);
+            moment.lang(navigator.userLanguage || navigator.language);
             $("#timeAgo").text(moment(<c:out value="${lastUpdate.time}"/>).fromNow());
             $.scrollDepth();
         });
