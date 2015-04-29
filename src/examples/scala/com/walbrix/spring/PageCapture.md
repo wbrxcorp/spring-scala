@@ -21,7 +21,5 @@ WebKitを動かせるほどのサーバー環境設定は知識がないとそ�
     - [How does the “scala.sys.process” from Scala 2.9 work?](http://stackoverflow.com/questions/6013415/how-does-the-scala-sys-process-from-scala-2-9-work)
     - サブプロセスの[終了コード](http://ja.wikipedia.org/wiki/終了ステータス)が0以外の場合は例外を上げる
 - [Scalaでリストに入った文字列を連結する](http://www.scala-lang.org/api/current/index.html#scala.io.Source@mkString%28sep:String%29:String)方法
-- [Seqを連結する](http://www.scala-lang.org/api/current/index.html#scala.collection.Seq@++[B]%28that:scala.collection.GenTraversableOnce[B]%29:Seq[B])方法
-    - [Scala list concatenation, ::: vs ++](http://stackoverflow.com/questions/6559996/scala-list-concatenation-vs) - ++と ::: のどっちでつなげばいいの？→++でおｋ
 - [ImageIO](https://docs.oracle.com/javase/jp/6/api/javax/imageio/ImageIO.html)でストリームを通じて画像データの読み書きをする方法
 - [BufferedImage](https://docs.oracle.com/javase/jp/6/api/java/awt/image/BufferedImage.html)に対して描画を行う方法

@@ -27,7 +27,8 @@ object PageCapture {
    * mobile == trueの場合、横幅320pxのブラウザがシミュレートされる(通常はwkhtmltoimageのデフォルトで1024px)
    */
   def apply(url:String, mobile:Boolean = false, format:String = "png", size:Int = 200):Array[Byte] = {
-    val cmdline = Seq("wkhtmltoimage","-f","png","--javascript-delay","500") ++ (if (mobile) Seq("--width","320","--disable-smart-width") else Nil) ++ Seq(url, "-")
+    val width = if (mobile) "320" else "992"
+    val cmdline = Seq("wkhtmltoimage","-f","png","--javascript-delay","500","--width",width,"--disable-smart-width",url, "-")
     val os = new java.io.ByteArrayOutputStream
     val pio = new scala.sys.process.ProcessIO(
       _ => (),
