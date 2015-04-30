@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.{RequestParam, RequestMethod, Req
  * Created by shimarin on 15/04/29.
  */
 
-case class Product(id:String,title:String,price:Int,available:Boolean, tags:Seq[Tag])
+case class Product(id:String,title:String,price:Int,available:Boolean, tags:Seq[Tag]=Nil)
 case class Tag(text:String)
 
 @RestController
@@ -15,7 +15,7 @@ class ProductRequestHandler extends ScalikeJdbcSupport {
   @RequestMapping(value=Array(""), method=Array(RequestMethod.GET))
   def products():Seq[Product] = {
     list(sql"select * from products,product_tags where products.id=product_tags.product_id".one { row =>
-      Product(row.string("id"), row.string("title"), row.int("price"), row.boolean("available"), Nil)
+      Product(row.string("id"), row.string("title"), row.int("price"), row.boolean("available"))
     }.toMany(_.stringOpt("tag").map(Tag(_))).map((one,many) => one.copy(tags=many)) )
   }
 

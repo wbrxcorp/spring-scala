@@ -27,6 +27,13 @@
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/github.min.css">
     <style>
+    pre, code, .hljs {
+        border: none;
+        background: #ffffff;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
     .scroll-top-wrapper {
         position: fixed;
         opacity: 0;
@@ -201,11 +208,17 @@
       </div>
     </div>
 
-    <h2>ソース (<c:out value="${language}"/>)</h2>
-    <p><a href="https://github.com/wbrxcorp/spring-scala/tree/master/${path}">GitHubで見る</a> (もっと良い書き方があるよ！のプルリクお願いします)</p>
-
-    <%-- ソースコードをここにハイライト表示 --%>
-    <pre><code<c:if test="${not empty highlight}"> class="<c:out value="${highlight}"/>"</c:if>>${source}</code></pre>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title pull-left"><i class="fa fa-code"></i> ソース(<c:out value="${language}"/>)</h3>
+        <div class="pull-right"><a href="https://github.com/wbrxcorp/spring-scala/tree/master/${path}"><i class="fa fa-github"></i> GitHubで見る</a> (もっと良い書き方があるよ！のプルリクお願いします)</div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="panel-body">
+        <%-- ソースコードをここにハイライト表示 --%>
+        <pre><code<c:if test="${not empty highlight}"> class="<c:out value="${highlight}"/>"</c:if>>${source}</code></pre>
+      </div>
+    </div>
 
     <%-- disqus --%>
     <div id="disqus_thread"></div>
