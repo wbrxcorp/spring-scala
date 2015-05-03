@@ -208,16 +208,23 @@
       </div>
     </div>
 
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title pull-left"><i class="fa fa-code"></i> ソース(<c:out value="${language}"/>)</h3>
-        <div class="pull-right"><a href="https://github.com/wbrxcorp/spring-scala/tree/master/${path}"><i class="fa fa-github"></i> GitHubで見る</a> (もっと良い書き方があるよ！のプルリクお願いします)</div>
-        <div class="clearfix"></div>
-      </div>
-      <div class="panel-body">
-        <%-- ソースコードをここにハイライト表示 --%>
-        <pre><code<c:if test="${not empty highlight}"> class="<c:out value="${highlight}"/>"</c:if>>${source}</code></pre>
-      </div>
+    <div class="row">
+        <div class="col-md-9" style="padding-right:0;">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title pull-left"><i class="fa fa-code"></i> ソース(<c:out value="${language}"/>)</h3>
+                <div class="pull-right"><a href="https://github.com/wbrxcorp/spring-scala/tree/master/${path}"><i class="fa fa-github"></i> GitHubで見る</a> (もっと良い書き方があるよ！のプルリクお願いします)</div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="panel-body">
+                <%-- ソースコードをここにハイライト表示 --%>
+                <pre><code<c:if test="${not empty highlight}"> class="<c:out value="${highlight}"/>"</c:if>>${source}</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3" style="padding-left:0.5em;">
+<a class="twitter-timeline" href="https://twitter.com/wbrxcorp" data-widget-id="389601505860255744">@wbrxcorpさんのツイート</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>        </div>
     </div>
 
     <%-- disqus --%>
