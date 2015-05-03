@@ -1,5 +1,8 @@
 package com.walbrix.spring
 
+import java.io.InputStream
+import com.fasterxml.jackson.databind.JsonNode
+
 import scala.reflect.ClassTag
 
 /**
@@ -20,8 +23,15 @@ object ObjectMapper {
    * Javaでは型パラメータが消去されてしまうので必要な場合は明示的にClassを引数で渡してやらなければいけないが、
    * Scalaでは暗黙の引数としてパラメータ型の情報を渡せるのでそういった引数を省略できる
    */
-  def readValue[T:ClassTag](is:java.io.InputStream):T =
+  def readValue[T:ClassTag](is:InputStream):T =
     underlying.readValue(is, implicitly[ClassTag[T]].runtimeClass.asInstanceOf[Class[T]])
+
+  def readValue[T:ClassTag](str:String):T =
+    underlying.readValue(str, implicitly[ClassTag[T]].runtimeClass.asInstanceOf[Class[T]])
+
+  def readTree(is:InputStream):JsonNode = underlying.readTree(is)
+
+  def writeValueAsString(value:AnyRef):String = underlying.writeValueAsString(value)
 
   // 以降、readValueの他にも必要なメソッドを追加
 }

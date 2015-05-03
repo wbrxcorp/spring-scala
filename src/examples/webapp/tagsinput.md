@@ -13,8 +13,7 @@ tags-inputの内側に auto-completeを設置することで、タグの入力�
 ### このソースからわかること
 
 - ngTagsInputを使って入力サジェスト付きのタグ入力コントロールを設置する方法
-- [$resource](https://docs.angularjs.org/api/ngResource/service/$resource), [$http](https://docs.angularjs.org/api/ng/service/$http) サービスを使って HTTP GETでサーバからデータを取得する方法
-    - $resoruceの方が高レベルな機能を提供する。（$resourceも内部では $httpを使用している）
+- AngularJSの [$http](https://docs.angularjs.org/api/ng/service/$http) サービスを使って HTTP GETでサーバからデータを取得する方法
 - [AngularJSで数値を通貨表示にフォーマットする](https://docs.angularjs.org/api/ng/filter/currency)方法
 - AngularJSの [ng-class](https://docs.angularjs.org/api/ng/directive/ngClass) 属性を使い、真偽値に応じて異なる [FontAwesome](http://fortawesome.github.io/Font-Awesome/)アイコンを表示する方法
 - AngularJSの [ng-repeat](https://docs.angularjs.org/api/ng/directive/ngRepeat)属性で 要素を繰り返し表示する際に、1度ごとに空白を挿入する方法

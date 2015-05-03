@@ -9,13 +9,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/2.3.0/ng-tags-input.bootstrap.min.css">
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-resource.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/2.3.0/ng-tags-input.min.js"></script>
     <title>タグ入力コントロールのデモ</title>
     <script>
-        angular.module("MyApp", ["ngResource", "ngTagsInput"])
-        .run(["$rootScope","$http","$resource", function($scope, $http, $resource) {
-            $scope.products = $resource("./api/product").query();
+        angular.module("MyApp", ["ngTagsInput"])
+        .run(["$rootScope","$http", function($scope, $http) {
+            $http.get("./api/product").success(function(result) {$scope.products = result});
 
             $scope.product = {
                 id: "B00TPQPUWI",

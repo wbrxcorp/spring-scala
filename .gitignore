@@ -4,3 +4,4 @@ build
 .idea/workspace.xml
 settings-*.xml
 *.iml
+local_config.json
