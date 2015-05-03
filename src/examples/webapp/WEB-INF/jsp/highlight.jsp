@@ -209,7 +209,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-9" style="padding-right:0;">
+        <div class="col-md-9">
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h3 class="panel-title pull-left"><i class="fa fa-code"></i> ソース(<c:out value="${language}"/>)</h3>
