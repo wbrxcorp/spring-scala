@@ -117,6 +117,7 @@ dependencies {
     compile 'org.jsoup:jsoup:1.8.1'
     compile 'com.rometools:rome:1.5.0'
     compile 'org.twitter4j:twitter4j-core:4.0.3'
+    compile 'org.bouncycastle:bcprov-jdk16:1.46'
 
     // メールセッションはアプリケーションサーバ任せにするのでこのdepはwarに入れない
     providedCompile 'javax.mail:mail:1.4.7'
