@@ -46,4 +46,5 @@
     </bean>
 
     <import resource="multipartResolver.xml"/> <!-- FileUpload用 Multipart Resolver -->
+    <import resource="bouncyCastle.xml"/> <!-- Javaセキュリティプロバイダに BouncyCastleを追加 -->
 </beans>

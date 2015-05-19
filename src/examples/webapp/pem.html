@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="MyApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <title>PEM</title>
+    <script>
+        angular.module("MyApp", [])
+        .run(["$rootScope", "$http", function($scope, $http) {
+            $scope.hello = "Hello, World!";
+            $scope.submit = function() {
+                $http({
+                    method: 'POST',
+                    url: "./api/pem",
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    transformRequest: function(obj) {
+                        var str = [];
+                        for(var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                        return str.join("&");
+                    },
+                    data: {pem: $scope.pem}
+                }).success(function (result) {
+                    console.log(result);
+                });
+            }
+        }]);
+    </script>
+</head>
+<body>
+<div class="container">
+    <h1>PEM</h1>
+    <p>{{hello}}</p>
+
+    <form ng-submit="submit()">
+        <textarea ng-model="pem" class="form-control"></textarea>
+        <button>submit</button>
+    </form>
+
+    <h3><i class="fa fa-code"></i> View Source</h3>
+    <ul>
+        <li><a href="./src/examples/webapp/pem.html">HTML/JavaScript</a></li>
+    </ul>
+</div>
+</body>
+</html>
