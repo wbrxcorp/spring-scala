@@ -1,6 +1,7 @@
 import java.util.Properties
 import java.util.concurrent.TimeUnit
 
+import boot.MailTrapConfig
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.walbrix.jetty
 import com.walbrix.spring.{ObjectMapper, HighlightServlet}
@@ -14,18 +15,10 @@ import scalikejdbc.{GlobalSettings, LoggingSQLAndTimeSettings}
  */
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-case class Config(mailtrap:Option[MailTrapConfig] = None, port:Option[Int] = None)
-case class MailTrapConfig(id:String,password:String)
+case class Config(mailtrap:Option[MailTrapConfig] = None, scalikejdbc_log_config:Option[LoggingSQLAndTimeSettings] = None, port:Option[Int] = None)
 
 object Main extends com.typesafe.scalalogging.slf4j.LazyLogging {
   def main(args:Array[String]):Unit = {
-    // ScalikeJDBC log settings
-    GlobalSettings.loggingSQLAndTime = new LoggingSQLAndTimeSettings(
-      enabled = true,
-      singleLineMode = true,
-      logLevel = 'DEBUG
-    )
-
     System.setProperty("org.apache.jasper.compiler.disablejsr199", "false")
 
     val root = jetty.createWebapp("src/examples/webapp", "")
@@ -39,21 +32,16 @@ object Main extends com.typesafe.scalalogging.slf4j.LazyLogging {
 
     logger.debug("Local config: " + localConfig.toString)
 
+    // ScalikeJDBC log settings
+    GlobalSettings.loggingSQLAndTime = localConfig.scalikejdbc_log_config.getOrElse(LoggingSQLAndTimeSettings(singleLineMode = true))
+
     // setup DataSource
     val dataSource = new JdbcDataSource()
     dataSource.setURL("jdbc:h2:mem:spring-scala;DB_CLOSE_DELAY=-1")
     new org.eclipse.jetty.plus.jndi.Resource("java:comp/env/jdbc/spring-scala", dataSource)
 
     // setup MailSession
-    val mailref = new org.eclipse.jetty.jndi.factories.MailSessionReference()
-    mailref.setUser(localConfig.mailtrap.map(_.id).getOrElse("MAILTRAP_ID"))
-    mailref.setPassword(localConfig.mailtrap.map(_.password).getOrElse("MAILTRAP_PASSWORD"))
-    val properties = new Properties()
-    properties.setProperty("mail.smtp.auth","true")
-    properties.setProperty("mail.smtp.host", "mailtrap.io")
-    properties.setProperty("mail.smtp.port", "465")
-    mailref.setProperties(properties)
-    new org.eclipse.jetty.plus.jndi.Resource("java:comp/env/mail/Session", mailref)
+    boot.CreateMailTrapSession(localConfig.mailtrap.getOrElse(MailTrapConfig()))
 
     val (server, port) = jetty.run(Seq(root), localConfig.port)
     println("http://localhost:%d".format(port))
