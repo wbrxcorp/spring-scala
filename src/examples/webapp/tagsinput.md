@@ -19,3 +19,4 @@ tags-inputの内側に auto-completeを設置することで、タグの入力�
 - AngularJSの [ng-repeat](https://docs.angularjs.org/api/ng/directive/ngRepeat)属性で 要素を繰り返し表示する際に、1度ごとに空白を挿入する方法
     - [How to add a space after ng-repeat element?](http://stackoverflow.com/questions/18434086/how-to-add-a-space-after-ng-repeat-element) - ng-repeatの代わりに ng-repeat-startと ng-repeat-endを使う
 - [Bootstrap](http://ja.wikipedia.org/wiki/Bootstrap)で項目名ラベルと入力コントロールが横に並ぶ形のフォーム ([Horizontal Form](http://getbootstrap.com/css/#forms-horizontal))を設置する方法
+- [$resource](https://docs.angularjs.org/api/ngResource/service/$resource) オブジェクトに対する操作で [promise](https://docs.angularjs.org/api/ng/service/$q)を取得する方法
