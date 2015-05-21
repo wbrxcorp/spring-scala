@@ -77,7 +77,7 @@
                 <label for="tags" class="col-sm-2 control-label">分類タグ</label>
                 <div class="col-sm-10">
                     <tags-input id="tags" ng-model="product.tags" placeholder="分類タグを追加">
-                        <auto-complete source="loadTags($query)"></auto-complete>
+                        <auto-complete source="loadTags($query)" load-on-down-arrow="true" load-on-empty="true" load-on-focus="true"></auto-complete>
                     </tags-input>
                     <span class="help-block">最初の数文字(例:DDR)を入力すると既存のタグの中から候補が表示されます</span>
                 </div>
