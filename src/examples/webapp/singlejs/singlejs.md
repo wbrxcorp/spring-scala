@@ -9,10 +9,10 @@ HTML側からは下記のようにして呼び出す。
 
 この時ブラウザはhogehoge.jsなる名前のJavaScriptファイルをロードしているつもりだが、裏ではPHPによって下記のJSファイルが動的に結合されている。
 
-- ./js/singlejs/angular.min.js
-- [./js/singlejs/main.js](./js/singlejs/main.js)
-- [./js/singlejs/ctrl1.js](./js/singlejs/ctrl1.js)
-- [./js/singlejs/ctrl2.js](./js/singlejs/ctrl2.js)
+- ./angular.min.js
+- [./main.js](./main.js)
+- [./ctrl1.js](./ctrl1.js)
+- [./ctrl2.js](./ctrl2.js)
 
 hogehoge.js の hogehoge 部分には実際には任意の文字列を与えることが可能であり、これは JavaScriptのグローバル変数 (windowオブジェクトのプロパティ) としてセットされる。
 
