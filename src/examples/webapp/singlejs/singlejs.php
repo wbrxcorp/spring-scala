@@ -40,7 +40,7 @@ if (preg_match_all("/^\/(.+)\.js$/", $path, $params)) {
   // 対象となるjsファイルの中でもっとも新しいものの最終更新日時を得る
   $last_modified = NULL;
   foreach ($js_files as $js_file) {
-    $filename = dirname(__FILE__) . "/js/singlejs/" . $js_file;
+    $filename = dirname(__FILE__) . "/" . $js_file;
     if (!file_exists($filename)) http_error(404, sprintf("Not Found '%s'", $js_file));
     $mtime = filemtime($filename);
     if ($last_modified == NULL || $last_modified < $mtime) $last_modified = $mtime;
@@ -60,7 +60,7 @@ if (preg_match_all("/^\/(.+)\.js$/", $path, $params)) {
 
   // jsファイルの本体を次々にレスポンスする
   foreach ($js_files as $js_file) {
-    readfile(dirname(__FILE__) . "/js/singlejs/" . $js_file);
+    readfile(dirname(__FILE__) . "/" . $js_file);
   }
   exit;
 }
