@@ -5,3 +5,5 @@ build
 settings-*.xml
 *.iml
 local_config.json
+*~
+
