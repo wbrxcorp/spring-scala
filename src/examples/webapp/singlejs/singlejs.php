@@ -53,7 +53,7 @@ if (preg_match_all("/^\/(.+)\.js$/", $path, $params)) {
     header('Last-Modified: '.gmdate('D, d M Y H:i:s', $mtime).' GMT');
   }
 
-  // If-Modified-Sinceヘッダが送信されてきている場合、jsファイルの最終更新日時と照らしあわせて更新されていなければ302を返す
+  // If-Modified-Sinceヘッダが送信されてきている場合、jsファイルの最終更新日時と照らしあわせて更新されていなければ304を返す
   if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && $last_modified != NULL && strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) >= $last_modified) {
     http_error(304, "Not Modified");
   }
