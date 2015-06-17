@@ -1,5 +1,5 @@
 title: 複数のJavaScriptファイルを結合してレスポンスするPHPスクリプト
-description: 単純に結合してレスポンスするだけだとブラウザ側のキャッシュが効かず効率が悪いため、対象となるJSファイルの最終更新日時が変わっていなければ302を返すことでブラウザにキャッシュを使用させる
+description: 単純に結合してレスポンスするだけだとブラウザ側のキャッシュが効かず効率が悪いため、対象となるJSファイルの最終更新日時が変わっていなければ304を返すことでブラウザにキャッシュを使用させる
 
 HTML側からは下記のようにして呼び出す。
 
@@ -9,10 +9,10 @@ HTML側からは下記のようにして呼び出す。
 
 この時ブラウザはhogehoge.jsなる名前のJavaScriptファイルをロードしているつもりだが、裏ではPHPによって下記のJSファイルが動的に結合されている。
 
-- ./js/singlejs/angular.min.js
-- [./js/singlejs/main.js](./js/singlejs/main.js)
-- [./js/singlejs/ctrl1.js](./js/singlejs/ctrl1.js)
-- [./js/singlejs/ctrl2.js](./js/singlejs/ctrl2.js)
+- ./angular.min.js
+- [./main.js](./main.js)
+- [./ctrl1.js](./ctrl1.js)
+- [./ctrl2.js](./ctrl2.js)
 
 hogehoge.js の hogehoge 部分には実際には任意の文字列を与えることが可能であり、これは JavaScriptのグローバル変数 (windowオブジェクトのプロパティ) としてセットされる。
 
