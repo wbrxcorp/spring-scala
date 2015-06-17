@@ -64,6 +64,7 @@ function parse_json() {
 function raw_json_encode($value) {
     // PHPのバージョンが 5.4以上の場合は JSON_UNESCAPED_UNICODEオプションが使えるのでそれを使う
     if (PHP_VERSION_ID >= 50400) return json_encode($value, JSON_UNESCAPED_UNICODE);
+    // version_compare関数を使う方が良いかも http://php.net/manual/ja/function.version-compare.php
 
     // CentOS <= 6 など、PHPが古い場合は正規表現による置換でどうにかする
     return preg_replace_callback(
