@@ -30,6 +30,8 @@
                 enableColumnMenus: false,
                 enableColumnResizing: true,
                 enableRowSelection: true,
+                enableFullRowSelection: true,
+                enableRowHeaderSelection: false,
                 multiSelect: true,
                 paginationPageSizes: [25, 50, 75],
                 paginationPageSize: 25,
@@ -60,7 +62,7 @@
 <body>
     <div class="container">
         <h1>ui-grid</h1>
-        <div id="grid1" ui-grid="gridOptions" ui-grid-pagination class="grid"></div>
+        <div id="grid1" ui-grid="gridOptions" ui-grid-pagination ui-grid-resize-columns ui-grid-selection class="grid"></div>
 
         <h3>View Source</h3>
         <ul>
@@ -76,7 +78,9 @@
     <div class="ui-grid-cell-contents"><input type="checkbox"></div>
 </script>
 <script type="text/ng-template" id="row.html">
-    <div ng-style="{'background-color': row.entity.ZIP_CODE=='0600000' ? 'aquamarine' : 'inherit'}" ng-repeat="col in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ui-grid-cell></div>
+    <div ng-style="row.entity.ZIP_CODE=='9010154' && {'background-color': row.isSelected? 'darkseagreen':'aquamarine'}"
+         ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.uid" class="ui-grid-cell"
+         ng-class="{ 'ui-grid-row-header-cell': col.isRowHeader }"  ui-grid-cell></div>
 </script>
 <script type="text/ng-template" id="jis_code.html">
     <div class="ui-grid-cell-contents" title="ほげほげ">{{row.entity.JIS_CODE}}</div>
