@@ -8,7 +8,7 @@ plugins {
 defaultTasks 'clean','jar','sourcesJar','shadowJar','war'
 
 sourceCompatibility = 1.6
-version = '0.20150508'
+version = '0.20150828'
 
 repositories.mavenCentral()
 
@@ -74,53 +74,55 @@ war {
 dependencies {
 //    testRuntime sourceSets.examples.output
     testCompile group: 'junit', name: 'junit', version: '4.11'
-    testCompile 'org.springframework:spring-test:4.1.6.RELEASE'
-    testCompile 'org.eclipse.jetty:jetty-plus:9.2.10.v20150310'
-    testCompile 'org.scala-lang:scala-compiler:2.11.6'
-    testCompile 'jline:jline:2.12.1'
-    testCompile 'org.seleniumhq.selenium:selenium-chrome-driver:2.44.0'
-    testCompile 'org.scalatest:scalatest_2.11:2.2.4'
-    testRuntime 'org.eclipse.jetty:jetty-jsp:9.2.10.v20150310'
-    testRuntime 'org.seleniumhq.selenium:selenium-support:2.44.0'
+    testCompile 'org.springframework:spring-test:4.2.0.RELEASE'
 
-    runtime 'org.slf4j:jcl-over-slf4j:1.7.10'
-    runtime 'org.aspectj:aspectjweaver:1.8.4'
+    testCompile 'org.eclipse.jetty:jetty-plus:9.2.13.v20150730'
+    testCompile 'org.scala-lang:scala-compiler:2.11.7'
+    testCompile 'jline:jline:2.13'
+    testCompile 'org.seleniumhq.selenium:selenium-chrome-driver:2.47.1'
+    testCompile 'org.scalatest:scalatest_2.11:2.2.5'
+    testRuntime 'org.eclipse.jetty:jetty-jsp:9.2.13.v20150730'
+    testRuntime 'org.seleniumhq.selenium:selenium-support:2.47.1'
+
+    runtime 'org.slf4j:jcl-over-slf4j:1.7.12'
+    runtime 'org.aspectj:aspectjweaver:1.8.6'
     runtime 'javax.servlet:jstl:1.2'
     runtime 'commons-fileupload:commons-fileupload:1.3.1'
 
-    compile 'org.scala-lang:scala-library:2.11.6'
-    compile 'org.scala-lang.modules:scala-xml_2.11:1.0.3'
+    compile 'org.scala-lang:scala-library:2.11.7'
+    compile 'org.scala-lang.modules:scala-xml_2.11:1.0.5'
     compile 'com.typesafe.scala-logging:scala-logging-slf4j_2.11:2.1.2'
-    compile 'ch.qos.logback:logback-classic:1.1.2'
+    compile 'ch.qos.logback:logback-classic:1.1.3'
     compile 'com.github.scopt:scopt_2.11:3.3.0'
-    compile 'org.springframework:spring-webmvc:4.1.6.RELEASE'
-    compile 'org.springframework:spring-jdbc:4.1.6.RELEASE'
-    compile 'org.springframework:spring-context-support:4.1.6.RELEASE'
-    compile 'org.scalikejdbc:scalikejdbc_2.11:2.2.5'
+    compile 'org.springframework:spring-webmvc:4.2.0.RELEASE'
+    compile 'org.springframework:spring-jdbc:4.2.0.RELEASE'
+    compile 'org.springframework:spring-context-support:4.2.0.RELEASE'
+    compile 'org.scalikejdbc:scalikejdbc_2.11:2.2.8'
     compile 'org.flywaydb:flyway-core:3.2.1'
     compile 'org.apache.velocity:velocity:1.7'
     compile 'commons-io:commons-io:2.4'
     compile 'commons-codec:commons-codec:1.6'
     compile 'com.yahoo.platform.yui:yuicompressor:2.4.8'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.2'
-    compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.5.2'
-    compile 'com.fasterxml.jackson.module:jackson-module-scala_2.11:2.5.2'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.6.1'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.6.1'
+    compile 'com.fasterxml.jackson.module:jackson-module-scala_2.11:2.6.1'
     compile 'org.pegdown:pegdown:1.5.0'
 
     // deps for examples
     examplesCompile sourceSets.main.output
-    compile 'com.h2database:h2:1.4.186'
-    compile 'mysql:mysql-connector-java:5.1.35'
+    compile 'com.h2database:h2:1.4.188'
+    compile 'mysql:mysql-connector-java:5.1.36'
     compile 'net.sf.opencsv:opencsv:2.3'
     compile 'org.tukaani:xz:1.5'
-    compile 'org.apache.httpcomponents:httpclient:4.4.1'
-    compile 'org.jsoup:jsoup:1.8.1'
-    compile 'com.rometools:rome:1.5.0'
-    compile 'org.twitter4j:twitter4j-core:4.0.3'
+    compile 'org.apache.httpcomponents:httpclient:4.5'
+    compile 'org.jsoup:jsoup:1.8.3'
+    compile 'com.rometools:rome:1.5.1'
+    compile 'org.twitter4j:twitter4j-core:4.0.4'
     compile 'org.bouncycastle:bcprov-jdk16:1.46'
 
     // メールセッションはアプリケーションサーバ任せにするのでこのdepはwarに入れない
     providedCompile 'javax.mail:mail:1.4.7'
     // Servlet APIはアプリケーションサーバの classpathにあるものを使うのでこのdepはwarに入れない
-    providedCompile 'org.eclipse.jetty:jetty-webapp:9.2.10.v20150310'
+    providedCompile 'org.eclipse.jetty:jetty-webapp:9.2.13.v20150730'
+
 }

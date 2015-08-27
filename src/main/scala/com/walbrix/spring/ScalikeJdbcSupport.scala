@@ -10,6 +10,8 @@ import scalikejdbc._
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.datasource.DataSourceUtils
 
+import scala.collection.generic.CanBuildFrom
+
 /**
  * Created by shimarin on 14/11/02.
  */
@@ -50,8 +52,8 @@ trait ScalikeJdbcSupport extends SQLInterpolation {
     }
   }
 
-  def apply(sql:SQLBatch):Seq[Int] = {
-    scalikeJdbcSession("batch", sql.statement, sql()(_))
+  def apply[C[_]](sql:SQLBatch)(implicit cbf: CanBuildFrom[Nothing, Int, C[Int]]):C[Int] = {
+    scalikeJdbcSession("batch", sql.statement, sql()(_, cbf))
   }
 
   def apply(sql:SQLExecution):Boolean = {
