@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="MyApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Adobe Creative SDK(Aviary) + AngularJSのテスト</title>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.2/ui-bootstrap-tpls.min.js"></script>
+    <script src="http://feather.aviary.com/imaging/v2/editor.js"></script>
+    <script src="./js/angular-aviary.min.js"></script>
+    <script>
+        angular.module('MyApp', ["ui.bootstrap","ngAviary"])
+        .config(function(ngAviaryProvider) {
+            ngAviaryProvider.configure({
+                apiKey: 'df802add2d134826a88d100ab4637be1',
+                theme: 'light',
+                tools: 'all'
+            })
+        })
+        .run([ "$rootScope", function($scope) {
+            $scope.imgsrc = "https://angularjs.org/img/AngularJS-large.png";
+            $scope.onSaveButtonClicked = function(id) {
+                console.log("Save button clicked");
+            }
+            $scope.onSave = function(id, newURL) {
+                console.log("Saved (URL of the new image = " + newURL + ")");
+                $scope.imgsrc = newURL;
+            }
+        }]);
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Adobe Creative SDK(Aviary) + AngularJSのテスト</h1>
+        <p><img id="myimage" data-ng-src="{{imgsrc}}"></p>
+
+        <a class="btn btn-default"
+           target_selector="#myimage"
+           on-save-button-clicked='onSaveButtonClicked(id)'
+           on-save='onSave(id, newURL)'
+           ng-aviary> この画像を編集する </a>
+        <h3>注意点</h3>
+        <p>画像処理はサーバーサイドで行われるため、この機能の可用性はAdobe側のサーバに依存する</p>
+        <p>本番サービス用のAPIキーはサイト運営者の名義にて正式に取得する必要あり <a href="https://creativesdk.adobe.com/">ここで取得 (Adobe IDでログインして Appをcreate)</a></p>
+        <p>セーブ後の画像は一旦 Amazon S3に保存される。アプリケーションとしては、それを直接利用するか、自サーバにコピーして利用する</p>
+        <p>料金体系については要確認（セーブ容量などで課金されるのかどうかなど）</p>
+    </div>
+</body>
+</html>
