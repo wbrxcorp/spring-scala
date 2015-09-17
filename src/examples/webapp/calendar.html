@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/latest/css/bootstrap.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-resource.js"></script>
+    <title>AngularJSでカレンダー表示</title>
+    <style>
+        table.calendar tr th { text-align: center; }
+        table.calendar tr .sat { color: #06C; background: #EAF6FF; }
+        table.calendar tr .sun { color: #F33; background: #FFE9E9; }
+    </style>
+    <script>
+        angular.module("MyApp", ["ngResource"])
+        .run(["$rootScope","$resource",  function($scope, $resource) {
+            var calendar = $resource("./api/calendar/:month");
+            $scope.calendar = calendar.get();
+
+            $scope.goto = function(month) {
+                calendar.get({month:month}, function(data) {
+                    $scope.calendar = data;
+                });
+            }
+        }]);
+        angular.element(document).ready(function() {
+            angular.bootstrap(document, ['MyApp']);
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>AngularJSでカレンダー表示</h1>
+
+        <div class="clearfix">
+            <div class="pull-left"><a href="" ng-click="goto(calendar.prev.id)"><span class="glyphicon glyphicon-triangle-left"></span> {{calendar.prev.year}}年{{calendar.prev.month}}月</a></div>
+            <div class="pull-right"><a href="" ng-click="goto(calendar.next.id)">{{calendar.next.year}}年{{calendar.next.month}}月 <span class="glyphicon glyphicon-triangle-right"></span></a></div>
+            <div class="text-center"><big>{{calendar.year}}年{{calendar.month}}月</big></div>
+        </div>
+
+        <table class="table table-bordered calendar">
+            <thead>
+                <tr><th class="sun">日</th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th class="sat">土</th></tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="week in calendar.weeks">
+                    <td ng-repeat="day in week track by $index" ng-class="{sat:$index==6,sun:$index==0}">
+                        <div ng-show="day">
+                            {{day.day}}
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3><i class="fa fa-code"></i> View Source</h3>
+        <ul>
+            <li><a href="./src/examples/webapp/calendar.html">クライアント</a> (HTML/JavaScript)</li>
+            <li><a href="./src/examples/scala/com/walbrix/spring/CalendarRequestHandler.scala">サーバ</a> (Scala/Spring MVC)</li>
+        </ul>
+    </div>
+</body>
+</html>
