@@ -1,8 +1,7 @@
 package com.walbrix.imaging
 
-import java.awt.Image
 import java.awt.image.BufferedImage
-import java.io.{ByteArrayInputStream, ByteArrayOutputStream, OutputStream, InputStream}
+import java.io.InputStream
 import javax.imageio.ImageIO
 
 /**
@@ -11,41 +10,76 @@ import javax.imageio.ImageIO
 object ResizeImage {
   type Width = Int
   type Height = Int
+  type Size = Either[Width, Height]
 
-  def toBufferedImage(source:InputStream, size:Either[Width, Height]):(BufferedImage, String) = {
-    val readers = ImageIO.getImageReaders(source)
+  /**
+   * BufferedImage -> Graphics
+   */
+  def apply(original:BufferedImage, destination:java.awt.Graphics, width:Int, height:Int, x:Int = 0, y:Int = 0):Unit = {
+    val scaled = original.getScaledInstance(width, height, java.awt.Image.SCALE_AREA_AVERAGING)
+    destination.drawImage(scaled, x, y, width, height, null)
+  }
+
+  /**
+   * BufferedImage -> BufferedImage
+   */
+  def apply(original:BufferedImage, destination:BufferedImage):Unit = {
+    apply(original, destination.getGraphics, destination.getWidth, destination.getHeight)
+  }
+
+  /**
+   * BufferedImage -> new BufferedImage
+   */
+  def apply(original:BufferedImage, size:Size):BufferedImage = {
+    val (origWidth, origHeight) = (original.getWidth, original.getHeight)
+    val (width, height) = size match {
+      case Left(width) => (width, origHeight * width / origWidth)
+      case Right(height) => (origWidth * height / origHeight, height)
+    }
+
+    val destination = new BufferedImage(width, height, original.getType)
+    apply(original, destination)
+    destination
+  }
+
+  /**
+   * InputStream -> new (BufferedImage, filetype)
+   */
+  def toBufferedImage(source:InputStream, size:Size):(BufferedImage, String) = {
+    // http://stackoverflow.com/questions/21057191/can-i-tell-what-the-file-type-of-a-bufferedimage-originally-was
+    val imageInputStream = ImageIO.createImageInputStream(source)
+    val readers = ImageIO.getImageReaders(imageInputStream)
     if (!readers.hasNext) throw new IllegalArgumentException("Unsupported image file type")
 
     val reader = readers.next
+    reader.setInput(imageInputStream)
     val original = reader.read(0)
 
-    val (width, height) = size match {
-      case Left(width) => (1, 2)
-      case Right(height) => (2, 3)
-    }
-
-    val bufferedImage = new BufferedImage(width, height, original.getType)
-    val scaled = original.getScaledInstance(width, height, Image.SCALE_AREA_AVERAGING)
-    bufferedImage.getGraphics.drawImage(scaled, 0, 0, width, height, null)
-    (bufferedImage, reader.getFormatName)
+    (apply(original, size), reader.getFormatName)
   }
 
-  def apply(source:InputStream, out:OutputStream, size:Either[Width,Height]):Unit = {
+  /**
+   * InputStream -> OutputStream
+   * @return filetype
+   */
+  def apply(source:InputStream, out:java.io.OutputStream, size:Size):String = {
     val (bufferedImage, format) = toBufferedImage(source, size)
     ImageIO.write(bufferedImage, format, out)
+    format
   }
 
-  def apply(source:InputStream, size:Either[Width, Height]):Array[Byte] = {
-    val baos = new ByteArrayOutputStream()
+  /**
+   * InputStream -> new ByteArray
+   */
+  def apply(source:InputStream, size:Size):Array[Byte] = {
+    val baos = new java.io.ByteArrayOutputStream()
     apply(source, baos, size)
     baos.toByteArray
   }
 
-  def apply(source:Array[Byte], size:Either[Width, Height]):Array[Byte] = {
-    val bais = new ByteArrayInputStream(source)
-    apply(bais, size)
-  }
-
-
+  /**
+   * ByteArray -> new ByteArray
+   */
+  def apply(source:Array[Byte], size:Size):Array[Byte] = apply(new java.io.ByteArrayInputStream(source), size)
 }
-// http://stackoverflow.com/questions/21057191/can-i-tell-what-the-file-type-of-a-bufferedimage-originally-was
+
