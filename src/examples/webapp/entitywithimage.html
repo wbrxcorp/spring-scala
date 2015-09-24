@@ -1,10 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="MyApp">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-resource.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-messages.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/7.3.6/ng-file-upload.js"></script>
+    <title>Entity with an image example</title>
+    <script>
+        angular.module("MyApp", ["ngResource", "ngMessages", "ngFileUpload"])
+        .run(["$rootScope", "$resource", "Upload", function($scope, $resource, Upload) {
+            var entity = $resource("./api/entitywithimage");
+            $scope.entity = entity.get();
+
+            $scope.reset = function() {
+                console.log($scope.entity.image);
+                if ($scope.entity.image) {
+                    $resource("./api/entitywithimage/upload_image/:uid").delete({uid:$scope.entity.image})
+                }
+                $scope.entity = entity.get();
+            }
+
+            $scope.upload = function(file) {
+                if (file == null) return;
+                // TODO: file type must start with "image/"
+                Upload.http({
+                    url: './api/entitywithimage/upload_image',
+                    headers: { "Content-Type": file.type },
+                    data: file
+                }).progress(function(event) {
+                    //console.log(event.loaded / event.total);
+                }).success(function(data) {
+                    if (data.success) {
+                        $scope.imageUploadStatus = {success:true};
+                        $scope.entity.image = data.info;
+                    } else {
+                        console.log("Error: " + data.info);
+                    }
+                }).error(function(data, status) {
+                    if (status == 415) {
+                        $scope.imageUploadStatus = {unsuppoeted:true};
+                    } else {
+                        $scope.imageUploadStatus = {unknown:true};
+                    }
+                });
+            }
+        }]);
+    </script>
 </head>
 <body>
+<div class="container">
+    <h1>Entity with an image example</h1>
 
+    <a href="https://github.com/danialfarid/ng-file-upload">ng-file-upload</a>
+    <form>
+        画像:
+        <div ngf-select="upload($file)" ngf-drop="upload($file)">
+            <span ng-show="entity.image === undefined"><img  ng-src="./api/entitywithimage/img"></span>
+            <span ng-show="entity.image !== undefined"><img ng-src="./api/entitywithimage/upload_image/{{entity.image}}"></span>
+            <br>
+        </div>
+        <div ng-messages="imageUploadStatus" ng-if="!!entity.image">
+            <span class="text-success" ng-message="success">画像アップロード成功</span>
+            <span class="text-danger" ng-message="unsupported">画像アップロード失敗: 使用できないファイル形式です</span>
+            <span class="text-danger" ng-message="unknown">画像アップロード失敗</span>
+        </div>
+        ↑クリックしてファイルを選択するかここにドラッグ＆ドロップ
+        <button class="btn btn-default" ng-disabled="entity.image===undefined" ng-click="entity.image=undefined"><span class="glyphicon glyphicon-remove-circle"></span>元に戻す</button>
+        <button class="btn btn-default" ng-click="entity.image=null"><span class="glyphicon glyphicon-ban-circle"></span>画像を削除</button>
+    </form>
+
+    <h3>View Source</h3>
+    <ul>
+        <li><a href="./src/examples/webapp/entitywithimage.html">クライアント (HTML/JavaScript)</a></li>
+        <li><a href="./src/examples/scala/com/walbrix/spring/EntityWithImageRequestHandler.scala">サーバ (Scala/Spring MVC)</a></li>
+    </ul>
+</div>
 </body>
 </html>
