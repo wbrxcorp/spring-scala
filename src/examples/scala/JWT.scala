@@ -1,7 +1,7 @@
 import scala.collection.JavaConversions._
 import com.nimbusds.jose.{JWEHeader,EncryptionMethod,JWEAlgorithm,JOSEException}
 import com.nimbusds.jose.crypto.{DirectEncrypter,DirectDecrypter}
-import com.nimbusds.jwt.{JWTClaimsSet,EncryptedJWT,ReadOnlyJWTClaimsSet}
+import com.nimbusds.jwt.{JWTClaimsSet,EncryptedJWT}
 import java.text.ParseException
 
 object JWT {
@@ -12,9 +12,10 @@ object JWT {
 	 * 好きなデータ(custom claims)を与えて JWTを生成する
 	 */
 	def encode(customClaims:Map[String,Any]):String = {
-		val claims = new JWTClaimsSet
-		customClaims.foreach { case (key, value) => claims.setCustomClaim(key, value) }
-		val jwt = new EncryptedJWT(new JWEHeader(JWEAlgorithm.DIR, EncryptionMethod.A128GCM), claims)
+		val builder = new JWTClaimsSet.Builder
+		customClaims.foreach { case (key, value) => builder.claim(key, value) }
+
+		val jwt = new EncryptedJWT(new JWEHeader(JWEAlgorithm.DIR, EncryptionMethod.A128GCM), builder.build)
 		jwt.encrypt(new DirectEncrypter(sharedKey))
 		jwt.serialize
 	}
@@ -22,7 +23,7 @@ object JWT {
 	/**
 	 * JWTから元のデータ(claims)を復元する
 	 */
-	def decode(s:String):Either[ReadOnlyJWTClaimsSet,Exception] = {
+	def decode(s:String):Either[JWTClaimsSet,Exception] = {
 		try {
 			val jwt = EncryptedJWT.parse(s)
 			jwt.decrypt(new DirectDecrypter(sharedKey))
@@ -39,7 +40,7 @@ object JWT {
 		println("Encoded token: " + jwt)
 
 		Seq(decode(jwt)/*success case*/, decode(jwt.replace('0', '1'))/*failure case*/).foreach { x=> x match {
-			case Left(claimsSet) => println("Decoded custom claims: " + claimsSet.getCustomClaims)
+			case Left(claimsSet) => println("Decoded custom claims: " + claimsSet.getClaims)
 			case Right(e) => println("Decode error")
 		}}
 		

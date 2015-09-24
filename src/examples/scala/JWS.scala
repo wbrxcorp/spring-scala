@@ -4,18 +4,6 @@ import com.nimbusds.jose.JWSAlgorithm
 import com.nimbusds.jose.JWSObject
 import com.nimbusds.jose.crypto.MACSigner
 import com.nimbusds.jose.crypto.MACVerifier
-import com.nimbusds.jwt.JWTClaimsSet
-import java.util.Date
-import java.util.UUID
-import scala.collection.JavaConversions._
-import com.nimbusds.jose.JWEHeader
-import com.nimbusds.jose.EncryptionMethod
-import com.nimbusds.jose.JWEAlgorithm
-import com.nimbusds.jwt.EncryptedJWT
-import com.nimbusds.jose.crypto.DirectEncrypter
-import com.nimbusds.jose.crypto.DirectDecrypter
-import com.nimbusds.jwt.ReadOnlyJWTClaimsSet
-import com.nimbusds.jose.JOSEException
 
 object JWS {
 	val sharedKey = "a0a2abd8-6162-41";
@@ -25,9 +13,8 @@ object JWS {
 	  val payload = new Payload("Hello world!")
 	  
 	  // Create JWS header with HS256 algorithm
-	  val header = new JWSHeader(JWSAlgorithm.HS256)
-	  header.setContentType("text/plain")
-	  
+		val header = new JWSHeader.Builder(JWSAlgorithm.HS256).contentType("text/plain").build
+
 	  // Create JWS object
 	  val jwsObject = new JWSObject(header, payload)
 	  
