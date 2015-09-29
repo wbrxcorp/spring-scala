@@ -8,43 +8,64 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-resource.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-messages.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/7.3.6/ng-file-upload.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap-tpls.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/8.0.1/ng-file-upload.js"></script>
     <title>Entity with an image example</title>
     <script>
-        angular.module("MyApp", ["ngResource", "ngMessages", "ngFileUpload"])
+        angular.module("MyApp", ["ngResource", "ngMessages", "ngFileUpload","ui.bootstrap"])
         .run(["$rootScope", "$resource", "Upload", function($scope, $resource, Upload) {
             var entity = $resource("./api/entitywithimage");
             $scope.entity = entity.get();
 
             $scope.reset = function() {
-                console.log($scope.entity.image);
-                if ($scope.entity.image) {
-                    $resource("./api/entitywithimage/upload_image/:uid").delete({uid:$scope.entity.image})
-                }
+                $scope.imageUploadStatus = undefined;
                 $scope.entity = entity.get();
+                $scope.form.$setPristine();
+            }
+
+            $scope.save = function() {
+                $scope.imageUploadStatus = undefined;
+                entity.save($scope.entity);
+                console.log($scope.entity);
+                $scope.form.$setPristine();
+            }
+
+            $scope.deleteImage = function() {
+                if ($scope.entity.image !== null) {
+                    $scope.entity.image = null;
+                    $scope.form.$setDirty();
+                    $scope.imageUploadStatus = undefined;
+                }
             }
 
             $scope.upload = function(file) {
                 if (file == null) return;
-                // TODO: file type must start with "image/"
+                if (file.type.indexOf("image/") !== 0) {
+                    $scope.imageUploadStatus = {unsupported: true};
+                    return;
+                }
+                $scope.imageUploadStatus = {progress: 0};
                 Upload.http({
                     url: './api/entitywithimage/upload_image',
                     headers: { "Content-Type": file.type },
                     data: file
                 }).progress(function(event) {
-                    //console.log(event.loaded / event.total);
+                    if ($scope.imageUploadStatus.progress !== undefined) {  // errorの後にprogressが来ることがあるのでこの条件判定が要る
+                        $scope.imageUploadStatus.progress = Math.round(event.loaded / event.total * 100);
+                    }
                 }).success(function(data) {
                     if (data.success) {
                         $scope.imageUploadStatus = {success:true};
-                        $scope.entity.image = data.info;
+                        $scope.entity.image = {image_uid:data.info};
+                        $scope.form.$setDirty();
                     } else {
-                        console.log("Error: " + data.info);
+                        $scope.imageUploadStatus = {unknown:true, info: data.info};
                     }
                 }).error(function(data, status) {
                     if (status == 415) {
-                        $scope.imageUploadStatus = {unsuppoeted:true};
+                        $scope.imageUploadStatus = {unsupported:true};
                     } else {
-                        $scope.imageUploadStatus = {unknown:true};
+                        $scope.imageUploadStatus = {unknown:true, info: status };
                     }
                 });
             }
@@ -55,23 +76,62 @@
 <div class="container">
     <h1>Entity with an image example</h1>
 
-    <a href="https://github.com/danialfarid/ng-file-upload">ng-file-upload</a>
-    <form>
+    <form name="form" ng-submit="save()">
         画像:
-        <div ngf-select="upload($file)" ngf-drop="upload($file)">
-            <span ng-show="entity.image === undefined"><img  ng-src="./api/entitywithimage/img"></span>
-            <span ng-show="entity.image !== undefined"><img ng-src="./api/entitywithimage/upload_image/{{entity.image}}"></span>
-            <br>
-        </div>
-        <div ng-messages="imageUploadStatus" ng-if="!!entity.image">
+        <span ngf-select="upload($file)" ngf-drop="upload($file)">
+            <span ng-if="!entity.image"><img ng-src="./api/entitywithimage/upload_image"></span>
+            <span ng-if="entity.image && !entity.image.image_uid"><img  ng-src="./api/entitywithimage/img"></span>
+            <span ng-if="entity.image.image_uid"><img ng-src="./api/entitywithimage/upload_image/{{entity.image.image_uid}}"></span>
+        </span>
+        <button class="btn btn-default" ng-disabled="entity.image===null" ng-click="deleteImage()"><span class="glyphicon glyphicon-ban-circle"></span>画像を削除</button>
+        <progressbar value="imageUploadStatus.progress" max="100" class="progress-striped active" ng-if="imageUploadStatus.progress!==undefined">
+            <span ng-if="imageUploadStatus.progress==100">変換処理中...</span>
+            <span ng-if="imageUploadStatus.progress<100">{{imageUploadStatus.progress}}%</span>
+        </progressbar>
+        <div ng-messages="imageUploadStatus">
             <span class="text-success" ng-message="success">画像アップロード成功</span>
             <span class="text-danger" ng-message="unsupported">画像アップロード失敗: 使用できないファイル形式です</span>
-            <span class="text-danger" ng-message="unknown">画像アップロード失敗</span>
+            <span class="text-danger" ng-message="unknown">画像アップロード失敗: {{imageUploadStatus.info}}</span>
         </div>
-        ↑クリックしてファイルを選択するかここにドラッグ＆ドロップ
-        <button class="btn btn-default" ng-disabled="entity.image===undefined" ng-click="entity.image=undefined"><span class="glyphicon glyphicon-remove-circle"></span>元に戻す</button>
-        <button class="btn btn-default" ng-click="entity.image=null"><span class="glyphicon glyphicon-ban-circle"></span>画像を削除</button>
+        <div ng-if="imageUploadStatus.progress===undefined">
+            ↑クリックしてファイルを選択するかここにドラッグ＆ドロップ
+
+        </div>
+        <button class="btn btn-default" ng-disabled="imageUploadStatus.progress!==undefined" ng-click="reset()"><span class="glyphicon glyphicon-remove-circle"></span>元に戻す</button>
+        <button class="btn btn-primary" ng-disabled="imageUploadStatus.progress!==undefined || form.$pristine" type="submit"><span class="glyphicon glyphicon-save"></span>保存</button>
     </form>
+
+    <h3>画像フィールドの状態遷移</h3>
+
+    <table class="table">
+        <tr>
+            <th>元の値</th><th>現在の値</th><th>意味</th><th>可能な状態遷移</th>
+        </tr>
+        <tr>
+            <td>null</td><td>null</td><td>A: 画像なし→画像なし</td><td>画像アップロード: B</td>
+        </tr>
+        <tr>
+            <td>null</td><td>{image_uid:uid}</td><td>B: 画像なし→画像あり</td><td>画像削除: A</td>
+        </tr>
+        <tr>
+            <td>任意の文字列</td><td>任意の文字列</td><td>C: 画像あり→変更なし</td><td>画像アップロード: D, 画像削除: E</td>
+        </tr>
+
+        <tr>
+            <td>任意の文字列</td><td>{image_uid:uid}</td><td>D: 画像あり→新画像に変更</td><td><strike>取り消し: C</strike>, 画像削除: E</td>
+        </tr>
+        <tr>
+            <td>任意の文字列</td><td>null</td><td>E: 画像あり→画像削除</td><td><strike>取り消し: C</strike>, 画像アップロード: D</td>
+        </tr>
+    </table>
+
+    <h3>画像フィールドの状態に対応する画像URL</h3>
+    <table class="table">
+        <tr><th>値</th><th>判定方法</th><th>画像URL</th><th>内容</th></tj></tr>
+        <tr><td>null</td><td>!entity</td><td>/upload_image/</td><td>[NO IMAGE]</td></tr>
+        <tr><td>任意の文字列</td><td>entity && !entity.image_uid</td><td>/entirty/img</td><td>orig画像</td></tr>
+        <tr><td>{image_uid:uid}</td><td>entity.image_uid</td><td>/upload_image/uid</td><td>アップロードされた画像</td></tr>
+    </table>
 
     <h3>View Source</h3>
     <ul>

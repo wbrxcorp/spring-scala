@@ -6,6 +6,7 @@ import javax.servlet.http.{Cookie, HttpSession, HttpServletResponse, HttpServlet
 
 import com.walbrix.servlet.GetContextURL
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.util.WebUtils
 
 /**
  * Created by shimarin on 14/11/15.
@@ -14,7 +15,6 @@ trait HttpContextSupport {
   @Autowired private var servletContext:ServletContext = _
   @Autowired private var request:HttpServletRequest = _
   @Autowired private var response:HttpServletResponse = _
-  @Autowired private var session:HttpSession = _
 
   // request
   def getRemoteHost:String = request.getRemoteHost
@@ -27,15 +27,17 @@ trait HttpContextSupport {
   def getAttribute(name:String):Option[AnyRef] = Option(request.getAttribute(name))
   def setAttribute(name:String,value:AnyRef):Unit = request.setAttribute(name, value)
   def removeAttribute(name:String):Unit = request.removeAttribute(name)
+  def getCookie(name:String):Option[Cookie] = Option(WebUtils.getCookie(request, name))
   def getCookies:Array[Cookie] = request.getCookies
   def getCookies(name:String):Seq[Cookie] = request.getCookies.filter(_.getName == name)
   def getInputStream:InputStream = request.getInputStream
 
   // session
-  def getSessionAttribute(name:String):Option[AnyRef] = Option(session.getAttribute(name))
-  def setSessionAttribute(name:String, value:AnyRef):Unit = session.setAttribute(name, value)
-  def removeSessionAttribute(name:String):Unit = session.removeAttribute(name)
-  def getSessionId:String = session.getId
+  def getSessionAttribute(name:String):Option[AnyRef] = Option(WebUtils.getSessionAttribute(request, name))
+  def setSessionAttribute(name:String, value:AnyRef):Unit = WebUtils.setSessionAttribute(request, name, value)
+  def removeSessionAttribute(name:String):Unit = Option(getSession(false)).foreach(_.removeAttribute(name))
+  def getSessionId:String = WebUtils.getSessionId(request)
+  def getOrCreateSessionAttribute[T](name:String, clazz:Class[_]):T = WebUtils.getOrCreateSessionAttribute(getSession(), name, clazz).asInstanceOf[T]
 
   // response
   def addCookie(cookie:Cookie):Unit = response.addCookie(cookie)

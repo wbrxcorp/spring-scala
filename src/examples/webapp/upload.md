@@ -1,3 +1,5 @@
+title: ng-file-uploadでファイルをアップロードする
+
 [ng-file-upload](https://github.com/danialfarid/ng-file-upload) でファイルアップロードを行うサンプル。
 
 angular-file-uploadとも呼ばれているが別人の作った同名のライブラリがあるため混同しないように注意。[cdnjsでは danialfarid-angular-file-upload として登録されている](https://cdnjs.com/libraries/danialfarid-angular-file-upload)。

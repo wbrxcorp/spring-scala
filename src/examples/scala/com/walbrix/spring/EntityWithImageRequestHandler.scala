@@ -1,26 +1,28 @@
 package com.walbrix.spring
 
 
-import java.awt.{BasicStroke, Stroke, RenderingHints, Color}
+import java.awt.{BasicStroke, RenderingHints, Color}
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.walbrix.imaging.ResizeImage
-import org.apache.commons.io.IOUtils
+import org.json4s.JsonAST.{JArray, JObject}
+import org.json4s.jackson.JsonMethods
 import org.springframework.web.bind.annotation._
+import org.springframework.web.context.request.{RequestAttributes, ServletRequestAttributes, RequestContextHolder}
 
 @RestController
 @RequestMapping(Array("entitywithimage"))
-class EntityWithImageRequestHandler extends com.walbrix.spring.mvc.HttpErrorStatus with HttpContextSupport with ServerSideImagingSupport {
+class EntityWithImageRequestHandler extends com.walbrix.spring.mvc.HttpErrorStatus with ServerSideImagingSupport with JsonMethods {
 
-  case class Entity()
+  case class Entity(image:Option[String]=Some("defaultimg.png"))
   case class Result(success:Boolean, info:Option[Any]=None)
 
   private def imageAttributeName(uuid:String) = "ewi/upload_image/%s".format(uuid)
+  private implicit val formats = org.json4s.DefaultFormats
 
   @RequestMapping(value=Array(""), method=Array(RequestMethod.GET))
   def entity():Entity = {
-    Entity(
-    )
+    getOrCreateSessionAttribute("entity", classOf[Entity])
   }
 
   @RequestMapping(value=Array("img"), method=Array(RequestMethod.GET))
@@ -41,8 +43,30 @@ class EntityWithImageRequestHandler extends com.walbrix.spring.mvc.HttpErrorStat
     }
   }
 
+  def withJsonObject[T](node:JsonNode)(f:JObject => T):T = {
+    fromJsonNode(node) match {
+      case obj:JObject => f(obj)
+      case _ => raiseBadRequest("Request must be a json object")
+    }
+  }
+
+  def withJsonArray[T](node:JsonNode)(f:JArray => T):T = {
+    fromJsonNode(node) match {
+      case array:JArray => f(array)
+      case _ => raiseBadRequest("Request must be a json array")
+    }
+  }
+
   @RequestMapping(value=Array(""), method=Array(RequestMethod.POST))
   def entity(@RequestBody body:JsonNode):Result = {
+    val image = withJsonObject(body) { obj =>
+      (obj \ "image").extractOpt[String]
+    }
+
+    image.foreach {image =>
+      //
+    }
+
     Result(false)
   }
 
