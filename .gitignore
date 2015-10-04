@@ -1,6 +1,8 @@
 .idea
 .gradle
 build
+project
+target
 .idea/workspace.xml
 settings-*.xml
 *.iml
