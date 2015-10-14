@@ -9,12 +9,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-resource.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-messages.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap-tpls.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/8.0.1/ng-file-upload.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/9.0.6/ng-file-upload.js"></script>
     <title>Entity with an image example</title>
     <script>
         angular.module("MyApp", ["ngResource", "ngMessages", "ngFileUpload","ui.bootstrap"])
         .run(["$rootScope", "$resource", "Upload", function($scope, $resource, Upload) {
-            var entity = $resource("./api/entitywithimage");
+            var entity = $resource("./entitywithimage");
             $scope.entity = entity.get();
 
             $scope.reset = function() {
@@ -46,7 +46,7 @@
                 }
                 $scope.imageUploadStatus = {progress: 0};
                 Upload.http({
-                    url: './api/entitywithimage/upload_image',
+                    url: './entitywithimage/upload_image',
                     headers: { "Content-Type": file.type },
                     data: file
                 }).progress(function(event) {
@@ -79,9 +79,9 @@
     <form name="form" ng-submit="save()">
         画像:
         <span ngf-select="upload($file)" ngf-drop="upload($file)">
-            <span ng-if="!entity.image"><img ng-src="./api/entitywithimage/upload_image"></span>
-            <span ng-if="entity.image && !entity.image.image_uid"><img  ng-src="./api/entitywithimage/img"></span>
-            <span ng-if="entity.image.image_uid"><img ng-src="./api/entitywithimage/upload_image/{{entity.image.image_uid}}"></span>
+            <span ng-if="!entity.image"><img ng-src="./entitywithimage/upload_image"></span>
+            <span ng-if="entity.image && !entity.image.image_uid"><img  ng-src="./entitywithimage/img"></span>
+            <span ng-if="entity.image.image_uid"><img ng-src="./entitywithimage/upload_image/{{entity.image.image_uid}}"></span>
         </span>
         <button class="btn btn-default" ng-disabled="entity.image===null" ng-click="deleteImage()"><span class="glyphicon glyphicon-ban-circle"></span>画像を削除</button>
         <progressbar value="imageUploadStatus.progress" max="100" class="progress-striped active" ng-if="imageUploadStatus.progress!==undefined">
