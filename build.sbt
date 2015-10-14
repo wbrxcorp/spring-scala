@@ -28,7 +28,8 @@ libraryDependencies ++= Seq(
   "com.fasterxml.jackson.datatype" % "jackson-datatype-joda" % "2.6.2",
   "com.fasterxml.jackson.module" % "jackson-module-scala_2.11" % "2.6.1",
   "org.json4s" % "json4s-native_2.11" % "3.3.0",
-  "org.json4s" % "json4s-jackson_2.11" % "3.3.0"
+  "org.json4s" % "json4s-jackson_2.11" % "3.3.0",
+  "org.json4s" % "json4s-ext_2.11" % "3.3.0"
 )
 
 libraryDependencies ++= Seq(

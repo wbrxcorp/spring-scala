@@ -13,8 +13,9 @@ import scala.util.Try
  */
 case class Hiya(abc:Option[Int], hoge:String)
 
-class ExampleServlet extends org.scalatra.ScalatraServlet with org.scalatra.json.NativeJsonSupport with ScalikeJdbcSupport with TransactionSupport with LazyLogging {
-  override protected implicit def jsonFormats: org.json4s.Formats = org.json4s.DefaultFormats
+class ExampleServlet extends org.scalatra.ScalatraServlet with org.scalatra.json.JacksonJsonSupport with ScalikeJdbcSupport with TransactionSupport with LazyLogging {
+  override protected implicit def jsonFormats: org.json4s.Formats = org.json4s.DefaultFormats.withBigDecimal ++ org.json4s.ext.JodaTimeSerializers.all
+
 
   override def init(config:javax.servlet.ServletConfig) {
     super.init(config)
@@ -30,10 +31,11 @@ class ExampleServlet extends org.scalatra.ScalatraServlet with org.scalatra.json
   }
 
   get("/") {
-    contentType = "application/json"
+    contentType = formats("json")
+    //contentType = "application/json;charset=UTF-8"
     tx {
-      val two = single(sql"select 1+1".map(_.int(1)).single())
-      val three = single(sql"select 1+2".map(_.int(1)).single())
+      val two = single(sql"select 1+1".map(_.int(1)))
+      val three = single(sql"select 1+2".map(_.int(1)))
       Ok(Hiya(two, "ふが"))
     }
   }

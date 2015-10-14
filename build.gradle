@@ -127,6 +127,7 @@ dependencies {
     compile 'org.pegdown:pegdown:1.5.0'
     compile 'org.json4s:json4s-native_2.11:3.3.0'
     compile 'org.json4s:json4s-jackson_2.11:3.3.0'
+    compile 'org.json4s:json4s-ext_2.11:3.3.0'
 
     // deps for examples
     examplesCompile sourceSets.main.output
