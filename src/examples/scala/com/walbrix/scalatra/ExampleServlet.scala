@@ -1,32 +1,55 @@
 package com.walbrix.scalatra
 
-import scalikejdbc.ThreadLocalDB
+import com.typesafe.scalalogging.slf4j.LazyLogging
+import com.walbrix.spring.{TransactionSupport, ScalikeJdbcSupport}
+import org.json4s.JObject
+import org.springframework.web.context.support.SpringBeanAutowiringSupport
 import org.scalatra.Ok
+
+import scala.util.Try
 
 /**
  * Created by shimarin on 15/10/14.
  */
-class ExampleServlet extends org.scalatra.ScalatraServlet with scalikejdbc.SQLInterpolation {
-  private implicit val formats = org.json4s.DefaultFormats
-  private val dataSource = new javax.naming.InitialContext().lookup("java:comp/env/jdbc/spring-scala").asInstanceOf[javax.sql.DataSource]
+case class Hiya(abc:Option[Int], hoge:String)
 
-  def localTx[T](f:scalikejdbc.DBSession=>T) = ThreadLocalDB.load.localTx(f(_))
+class ExampleServlet extends org.scalatra.ScalatraServlet with org.scalatra.json.NativeJsonSupport with ScalikeJdbcSupport with TransactionSupport with LazyLogging {
+  override protected implicit def jsonFormats: org.json4s.Formats = org.json4s.DefaultFormats
+
+  override def init(config:javax.servlet.ServletConfig) {
+    super.init(config)
+    SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext)
+  }
 
   before() {
-    ThreadLocalDB.create(dataSource.getConnection)
     println("Before")
   }
 
   after() {
-    try { ThreadLocalDB.load.close() } catch { case e: Exception => } // DB.closeは物理コネクションをクローズする
     println("After")
   }
 
   get("/") {
     contentType = "application/json"
-    localTx { implicit session =>
-      val two = sql"select 1+1".map(_.int(1)).single().apply()
-      Ok(org.json4s.native.Serialization.write(Map("abc"->two, "hoge"->"ふが")))
+    tx {
+      val two = single(sql"select 1+1".map(_.int(1)).single())
+      val three = single(sql"select 1+2".map(_.int(1)).single())
+      Ok(Hiya(two, "ふが"))
     }
   }
+
+  post("/") {
+    val hiya = parsedBody match {
+      case obj:JObject => Try(obj.extract[Hiya]).getOrElse(halt(400))
+      case _ => halt(400)
+    }
+    Ok(hiya)
+  }
+
+  error {
+    case e => {
+      logger.error("Error", e)
+    }
+  }
+
 }

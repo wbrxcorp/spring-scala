@@ -51,7 +51,7 @@ libraryDependencies ++= Seq(
   "org.bouncycastle" % "bcprov-jdk16" % "1.46",
   "mysql" % "mysql-connector-java" % "5.1.36",
   "com.nimbusds" % "nimbus-jose-jwt" % "4.1.1",
-  "org.scalatra" % "scalatra_2.11" % "2.3.1"
+  "org.scalatra" % "scalatra-json_2.11" % "2.3.1"
 )
 
 // example runtime deps
