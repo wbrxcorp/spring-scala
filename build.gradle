@@ -125,7 +125,8 @@ dependencies {
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda:' + jacksonVersion
     compile 'com.fasterxml.jackson.module:jackson-module-scala_2.11:2.6.1'
     compile 'org.pegdown:pegdown:1.5.0'
-    compile 'org.json4s:json4s-jackson_2.11:3.2.11'
+    compile 'org.json4s:json4s-native_2.11:3.3.0'
+    compile 'org.json4s:json4s-jackson_2.11:3.3.0'
 
     // deps for examples
     examplesCompile sourceSets.main.output
@@ -139,6 +140,7 @@ dependencies {
     compile 'org.twitter4j:twitter4j-core:4.0.4'
     compile 'org.bouncycastle:bcprov-jdk16:1.46'
     compile 'com.nimbusds:nimbus-jose-jwt:4.1.1'
+    compile 'org.scalatra:scalatra_2.11:2.3.1'
 
     // メールセッションはアプリケーションサーバ任せにするのでこのdepはwarに入れない
     providedCompile 'javax.mail:mail:1.4.7'

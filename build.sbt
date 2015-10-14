@@ -27,7 +27,8 @@ libraryDependencies ++= Seq(
   "com.fasterxml.jackson.core" % "jackson-databind" % "2.6.2",
   "com.fasterxml.jackson.datatype" % "jackson-datatype-joda" % "2.6.2",
   "com.fasterxml.jackson.module" % "jackson-module-scala_2.11" % "2.6.1",
-  "org.json4s" % "json4s-jackson_2.11" % "3.2.11"
+  "org.json4s" % "json4s-native_2.11" % "3.3.0",
+  "org.json4s" % "json4s-jackson_2.11" % "3.3.0"
 )
 
 libraryDependencies ++= Seq(
@@ -49,7 +50,8 @@ libraryDependencies ++= Seq(
   "com.rometools" % "rome" % "1.5.1",
   "org.bouncycastle" % "bcprov-jdk16" % "1.46",
   "mysql" % "mysql-connector-java" % "5.1.36",
-  "com.nimbusds" % "nimbus-jose-jwt" % "4.1.1"
+  "com.nimbusds" % "nimbus-jose-jwt" % "4.1.1",
+  "org.scalatra" % "scalatra_2.11" % "2.3.1"
 )
 
 // example runtime deps

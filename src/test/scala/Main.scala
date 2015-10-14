@@ -27,7 +27,8 @@ import scalikejdbc.{GlobalSettings, LoggingSQLAndTimeSettings}
 @JsonIgnoreProperties(ignoreUnknown = true)
 case class Config(mailtrap:Option[MailTrapConfig] = None, scalikejdbc_log_config:Option[LoggingSQLAndTimeSettings] = None, port:Option[Int] = None)
 
-object Main extends com.typesafe.scalalogging.slf4j.LazyLogging with ScalikeJdbcSupport {
+object Main extends com.typesafe.scalalogging.slf4j.LazyLogging with ScalikeJdbcSupport with org.json4s.native.JsonMethods
+{
   private var webappContext:WebAppContext = _
   private var server:Server = _
   private var _session:HttpSession = _
