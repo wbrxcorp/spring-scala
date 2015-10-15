@@ -13,7 +13,7 @@
 		<scala.version.major>2.11</scala.version.major>
 		<scala.version.minor>6</scala.version.minor>
 		<aspectj.version>1.8.4</aspectj.version>
-		<scalikejdbc.version>2.2.5</scalikejdbc.version>
+		<scalikejdbc.version>2.2.8</scalikejdbc.version>
 	</properties>
 	<dependencies>
 		<!-- scala -->
@@ -90,13 +90,13 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-joda</artifactId>
-			<version>2.5.2</version>
+			<version>2.6.2</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.module</groupId>
 			<artifactId>jackson-module-scala_${scala.version.major}</artifactId>
-			<version>2.5.2</version>
+			<version>2.6.1</version>
 			<scope>runtime</scope>
 		</dependency>
 
