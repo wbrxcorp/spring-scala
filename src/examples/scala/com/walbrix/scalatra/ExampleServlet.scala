@@ -16,10 +16,6 @@ class ExampleServlet
   with com.typesafe.scalalogging.slf4j.LazyLogging {
   override protected implicit def jsonFormats: org.json4s.Formats = org.json4s.DefaultFormats.withBigDecimal ++ org.json4s.ext.JodaTimeSerializers.all
 
-  override def initialize(config:javax.servlet.ServletConfig):Unit = {
-    org.springframework.web.context.support.SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext)
-  }
-
   before() {
     println("Before")
   }

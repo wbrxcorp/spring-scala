@@ -28,7 +28,8 @@ class EntityWithImageServlet extends org.scalatra.ScalatraServlet with org.scala
   }
 
   get("/") {
-    contentType = formats("json")
+    // Accept: application/json の場合はこれがなくてもjsonになるもよう
+    //contentType = formats("json")
     enrichSession(session).getAsOrElse("entity", Entity())
   }
 
@@ -110,6 +111,10 @@ class EntityWithImageServlet extends org.scalatra.ScalatraServlet with org.scala
 
   post("/upload_image") {
     val requestContentType = request.getContentType
+    if (!requestContentType.startsWith("image/")) {
+      halt(415, "image/* only")
+    }
+
     val image = ResizeImage(request.getInputStream, Left(240))
 
     val uuid = java.util.UUID.randomUUID.toString
