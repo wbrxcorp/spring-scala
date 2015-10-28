@@ -1,8 +1,10 @@
+import java.io.File
+import java.nio.file.Files
 import java.util.concurrent.TimeUnit
 import javax.servlet.{Servlet, ServletContext}
 import javax.servlet.http.{HttpSession, HttpServletResponse, HttpServletRequest}
 
-import org.apache.commons.io.IOUtils
+import org.apache.commons.io.{FileUtils, IOUtils}
 import org.eclipse.jetty.webapp.WebAppContext
 import org.springframework.web.context.WebApplicationContext
 
@@ -116,6 +118,12 @@ object Main extends com.typesafe.scalalogging.slf4j.LazyLogging with ScalikeJdbc
       req.setContent(content)
       f(req)
     })
+  }
+
+  def post(servletName:String, path:String, file:File):MockHttpServletResponse = {
+    val contentType = Files.probeContentType(file.toPath)
+    val content = FileUtils.readFileToByteArray(file)
+    post(servletName, path, contentType, content)
   }
 
   def post(servletName:String, path:String, contentType:String, content:String):MockHttpServletResponse = {

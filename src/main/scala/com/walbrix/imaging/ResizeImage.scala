@@ -69,17 +69,18 @@ object ResizeImage {
   }
 
   /**
-   * InputStream -> new ByteArray
+   * InputStream -> (new ByteArray, filetype)
    */
-  def apply(source:InputStream, size:Size):Array[Byte] = {
+  def apply(source:InputStream, size:Size):(Array[Byte], String) = {
+    val (bufferedImage, format) = toBufferedImage(source, size)
     val baos = new java.io.ByteArrayOutputStream()
-    apply(source, baos, size)
-    baos.toByteArray
+    ImageIO.write(bufferedImage, format, baos)
+    (baos.toByteArray, format)
   }
 
   /**
    * ByteArray -> new ByteArray
    */
-  def apply(source:Array[Byte], size:Size):Array[Byte] = apply(new java.io.ByteArrayInputStream(source), size)
+  def apply(source:Array[Byte], size:Size):(Array[Byte], String) = apply(new java.io.ByteArrayInputStream(source), size)
 }
 

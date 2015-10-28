@@ -6,8 +6,9 @@ import java.io.ByteArrayOutputStream
 import javax.imageio.ImageIO
 
 import com.walbrix.imaging.ResizeImage
-import org.json4s.JObject
-import org.scalatra.{Ok, ActionResult}
+import org.apache.commons.codec.binary.Base64
+import org.json4s.{JValue, JObject}
+import org.scalatra.{UnsupportedMediaType, BadRequest, Ok, ActionResult}
 
 case class Entity(image:Option[String]=Some("defaultimg.png"))
 case class Result(success:Boolean, info:Option[Any]=None)
@@ -15,7 +16,7 @@ case class Result(success:Boolean, info:Option[Any]=None)
 /**
  * Created by shimarin on 15/10/14.
  */
-class EntityWithImageServlet extends org.scalatra.ScalatraServlet with org.scalatra.json.JacksonJsonSupport {
+class EntityWithImageServlet extends org.scalatra.ScalatraServlet with org.scalatra.json.JacksonJsonSupport with com.typesafe.scalalogging.slf4j.LazyLogging {
   override protected implicit def jsonFormats: org.json4s.Formats = org.json4s.DefaultFormats.withBigDecimal ++ org.json4s.ext.JodaTimeSerializers.all
 
   def drawImage(width:Int, height:Int, format:String)(f:Graphics2D=>Unit):ActionResult = {
@@ -25,6 +26,51 @@ class EntityWithImageServlet extends org.scalatra.ScalatraServlet with org.scala
     val baos = new ByteArrayOutputStream()
     ImageIO.write(bufferedImage, format, baos)
     Ok(baos.toByteArray, Map("Content-Type" -> ("image/" + format)))
+  }
+
+  def withJsonObject[T](obj:JValue)(f:JObject=>T):T = obj match {
+    case x:JObject =>
+      logger.debug(x.toString)
+      try {
+        f(x)
+      }
+      catch {
+        case e:Throwable =>
+          logger.debug("error parsing json object", e)
+          halt(BadRequest(e))
+      }
+    case _ => halt(BadRequest("Request body must be a json object"))
+  }
+
+  def imageToDataURI(contentType:String, content:Array[Byte]):String = {
+    "data:%s;base64,%s".format(contentType, Base64.encodeBase64URLSafeString(content))
+  }
+
+  def dataURIToImage(dataURI:String):(String,Array[Byte]) = {
+    val chunks = dataURI.split(";", 2)
+    if (chunks.length != 2 || !chunks(0).startsWith("data:") || !chunks(1).startsWith("base64,")) halt(BadRequest("Invalid Data URI string"))
+    try {
+      (chunks(0).substring(5), Base64.decodeBase64(chunks(1).substring(7)))
+    }
+    catch {
+      case e:Throwable => halt(BadRequest("Invalid base64 stream"))
+    }
+  }
+
+  post("/image") {
+    val requestContentType = request.getContentType
+    if (!requestContentType.startsWith("image/")) {
+      halt(UnsupportedMediaType("image/* only"))
+    }
+
+    try {
+      val (image, filetype) = ResizeImage(request.getInputStream, Left(240))
+      Ok(imageToDataURI("image/%s".format(filetype), image), Map("Content-Type" -> ("text/plain")))
+    }
+    catch {
+      case e:IllegalArgumentException => BadRequest("Invalid image file")
+    }
+
   }
 
   get("/") {
@@ -51,11 +97,11 @@ class EntityWithImageServlet extends org.scalatra.ScalatraServlet with org.scala
   }
 
   post("/") {
-    parsedBody match {
-      case json:JObject =>
-        val name = (json \ "name").extract
-        val image = (json \ "image").toSome.map (_.extract[String] )
-      case _ => halt(400, "Request body must be a json object")
+    val (name, image) = withJsonObject(parsedBody) { json =>
+      (
+        (json \ "name").extract[String],
+        (json \ "image").toSome.map(_.extract[String])
+        )
     }
 
     Result(false)
