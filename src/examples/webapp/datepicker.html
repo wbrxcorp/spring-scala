@@ -9,10 +9,10 @@
         .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-resource.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/i18n/angular-locale_ja.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-resource.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/i18n/angular-locale_ja.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
     <script>
         angular.module("MyApp", ["ngResource", "ui.bootstrap"])
         .run(["$rootScope", "$resource", "$filter", function($scope, $resource, $filter) {
@@ -36,6 +36,8 @@
 
                 $scope.opened = true;
             };
+
+            $scope.mytime = null;
           }]);
     </script>
     <title>DatePicker</title>
@@ -45,7 +47,7 @@
         <h1>DatePicker(日付選択)</h1>
 
         <p class="input-group">
-            <input type="text" class="form-control" datepicker-popup="yyyy/MM/dd" ng-model="date" is-open="opened"
+            <input type="text" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="date" is-open="opened"
                    datepicker-options="{}" ng-required="true" close-text="Close"/>
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -55,6 +57,10 @@
         <p><button class="btn btn-default" ng-click="submit()">送信</button></p>
 
         <p>１ヶ月後の日付: [{{oneMonthAfter.info | date:'yyyy-MM-dd HH:mm'}}]</p>
+
+        <h3>timepicker</h3>
+        <uib-timepicker ng-model="mytime" hour-step="1" minute-step="30" show-meridian="false"></uib-timepicker><button class="btn btn-default">reset</button>
+        waiting for <a href="https://github.com/angular-ui/bootstrap/commit/8ffdaeb099b3f3858369177056977940107e3d9d">8ffdaeb</a>
 
         <h3>View Source</h3>
         <ul>
