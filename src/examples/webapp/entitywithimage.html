@@ -9,7 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-resource.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-messages.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/9.1.1/ng-file-upload.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/9.1.2/ng-file-upload.js"></script>
     <title>Entity with an image example</title>
     <script>
         angular.module("MyApp", ["ngResource", "ngMessages", "ngFileUpload","ui.bootstrap"])
@@ -26,7 +26,6 @@
             $scope.save = function() {
                 $scope.imageUploadStatus = undefined;
                 entity.save($scope.entity);
-                console.log($scope.entity);
                 $scope.form.$setPristine();
             }
 
@@ -46,7 +45,7 @@
                 }
                 $scope.imageUploadStatus = {progress: 0};
                 Upload.http({
-                    url: './entitywithimage/upload_image',
+                    url: './entitywithimage/image',
                     headers: { "Content-Type": file.type },
                     data: file
                 }).progress(function(event) {
@@ -54,18 +53,14 @@
                         $scope.imageUploadStatus.progress = Math.round(event.loaded / event.total * 100);
                     }
                 }).success(function(data) {
-                    if (data.success) {
-                        $scope.imageUploadStatus = {success:true};
-                        $scope.entity.image = {image_uid:data.info};
-                        $scope.form.$setDirty();
-                    } else {
-                        $scope.imageUploadStatus = {unknown:true, info: data.info};
-                    }
+                    $scope.imageUploadStatus = {success:true};
+                    $scope.entity.image = data;
+                    $scope.form.$setDirty();
                 }).error(function(data, status) {
                     if (status == 415) {
                         $scope.imageUploadStatus = {unsupported:true};
                     } else {
-                        $scope.imageUploadStatus = {unknown:true, info: status };
+                        $scope.imageUploadStatus = {unknown:true, info: data };
                     }
                 });
             }
@@ -76,68 +71,54 @@
 <div class="container">
     <h1>Entity with an image example</h1>
 
-
-    <form name="form" ng-submit="save()">
-        画像:
-        <span ngf-select="upload($file)" ngf-drop="upload($file)">
-            <span ng-if="!entity.image"><img ng-src="./entitywithimage/upload_image"></span>
-            <span ng-if="entity.image && !entity.image.image_uid"><img  ng-src="./entitywithimage/img"></span>
-            <span ng-if="entity.image.image_uid"><img ng-src="./entitywithimage/upload_image/{{entity.image.image_uid}}"></span>
-        </span>
-        <button class="btn btn-default" ng-disabled="entity.image===null" ng-click="deleteImage()"><span class="glyphicon glyphicon-ban-circle"></span>画像を削除</button>
-        <progressbar value="imageUploadStatus.progress" max="100" class="progress-striped active" ng-if="imageUploadStatus.progress!==undefined">
-            <span ng-if="imageUploadStatus.progress==100">変換処理中...</span>
-            <span ng-if="imageUploadStatus.progress<100">{{imageUploadStatus.progress}}%</span>
-        </progressbar>
-        <div ng-messages="imageUploadStatus">
-            <span class="text-success" ng-message="success">画像アップロード成功</span>
-            <span class="text-danger" ng-message="unsupported">画像アップロード失敗: 使用できないファイル形式です</span>
-            <span class="text-danger" ng-message="unknown">画像アップロード失敗: {{imageUploadStatus.info}}</span>
+    <form name="form" class="form-horizontal" ng-submit="save()">
+        <div class="form-group">
+            <label class="control-label col-xs-2">画像</label>
+            <div class="col-xs-5">
+                <span ngf-select="upload($file)" ngf-drop="upload($file)">
+                    <img class="img-responsive img-thumbnail" ng-src="{{entity.image? entity.image : './entitywithimage/no_image'}}">
+                </span>
+                <button class="btn btn-default" type="button" ng-show="entity.image" ng-click="deleteImage()"><span class="glyphicon glyphicon-ban-circle"></span>画像を削除</button>
+                <uib-progressbar value="imageUploadStatus.progress" max="100" class="progress-striped active" ng-if="imageUploadStatus.progress!==undefined">
+                    <span ng-if="imageUploadStatus.progress==100">変換処理中...</span>
+                    <span ng-if="imageUploadStatus.progress<100">{{imageUploadStatus.progress}}%</span>
+                </uib-progressbar>
+                <div ng-messages="imageUploadStatus">
+                    <span class="text-success" ng-message="success">画像アップロード成功</span>
+                    <span class="text-danger" ng-message="unsupported">画像アップロード失敗: 使用できないファイル形式です</span>
+                    <span class="text-danger" ng-message="unknown">画像アップロード失敗: {{imageUploadStatus.info}}</span>
+                </div>
+                <div ng-if="imageUploadStatus.progress===undefined">
+                    ↑クリックしてファイルを選択するかここにドラッグ＆ドロップ
+                </div>
+            </div>
         </div>
-        <div ng-if="imageUploadStatus.progress===undefined">
-            ↑クリックしてファイルを選択するかここにドラッグ＆ドロップ
-
+        <div class="form-group">
+            <label class="control-label col-xs-2">タイトル</label>
+            <div class="col-xs-5">
+                <input type="text" name="title" class="form-control" ng-model="entity.title">
+            </div>
         </div>
-        <button class="btn btn-default" ng-disabled="imageUploadStatus.progress!==undefined" ng-click="reset()"><span class="glyphicon glyphicon-remove-circle"></span>元に戻す</button>
-        <button class="btn btn-primary" ng-disabled="imageUploadStatus.progress!==undefined || form.$pristine" type="submit"><span class="glyphicon glyphicon-save"></span>保存</button>
+        <div class="form-group">
+            <label class="control-label col-xs-2">説明文</label>
+            <div class="col-xs-5">
+                <textarea name="description" class="form-control" ng-model="entity.description"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-5">
+                <button class="btn btn-default" ng-disabled="imageUploadStatus.progress!==undefined || form.$pristine" ng-click="reset()" type="button"><span class="glyphicon glyphicon-remove-circle"></span>元に戻す</button>
+                <button class="btn btn-primary" ng-disabled="imageUploadStatus.progress!==undefined || form.$pristine" type="submit"><span class="glyphicon glyphicon-save"></span>保存</button>
+                <span ng-if="!form.$pristine">変更は保存されていません!</span>
+            </div>
+        </div>
+
     </form>
-
-    <h3>画像フィールドの状態遷移</h3>
-
-    <table class="table">
-        <tr>
-            <th>元の値</th><th>現在の値</th><th>意味</th><th>可能な状態遷移</th>
-        </tr>
-        <tr>
-            <td>null</td><td>null</td><td>A: 画像なし→画像なし</td><td>画像アップロード: B</td>
-        </tr>
-        <tr>
-            <td>null</td><td>{image_uid:uid}</td><td>B: 画像なし→画像あり</td><td>画像削除: A</td>
-        </tr>
-        <tr>
-            <td>任意の文字列</td><td>任意の文字列</td><td>C: 画像あり→変更なし</td><td>画像アップロード: D, 画像削除: E</td>
-        </tr>
-
-        <tr>
-            <td>任意の文字列</td><td>{image_uid:uid}</td><td>D: 画像あり→新画像に変更</td><td><strike>取り消し: C</strike>, 画像削除: E</td>
-        </tr>
-        <tr>
-            <td>任意の文字列</td><td>null</td><td>E: 画像あり→画像削除</td><td><strike>取り消し: C</strike>, 画像アップロード: D</td>
-        </tr>
-    </table>
-
-    <h3>画像フィールドの状態に対応する画像URL</h3>
-    <table class="table">
-        <tr><th>値</th><th>判定方法</th><th>画像URL</th><th>内容</th></tj></tr>
-        <tr><td>null</td><td>!entity</td><td>/upload_image/</td><td>[NO IMAGE]</td></tr>
-        <tr><td>任意の文字列</td><td>entity && !entity.image_uid</td><td>/entirty/img</td><td>orig画像</td></tr>
-        <tr><td>{image_uid:uid}</td><td>entity.image_uid</td><td>/upload_image/uid</td><td>アップロードされた画像</td></tr>
-    </table>
 
     <h3>View Source</h3>
     <ul>
         <li><a href="./src/examples/webapp/entitywithimage.html">クライアント (HTML/JavaScript)</a></li>
-        <li><a href="./src/examples/scala/com/walbrix/spring/EntityWithImageRequestHandler.scala">サーバ (Scala/Spring MVC)</a></li>
+        <li><a href="./src/examples/scala/com/walbrix/scalatra/EntityWithImageServlet.scala">サーバ (Scalatra)</a></li>
     </ul>
 </div>
 </body>

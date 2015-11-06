@@ -13,7 +13,7 @@ run"""
 
 libraryDependencies ++= Seq(
   "org.apache.velocity" % "velocity" % "1.7",
-  "org.scalikejdbc" % "scalikejdbc_2.11" % "2.2.8",
+  "org.scalikejdbc" % "scalikejdbc_2.11" % "2.2.9",
   "com.typesafe.scala-logging" % "scala-logging-slf4j_2.11" % "2.1.2",
   "com.yahoo.platform.yui" % "yuicompressor" % "2.4.8",
   "org.flywaydb" % "flyway-core" % "3.2.1",
@@ -24,9 +24,9 @@ libraryDependencies ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "com.fasterxml.jackson.core" % "jackson-databind" % "2.6.2",
-  "com.fasterxml.jackson.datatype" % "jackson-datatype-joda" % "2.6.2",
-  "com.fasterxml.jackson.module" % "jackson-module-scala_2.11" % "2.6.1",
+  "com.fasterxml.jackson.core" % "jackson-databind" % "2.6.3",
+  "com.fasterxml.jackson.datatype" % "jackson-datatype-joda" % "2.6.3",
+  "com.fasterxml.jackson.module" % "jackson-module-scala_2.11" % "2.6.3",
   "org.json4s" % "json4s-native_2.11" % "3.3.0",
   "org.json4s" % "json4s-jackson_2.11" % "3.3.0",
   "org.json4s" % "json4s-ext_2.11" % "3.3.0"
@@ -34,7 +34,7 @@ libraryDependencies ++= Seq(
 
 libraryDependencies ++= Seq(
   "context-support","webmvc","jdbc"
-).map(name => "org.springframework" % ("spring-" + name) % "4.2.1.RELEASE")
+).map(name => "org.springframework" % ("spring-" + name) % "4.2.2.RELEASE")
 
 libraryDependencies ++= Seq(
   "jetty-webapp","jetty-jsp","jetty-plus"

@@ -13,7 +13,7 @@ plugins {
 defaultTasks 'clean','jar','sourcesJar','shadowJar','war'
 
 sourceCompatibility = 1.6
-version = '0.20151014'
+version = '0.20151106'
 
 repositories.mavenCentral()
 
@@ -32,8 +32,8 @@ sourceSets {
 }
 
 ext {
-    springVersion = "4.2.1.RELEASE"
-    jacksonVersion = "2.6.2"
+    springVersion = "4.2.2.RELEASE"
+    jacksonVersion = "2.6.3"
 }
 
 idea {
@@ -115,7 +115,7 @@ dependencies {
     compile 'org.springframework:spring-webmvc:' + springVersion
     compile 'org.springframework:spring-jdbc:' + springVersion
     compile 'org.springframework:spring-context-support:' + springVersion
-    compile 'org.scalikejdbc:scalikejdbc_2.11:2.2.8'
+    compile 'org.scalikejdbc:scalikejdbc_2.11:2.2.9'
     compile 'org.flywaydb:flyway-core:3.2.1'
     compile 'org.apache.velocity:velocity:1.7'
     compile 'commons-io:commons-io:2.4'
@@ -123,7 +123,7 @@ dependencies {
     compile 'com.yahoo.platform.yui:yuicompressor:2.4.8'
     compile 'com.fasterxml.jackson.core:jackson-databind:' + jacksonVersion
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda:' + jacksonVersion
-    compile 'com.fasterxml.jackson.module:jackson-module-scala_2.11:2.6.1'
+    compile 'com.fasterxml.jackson.module:jackson-module-scala_2.11:' + jacksonVersion
     compile 'org.pegdown:pegdown:1.5.0'
     compile 'org.json4s:json4s-native_2.11:3.3.0'
     compile 'org.json4s:json4s-jackson_2.11:3.3.0'
