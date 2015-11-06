@@ -74,7 +74,7 @@
     <form name="form" class="form-horizontal" ng-submit="save()">
         <div class="form-group">
             <label class="control-label col-xs-2">画像</label>
-            <div class="col-xs-5">
+            <div class="col-xs-10">
                 <span ngf-select="upload($file)" ngf-drop="upload($file)">
                     <img class="img-responsive img-thumbnail" ng-src="{{entity.image? entity.image : './entitywithimage/no_image'}}">
                 </span>
@@ -95,18 +95,18 @@
         </div>
         <div class="form-group">
             <label class="control-label col-xs-2">タイトル</label>
-            <div class="col-xs-5">
+            <div class="col-xs-10">
                 <input type="text" name="title" class="form-control" ng-model="entity.title">
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-xs-2">説明文</label>
-            <div class="col-xs-5">
+            <div class="col-xs-10">
                 <textarea name="description" class="form-control" ng-model="entity.description"></textarea>
             </div>
         </div>
         <div class="form-group">
-            <div class="col-xs-offset-2 col-xs-5">
+            <div class="col-xs-offset-2 col-xs-10">
                 <button class="btn btn-default" ng-disabled="imageUploadStatus.progress!==undefined || form.$pristine" ng-click="reset()" type="button"><span class="glyphicon glyphicon-remove-circle"></span>元に戻す</button>
                 <button class="btn btn-primary" ng-disabled="imageUploadStatus.progress!==undefined || form.$pristine" type="submit"><span class="glyphicon glyphicon-save"></span>保存</button>
                 <span ng-if="!form.$pristine">変更は保存されていません!</span>
