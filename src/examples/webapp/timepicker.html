@@ -15,9 +15,9 @@
                 restrict: 'E',
                 replace: true,
                 templateUrl: 'timepicker.html',
-                require: 'ngModel',
+                require: '^ngModel',
                 scope: {
-                    //required:'=',
+                    required:'=',
                     hours:'&',  // & : 単方向バインディング(expression)
                     minutes:'&'
                 },
@@ -39,28 +39,28 @@
 
                     scope.minutes = minuteOptions;
 
-                    // TODO: ngModel support
-                    scope.$watch("model", function(newValue){
-                        if (newValue && Array.isArray(newValue)) {
-                            scope.hour = newValue[0];
-                            scope.minute = newValue[1];
+                    scope.$parent.$watch(attrs.ngModel, function (value) {
+                        if (value && Array.isArray(value)) {
+                            scope.hour = value[0];
+                            scope.minute = value[1];
                         } else {
                             scope.hour = null;
                             scope.minute = null;
                         }
+                        ctrl.$setValidity('required', !scope.required || !!value);
                     });
-                    scope.$watch("hour", function(newValue) {
-                        if (newValue !== null) {
-                            scope.model = [ newValue, scope.minute !== null? scope.minute : scope.minutes[0].value ];
+                    scope.$watch("hour", function(value) {
+                        if (value !== null) {
+                            ctrl.$setViewValue([ value, scope.minute !== null? scope.minute : scope.minutes[0].value ]);
                         } else {
-                            scope.model = null;
+                            ctrl.$setViewValue(null);
                         }
                     });
-                    scope.$watch("minute", function(newValue) {
-                        if (newValue !== null) {
-                            scope.model = [ scope.hour !== null? scope.hour : scope.hours[0], newValue ];
+                    scope.$watch("minute", function(value) {
+                        if (value !== null) {
+                            ctrl.$setViewValue([ scope.hour !== null? scope.hour : scope.hours[0], value ]);
                         } else {
-                            scope.model = null;
+                            ctrl.$setViewValue(null);
                         }
                     });
                 }
@@ -77,8 +77,25 @@
 <body>
 <div class="container">
     <h1>TimePicker(時刻選択)</h1>
-    time1: <timepicker class="timepicker" ng-model="time1" required="true"></timepicker> {{ time1 }}<br>
-    time2: <timepicker class="timepicker" ng-model="time2" hours="[5,6,7,8,9,10,11,12]"></timepicker> {{ time2 }} <button type="button" ng-click="time2=null">クリア</button><br>
+    <form name="form" class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-xs-3">time1(必須)</label>
+            <div class="col-xs-9">
+                <timepicker class="timepicker" name="time1" ng-model="time1" required="true"></timepicker> {{ time1 }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3">time2</label>
+            <div class="col-xs-9">
+                <timepicker class="timepicker" name="time2" ng-model="time2" hours="[5,6,7,8,9,10,11,12]"></timepicker> {{ time2 }} <button type="button" ng-click="time2=null">クリア</button>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-offset-3 col-xs-9">
+                <button class="btn btn-primary" ng-disabled="!form.$valid" type="submit"><span class="glyphicon glyphicon-save"></span>OK</button>
+            </div>
+        </div>
+    </form>
 </div>
 </body>
 <script type="text/ng-template" id="timepicker.html">
