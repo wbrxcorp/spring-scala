@@ -13,7 +13,7 @@ plugins {
 defaultTasks 'clean','jar','sourcesJar','shadowJar','war'
 
 sourceCompatibility = 1.6
-version = '0.20151106'
+version = '0.20151125'
 
 repositories.mavenCentral()
 
@@ -32,7 +32,7 @@ sourceSets {
 }
 
 ext {
-    springVersion = "4.2.2.RELEASE"
+    springVersion = "4.2.3.RELEASE"
     jacksonVersion = "2.6.3"
 }
 
@@ -94,13 +94,13 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile 'org.springframework:spring-test:' + springVersion
 
-    testCompile 'org.eclipse.jetty:jetty-plus:9.2.13.v20150730'
+    testCompile 'org.eclipse.jetty:jetty-plus:9.2.14.v20151106'
     testCompile 'org.scala-lang:scala-compiler:2.11.7'
     testCompile 'jline:jline:2.13'
-    testCompile 'org.seleniumhq.selenium:selenium-chrome-driver:2.47.1'
+    testCompile 'org.seleniumhq.selenium:selenium-chrome-driver:2.48.2'
     testCompile 'org.scalatest:scalatest_2.11:2.2.5'
-    testRuntime 'org.eclipse.jetty:jetty-jsp:9.2.13.v20150730'
-    testRuntime 'org.seleniumhq.selenium:selenium-support:2.47.1'
+    testRuntime 'org.eclipse.jetty:jetty-jsp:9.2.14.v20151106'
+    testRuntime 'org.seleniumhq.selenium:selenium-support:2.48.2'
 
     runtime 'org.slf4j:jcl-over-slf4j:1.7.12'
     runtime 'org.aspectj:aspectjweaver:1.8.7'
@@ -131,8 +131,8 @@ dependencies {
 
     // deps for examples
     examplesCompile sourceSets.main.output
-    compile 'com.h2database:h2:1.4.189'
-    compile 'mysql:mysql-connector-java:5.1.36'
+    compile 'com.h2database:h2:1.4.190'
+    compile 'mysql:mysql-connector-java:5.1.37'
     compile 'net.sf.opencsv:opencsv:2.3'
     compile 'org.tukaani:xz:1.5'
     compile 'org.apache.httpcomponents:httpclient:4.5'
@@ -146,6 +146,6 @@ dependencies {
     // メールセッションはアプリケーションサーバ任せにするのでこのdepはwarに入れない
     providedCompile 'javax.mail:mail:1.4.7'
     // Servlet APIはアプリケーションサーバの classpathにあるものを使うのでこのdepはwarに入れない
-    providedCompile 'org.eclipse.jetty:jetty-webapp:9.2.13.v20150730'
+    providedCompile 'org.eclipse.jetty:jetty-webapp:9.2.14.v20151106'
 
 }
