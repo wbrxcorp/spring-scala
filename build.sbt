@@ -34,11 +34,11 @@ libraryDependencies ++= Seq(
 
 libraryDependencies ++= Seq(
   "context-support","webmvc","jdbc"
-).map(name => "org.springframework" % ("spring-" + name) % "4.2.2.RELEASE")
+).map(name => "org.springframework" % ("spring-" + name) % "4.2.3.RELEASE")
 
 libraryDependencies ++= Seq(
   "jetty-webapp","jetty-jsp","jetty-plus"
-).map("org.eclipse.jetty" % _ % "9.2.13.v20150730")
+).map("org.eclipse.jetty" % _ % "9.2.14.v20151106")
 
 // examples deps
 
@@ -50,7 +50,7 @@ libraryDependencies ++= Seq(
   "org.twitter4j" % "twitter4j-core" % "4.0.4",
   "com.rometools" % "rome" % "1.5.1",
   "org.bouncycastle" % "bcprov-jdk16" % "1.46",
-  "mysql" % "mysql-connector-java" % "5.1.36",
+  "mysql" % "mysql-connector-java" % "5.1.37",
   "com.nimbusds" % "nimbus-jose-jwt" % "4.1.1",
   "org.scalatra" % "scalatra-json_2.11" % "2.3.1"
 )
@@ -69,10 +69,10 @@ libraryDependencies ++= Seq(
   "junit" % "junit" % "4.12",
   "org.springframework" % "spring-test" % "4.2.1.RELEASE",
   "org.scalatest" % "scalatest_2.11" % "2.2.5",
-  "com.h2database" % "h2" % "1.4.189"
+  "com.h2database" % "h2" % "1.4.190"
 )
 
 libraryDependencies ++= Seq(
   "support","chrome-driver"
-).map(name => "org.seleniumhq.selenium" % ("selenium-" + name) % "2.47.2")
+).map(name => "org.seleniumhq.selenium" % ("selenium-" + name) % "2.48.2")
 
