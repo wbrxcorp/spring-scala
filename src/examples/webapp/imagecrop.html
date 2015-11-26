@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/ngCropper.all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/10.0.2/ng-file-upload.js"></script>
+    <script src="./js/ngCropper.all.min.js"></script>
+    <title>画像のトリミング</title>
+    <script>
+        angular.module("MyApp", ["ngFileUpload","ngCropper"])
+        .run(["$rootScope", "$timeout", "Cropper", function($scope, $timeout, Cropper) {
+            $scope.entity = {
+                image: null
+            };
+
+            var file, data;
+
+            $scope.selected = function(blob) {
+                if (blob == null) return;
+                Cropper.encode((file = blob)).then(function(dataUrl) {
+                    $scope.dataUrl = dataUrl;
+                    $timeout(showCropper);  // wait for $digest to set image's src
+                });
+
+            }
+
+            $scope.cropper = {};
+
+            $scope.options = {
+                //maximize: true,
+                //aspectRatio: 2 / 1,
+                crop: function(data) {
+                    Cropper.crop(Cropper.decode($scope.dataUrl), data).then(Cropper.encode).then(function(dataUrl) {
+                        console.log(dataUrl);
+                        $scope.preview = dataUrl;
+                    });
+                }
+            };
+
+            $scope.showEvent = 'show';
+            $scope.hideEvent = 'hide';
+
+            function showCropper() { $scope.$broadcast($scope.showEvent); }
+            function hideCropper() { $scope.$broadcast($scope.hideEvent); }
+        }]);
+        angular.element(document).ready(function() { angular.bootstrap(document, ["MyApp"]); });
+    </script>
+</head>
+<body>
+<div class="container">
+    <h1>画像のトリミング</h1>
+
+    <span ngf-select="selected($file)" ngf-drop="selected($file)">
+        <img ng-if="!dataUrl" src="./img/okotowari.jpg">
+    </span>
+
+    <img ng-if="dataUrl" ng-src="{{dataUrl}}"
+         ng-cropper
+         ng-cropper-show="showEvent"
+         ng-cropper-hide="hideEvent"
+         ng-cropper-options="options">
+
+    {{preview}}
+    <div class="preview-container">
+        <img ng-if="preview" ng-src="{{preview}}">
+    </div>
+</div>
+</body>
+</html>
