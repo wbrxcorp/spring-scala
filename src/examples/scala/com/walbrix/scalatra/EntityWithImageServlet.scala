@@ -20,7 +20,7 @@ class EntityWithImageServlet extends org.scalatra.ScalatraServlet with org.scala
   override protected implicit def jsonFormats: org.json4s.Formats = org.json4s.DefaultFormats.withBigDecimal ++ org.json4s.ext.JodaTimeSerializers.all
 
   def drawImage(width:Int, height:Int, format:String)(f:Graphics2D=>Unit):Array[Byte] = {
-    val bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
+    val bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB) // OpenJDKのJPEGエンコーダーだとAチャネル入りはエラーになってしまう
     val g = bufferedImage.getGraphics.asInstanceOf[Graphics2D]
     f(g)
     val baos = new ByteArrayOutputStream()
